@@ -1,0 +1,72 @@
+{
+  "clusters": [
+    {
+      "cluster": "site-a",
+      "site": "site-a",
+      "nodes": [
+        {
+          "name": "atlas-800i-a2",
+          "cluster": "site-a",
+          "site": "site-a",
+          "hardwareClass": "atlas-800i-a2",
+          "certifiedStack": "atlas-800i-a2-cann852",
+          "ready": true,
+          "cordoned": false,
+          "remediating": false,
+          "faulted": false,
+          "npuTotal": 11,
+          "npuAllocatable": 11,
+          "npuAllocated": 5,
+          "npuUnhealthy": 0
+        }
+      ],
+      "nodeSummary": {
+        "total": 1,
+        "ready": 1,
+        "notReady": 0,
+        "cordoned": 0,
+        "faulted": 0,
+        "remediating": 0
+      },
+      "npu": {
+        "total": 11,
+        "allocatable": 11,
+        "allocated": 5,
+        "unhealthy": 0
+      },
+      "hardwareClasses": [
+        "atlas-800i-a2"
+      ],
+      "allocations": [
+        {
+          "tenant": "acme",
+          "namespace": "tenant-acme",
+          "resource": "huawei.com/Ascend910",
+          "devices": 1
+        },
+        {
+          "tenant": "acme",
+          "namespace": "tenant-acme",
+          "resource": "huawei.com/Ascend910-5c.1cpu.16g",
+          "devices": 2
+        },
+        {
+          "tenant": "globex",
+          "namespace": "tenant-globex",
+          "resource": "huawei.com/Ascend910-5c.1cpu.16g",
+          "devices": 2
+        }
+      ]
+    }
+  ],
+  "totals": {
+    "clusters": 1,
+    "nodes": 1,
+    "nodesReady": 1,
+    "nodesFaulted": 0,
+    "npuTotal": 11,
+    "npuAllocatable": 11,
+    "npuAllocated": 5,
+    "npuUnhealthy": 0
+  }
+}

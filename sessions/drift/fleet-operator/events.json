@@ -1,0 +1,267 @@
+{
+  "entries": [
+    {
+      "time": "2026-10-29T09:14:46Z",
+      "source": "kubernetes",
+      "severity": "error",
+      "tenant": "acme",
+      "namespace": "tenant-acme",
+      "object": "Job/acme-oversized",
+      "reason": "FailedCreate",
+      "message": "Error creating: pods \"acme-oversized-cj2sf\" is forbidden: exceeded quota: tenant-quota, requested: requests.huawei.com/Ascend910=6, used: requests.huawei.com/Ascend910=1, limited: requests.huawei.com/Ascend910=2",
+      "count": 1
+    },
+    {
+      "time": "2026-10-29T09:14:32Z",
+      "source": "drift",
+      "severity": "warning",
+      "node": "atlas-800i-a2",
+      "object": "NodeDrift/atlas-800i-a2",
+      "reason": "Detected",
+      "message": "detected; remediation is not armed for this drift"
+    },
+    {
+      "time": "2026-10-29T09:14:32Z",
+      "source": "drift",
+      "severity": "warning",
+      "node": "atlas-800i-a2",
+      "object": "NodeDrift/atlas-800i-a2",
+      "reason": "DriftDetected",
+      "message": "cannVersion: observed 8.5.1, certified 8.5.2"
+    },
+    {
+      "time": "2026-10-29T09:14:24Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "DaemonSet/node-agent",
+      "reason": "SuccessfulDelete",
+      "message": "Deleted pod: node-agent-pmq6z",
+      "count": 1
+    },
+    {
+      "time": "2026-10-29T09:14:24Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/node-agent-pmq6z",
+      "reason": "Killing",
+      "message": "Stopping container node-agent",
+      "count": 1
+    },
+    {
+      "time": "2026-10-29T09:13:47Z",
+      "source": "kubernetes",
+      "severity": "warning",
+      "node": "atlas-800i-a2",
+      "namespace": "default",
+      "object": "Node/atlas-800i-a2",
+      "reason": "FreeDiskSpaceFailed",
+      "message": "(combined from similar events): Failed to garbage collect required amount of images. Attempted to free 73942493593 bytes, but only found 77887377 bytes eligible to free.",
+      "count": 479
+    },
+    {
+      "time": "2026-10-29T09:13:46Z",
+      "source": "kubernetes",
+      "severity": "error",
+      "tenant": "acme",
+      "namespace": "tenant-acme",
+      "object": "Job/acme-oversized",
+      "reason": "FailedCreate",
+      "message": "Error creating: pods \"acme-oversized-6tzxj\" is forbidden: exceeded quota: tenant-quota, requested: requests.huawei.com/Ascend910=6, used: requests.huawei.com/Ascend910=1, limited: requests.huawei.com/Ascend910=2",
+      "count": 1
+    },
+    {
+      "time": "2026-10-29T09:13:14Z",
+      "source": "kubernetes",
+      "severity": "error",
+      "tenant": "acme",
+      "namespace": "tenant-acme",
+      "object": "Job/acme-oversized",
+      "reason": "FailedCreate",
+      "message": "Error creating: pods \"acme-oversized-f5v67\" is forbidden: exceeded quota: tenant-quota, requested: requests.huawei.com/Ascend910=6, used: requests.huawei.com/Ascend910=1, limited: requests.huawei.com/Ascend910=2",
+      "count": 1
+    },
+    {
+      "time": "2026-10-29T09:13:13Z",
+      "source": "kubernetes",
+      "severity": "warning",
+      "tenant": "acme",
+      "namespace": "tenant-acme",
+      "object": "PodGroup/acme-oversized",
+      "reason": "Unschedulable",
+      "message": "0/0 tasks in gang unschedulable: pod group is not ready, 1 minAvailable",
+      "count": 25
+    },
+    {
+      "time": "2026-10-29T09:12:58Z",
+      "source": "kubernetes",
+      "severity": "error",
+      "tenant": "acme",
+      "namespace": "tenant-acme",
+      "object": "Job/acme-oversized",
+      "reason": "FailedCreate",
+      "message": "Error creating: pods \"acme-oversized-sj2np\" is forbidden: exceeded quota: tenant-quota, requested: requests.huawei.com/Ascend910=6, used: requests.huawei.com/Ascend910=1, limited: requests.huawei.com/Ascend910=2",
+      "count": 1
+    },
+    {
+      "time": "2026-10-29T09:12:50Z",
+      "source": "kubernetes",
+      "severity": "error",
+      "tenant": "acme",
+      "namespace": "tenant-acme",
+      "object": "Job/acme-oversized",
+      "reason": "FailedCreate",
+      "message": "Error creating: pods \"acme-oversized-sdbvh\" is forbidden: exceeded quota: tenant-quota, requested: requests.huawei.com/Ascend910=6, used: requests.huawei.com/Ascend910=1, limited: requests.huawei.com/Ascend910=2",
+      "count": 1
+    },
+    {
+      "time": "2026-10-29T09:12:46Z",
+      "source": "kubernetes",
+      "severity": "error",
+      "tenant": "acme",
+      "namespace": "tenant-acme",
+      "object": "Job/acme-oversized",
+      "reason": "FailedCreate",
+      "message": "Error creating: pods \"acme-oversized-lf72s\" is forbidden: exceeded quota: tenant-quota, requested: requests.huawei.com/Ascend910=6, used: requests.huawei.com/Ascend910=1, limited: requests.huawei.com/Ascend910=2",
+      "count": 1
+    },
+    {
+      "time": "2026-10-29T09:12:44Z",
+      "source": "kubernetes",
+      "severity": "error",
+      "tenant": "acme",
+      "namespace": "tenant-acme",
+      "object": "Job/acme-oversized",
+      "reason": "FailedCreate",
+      "message": "Error creating: pods \"acme-oversized-d7pt7\" is forbidden: exceeded quota: tenant-quota, requested: requests.huawei.com/Ascend910=6, used: requests.huawei.com/Ascend910=1, limited: requests.huawei.com/Ascend910=2",
+      "count": 1
+    },
+    {
+      "time": "2026-10-29T09:12:43Z",
+      "source": "kubernetes",
+      "severity": "error",
+      "tenant": "acme",
+      "namespace": "tenant-acme",
+      "object": "Job/acme-oversized",
+      "reason": "FailedCreate",
+      "message": "Error creating: pods \"acme-oversized-f7tbt\" is forbidden: exceeded quota: tenant-quota, requested: requests.huawei.com/Ascend910=6, used: requests.huawei.com/Ascend910=1, limited: requests.huawei.com/Ascend910=2",
+      "count": 1
+    },
+    {
+      "time": "2026-10-29T09:10:18Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Lease/f441c6a2.ascendfleet.internal",
+      "reason": "LeaderElection",
+      "message": "ascend-fleet-controller-manager-767bf9f8b7-th6q2_7a73e988-8a49-4cdd-813e-cc46a0d94662 became leader",
+      "count": 1
+    },
+    {
+      "time": "2026-10-29T09:10:01Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Deployment/ascend-fleet-controller-manager",
+      "reason": "ScalingReplicaSet",
+      "message": "Scaled down replica set ascend-fleet-controller-manager-7d5656c548 from 1 to 0",
+      "count": 1
+    },
+    {
+      "time": "2026-10-29T09:10:01Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/ascend-fleet-controller-manager-7d5656c548-zthbj",
+      "reason": "Killing",
+      "message": "Stopping container manager",
+      "count": 1
+    },
+    {
+      "time": "2026-10-29T09:10:01Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "ReplicaSet/ascend-fleet-controller-manager-7d5656c548",
+      "reason": "SuccessfulDelete",
+      "message": "Deleted pod: ascend-fleet-controller-manager-7d5656c548-zthbj",
+      "count": 1
+    },
+    {
+      "time": "2026-10-29T09:09:50Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/ascend-fleet-controller-manager-767bf9f8b7-th6q2",
+      "reason": "Started",
+      "message": "Started container manager",
+      "count": 1
+    },
+    {
+      "time": "2026-10-29T09:09:50Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/ascend-fleet-controller-manager-767bf9f8b7-th6q2",
+      "reason": "Created",
+      "message": "Created container: manager",
+      "count": 1
+    },
+    {
+      "time": "2026-10-29T09:09:50Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/ascend-fleet-controller-manager-767bf9f8b7-th6q2",
+      "reason": "Pulled",
+      "message": "Container image \"ascend-fleet-manager:mr4\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-10-29T09:09:46.369844Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/ascend-fleet-controller-manager-767bf9f8b7-th6q2",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/ascend-fleet-controller-manager-767bf9f8b7-th6q2 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-10-29T09:09:46Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Deployment/ascend-fleet-controller-manager",
+      "reason": "ScalingReplicaSet",
+      "message": "Scaled up replica set ascend-fleet-controller-manager-767bf9f8b7 from 0 to 1",
+      "count": 1
+    },
+    {
+      "time": "2026-10-29T09:09:46Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "ReplicaSet/ascend-fleet-controller-manager-767bf9f8b7",
+      "reason": "SuccessfulCreate",
+      "message": "Created pod: ascend-fleet-controller-manager-767bf9f8b7-th6q2",
+      "count": 1
+    }
+  ],
+  "totals": {
+    "entries": 24,
+    "errors": 8,
+    "warnings": 4,
+    "nodes": 1,
+    "tenants": 1,
+    "dropped": 0
+  },
+  "horizon": {
+    "earliestTrustworthy": "2026-10-29T08:15:13.042777867Z",
+    "eventTTLSeconds": 3600,
+    "truncated": true,
+    "note": "Kubernetes events older than 1h0m0s are deleted by the API server, so this timeline is complete only back to 2026-10-29T08:15:13Z. Drift records outlive them and are shown for the whole window. Before the horizon, an empty timeline means the records are gone, not that nothing happened."
+  },
+  "since": "2026-10-28T09:15:13.042777527Z",
+  "asOf": "2026-10-29T09:15:13.042777867Z"
+}

@@ -1,0 +1,147 @@
+{
+  "count": 1,
+  "note": "A closed period is final. Usage after the last close is on /fleet/invoices and is not yet billable.",
+  "periods": [
+    {
+      "id": "2026-10",
+      "from": "2026-10-28T13:08:50.27331466Z",
+      "to": "2026-10-29T04:02:54.756684636Z",
+      "closedAt": "2026-10-29T04:02:54.756684636Z",
+      "readings": [
+        {
+          "cluster": "site-a",
+          "tenant": "_unattributed",
+          "namespace": "default",
+          "resource": "huawei.com/Ascend910",
+          "deviceSeconds": 76.62715987
+        },
+        {
+          "cluster": "site-a",
+          "tenant": "_unattributed",
+          "namespace": "default",
+          "resource": "huawei.com/Ascend910-5c.1cpu.16g",
+          "deviceSeconds": 76.62715987
+        },
+        {
+          "cluster": "site-a",
+          "tenant": "acme",
+          "namespace": "tenant-acme",
+          "resource": "huawei.com/Ascend910-5c.1.16g",
+          "deviceSeconds": 381.88534302000005
+        },
+        {
+          "cluster": "site-a",
+          "tenant": "acme",
+          "namespace": "tenant-acme",
+          "resource": "huawei.com/Ascend910-5c.1cpu.16g",
+          "deviceSeconds": 29305.355375520958
+        },
+        {
+          "cluster": "site-a",
+          "tenant": "globex",
+          "namespace": "tenant-globex",
+          "resource": "huawei.com/Ascend910-5c.1.16g",
+          "deviceSeconds": 557.3120579900001
+        },
+        {
+          "cluster": "site-a",
+          "tenant": "globex",
+          "namespace": "tenant-globex",
+          "resource": "huawei.com/Ascend910-5c.1cpu.16g",
+          "deviceSeconds": 30293.50710317297
+        }
+      ],
+      "unobservedSeconds": 0,
+      "invoices": [
+        {
+          "tenant": "_unattributed",
+          "currency": "USD",
+          "periodFrom": "2026-10-28T13:08:50.27331466Z",
+          "periodTo": "2026-10-29T04:02:54.756684636Z",
+          "lines": [
+            {
+              "namespace": "default",
+              "resource": "huawei.com/Ascend910",
+              "deviceHours": 0.02128532218611111,
+              "unitPrice": 12,
+              "amount": 0.26
+            },
+            {
+              "namespace": "default",
+              "resource": "huawei.com/Ascend910-5c.1cpu.16g",
+              "deviceHours": 0.02128532218611111,
+              "unitPrice": 3.6,
+              "amount": 0.08
+            }
+          ],
+          "total": 0.34,
+          "warnings": [
+            "usage by pods outside any tenant namespace; not chargeable to a customer"
+          ],
+          "usage": {
+            "deviceHours": 0.04257064437222222
+          }
+        },
+        {
+          "tenant": "acme",
+          "accountID": "acct-001",
+          "costCenter": "cc-research",
+          "currency": "USD",
+          "periodFrom": "2026-10-28T13:08:50.27331466Z",
+          "periodTo": "2026-10-29T04:02:54.756684636Z",
+          "lines": [
+            {
+              "namespace": "tenant-acme",
+              "resource": "huawei.com/Ascend910-5c.1.16g",
+              "deviceHours": 0.10607926195000002,
+              "unitPrice": 3.6,
+              "amount": 0.38
+            },
+            {
+              "namespace": "tenant-acme",
+              "resource": "huawei.com/Ascend910-5c.1cpu.16g",
+              "deviceHours": 8.140376493200266,
+              "unitPrice": 3.6,
+              "amount": 29.31
+            }
+          ],
+          "total": 29.69,
+          "usage": {
+            "deviceHours": 8.246455755150267
+          }
+        },
+        {
+          "tenant": "globex",
+          "accountID": "acct-002",
+          "costCenter": "cc-ml-platform",
+          "currency": "USD",
+          "periodFrom": "2026-10-28T13:08:50.27331466Z",
+          "periodTo": "2026-10-29T04:02:54.756684636Z",
+          "lines": [
+            {
+              "namespace": "tenant-globex",
+              "resource": "huawei.com/Ascend910-5c.1.16g",
+              "deviceHours": 0.15480890499722225,
+              "unitPrice": 3.6,
+              "amount": 0.56
+            },
+            {
+              "namespace": "tenant-globex",
+              "resource": "huawei.com/Ascend910-5c.1cpu.16g",
+              "deviceHours": 8.414863084214714,
+              "unitPrice": 3.6,
+              "amount": 30.29
+            }
+          ],
+          "total": 30.85,
+          "usage": {
+            "deviceHours": 8.569671989211937
+          }
+        }
+      ],
+      "currency": "USD",
+      "total": 60.88,
+      "rateCard": "b3ea0ad6a207af5e"
+    }
+  ]
+}

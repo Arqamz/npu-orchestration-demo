@@ -1,0 +1,23 @@
+{
+  "count": 1,
+  "jobs": [
+    {
+      "name": "globex-serve",
+      "tenant": "globex",
+      "namespace": "tenant-globex",
+      "queue": "tenant-globex",
+      "image": "busybox:1.37",
+      "resource": "huawei.com/Ascend910-5c.1cpu.16g",
+      "devices": 1,
+      "replicas": 2,
+      "active": 2,
+      "succeeded": 0,
+      "failed": 0,
+      "phase": "Running",
+      "submitter": "fcce0145-d617-489b-ba8a-6739fe31bb4d",
+      "createdAt": "2026-10-29T05:07:19Z",
+      "startedAt": "2026-10-29T05:07:19Z"
+    }
+  ],
+  "submitEnabled": true
+}

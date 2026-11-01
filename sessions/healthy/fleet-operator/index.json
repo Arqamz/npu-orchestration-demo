@@ -1,0 +1,75 @@
+{
+  "api": "ascend-fleet inventory",
+  "authMode": "oidc",
+  "note": "Every route is served under the scope shown. A route absent from this list is refused regardless of credential.",
+  "routes": [
+    {
+      "path": "/fleet",
+      "scope": "public"
+    },
+    {
+      "path": "/fleet/allocations",
+      "scope": "tenant"
+    },
+    {
+      "path": "/fleet/billing-export",
+      "scope": "tenant-admin"
+    },
+    {
+      "path": "/fleet/clusters",
+      "scope": "operator"
+    },
+    {
+      "path": "/fleet/compliance",
+      "scope": "operator"
+    },
+    {
+      "path": "/fleet/drift",
+      "scope": "operator"
+    },
+    {
+      "path": "/fleet/entitlements",
+      "scope": "tenant-admin"
+    },
+    {
+      "path": "/fleet/events",
+      "scope": "operator"
+    },
+    {
+      "path": "/fleet/invoices",
+      "scope": "tenant-admin"
+    },
+    {
+      "path": "/fleet/jobs",
+      "scope": "tenant"
+    },
+    {
+      "path": "/fleet/me",
+      "scope": "self"
+    },
+    {
+      "path": "/fleet/nodes",
+      "scope": "operator"
+    },
+    {
+      "path": "/fleet/openapi",
+      "scope": "public"
+    },
+    {
+      "path": "/fleet/periods",
+      "scope": "tenant-admin"
+    },
+    {
+      "path": "/fleet/ratecard",
+      "scope": "self"
+    },
+    {
+      "path": "/fleet/usage",
+      "scope": "tenant"
+    },
+    {
+      "path": "/healthz",
+      "scope": "public"
+    }
+  ]
+}

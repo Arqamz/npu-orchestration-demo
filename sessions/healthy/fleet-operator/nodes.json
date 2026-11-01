@@ -1,0 +1,20 @@
+{
+  "count": 1,
+  "nodes": [
+    {
+      "name": "atlas-800i-a2",
+      "cluster": "site-a",
+      "site": "site-a",
+      "hardwareClass": "atlas-800i-a2",
+      "certifiedStack": "atlas-800i-a2-cann852",
+      "ready": true,
+      "cordoned": false,
+      "remediating": false,
+      "faulted": false,
+      "npuTotal": 11,
+      "npuAllocatable": 11,
+      "npuAllocated": 5,
+      "npuUnhealthy": 0
+    }
+  ]
+}

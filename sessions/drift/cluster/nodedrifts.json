@@ -1,0 +1,52 @@
+{
+    "apiVersion": "v1",
+    "items": [
+        {
+            "apiVersion": "platform.ascendfleet.internal/v1alpha1",
+            "kind": "NodeDrift",
+            "metadata": {
+                "creationTimestamp": "2026-10-29T00:03:23Z",
+                "generation": 2,
+                "name": "atlas-800i-a2",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "platform.ascendfleet.internal/v1alpha1",
+                        "kind": "CertifiedStack",
+                        "name": "atlas-800i-a2-cann852",
+                        "uid": "49f9a3b6-9d93-4170-8c16-7fd093b63cf7"
+                    }
+                ],
+                "resourceVersion": "746370",
+                "uid": "b0654c5d-9266-4459-a65d-724f560eb02d"
+            },
+            "spec": {
+                "certifiedStack": "atlas-800i-a2-cann852",
+                "differences": [
+                    {
+                        "actual": "8.5.1",
+                        "expected": "8.5.2",
+                        "field": "cannVersion"
+                    }
+                ],
+                "nodeName": "atlas-800i-a2",
+                "observed": {
+                    "cannVersion": "8.5.1",
+                    "driverVersion": "25.5.1",
+                    "firmwareVersion": "7.8.0.6.201",
+                    "hardwareClass": "atlas-800i-a2"
+                },
+                "remediation": "DetectOnly"
+            },
+            "status": {
+                "detectedTime": "2026-10-29T09:14:32Z",
+                "message": "detected; remediation is not armed for this drift",
+                "phase": "Detected",
+                "phaseStartTime": "2026-10-29T09:14:32Z"
+            }
+        }
+    ],
+    "kind": "List",
+    "metadata": {
+        "resourceVersion": ""
+    }
+}

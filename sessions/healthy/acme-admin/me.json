@@ -1,0 +1,16 @@
+{
+  "authenticated": true,
+  "principal": {
+    "subject": "d5432993-7ff3-45c7-9ecf-1c3f768f9605",
+    "username": "acme-admin",
+    "email": "admin@acme.example",
+    "name": "Ada Acme",
+    "operator": false,
+    "tenantAdmin": true,
+    "tenants": [
+      "acme"
+    ],
+    "issuer": "https://keycloak.ascend-fleet-system.svc.cluster.local:8443/realms/ascend-fleet",
+    "via": "oidc"
+  }
+}

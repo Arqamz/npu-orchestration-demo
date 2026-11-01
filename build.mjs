@@ -22,8 +22,18 @@ await mkdir(DIST, { recursive: true });
 /* The surfaces. */
 await cp(path.join(HERE, 'web'), DIST, { recursive: true });
 
-/* The recordings, served as assets the Function fetches back. */
-await cp(path.join(HERE, 'sessions'), path.join(DIST, 'sessions'), { recursive: true });
+/* The recordings the demo actually serves.
+ *
+ * sessions/ also holds `drift` and `healthy`, captured a week earlier
+ * against the previous persona set and before /fleet/endpoints and
+ * /fleet/logs existed. They are kept in the repository as reference -- a
+ * fleet with real drift on it is worth having -- and deliberately NOT
+ * shipped: nothing routes to them, and a session that 501s on half the
+ * routes a surface asks for would read as a broken demo rather than as an
+ * older recording. */
+for (const s of ['baseline', 'autoscale']) {
+  await cp(path.join(HERE, 'sessions', s), path.join(DIST, 'sessions', s), { recursive: true });
+}
 
 /* The frame manifest: offsets in order, with the pod file beside each.
  * Without this the Function has no way to know which frames exist. */

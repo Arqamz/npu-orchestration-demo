@@ -1,0 +1,7 @@
+{
+  "session": "drift",
+  "capturedAt": "2026-10-29T09:15:14Z",
+  "api": "10.42.0.121:8082",
+  "personas": ["fleet-operator", "acme-admin", "acme-engineer", "globex-admin"],
+  "note": "Real responses from a real control plane, captured through each persona's own token. Status codes are recorded beside each body, including the refusals."
+}

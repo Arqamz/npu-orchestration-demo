@@ -1,0 +1,42 @@
+{
+  "drifts": [
+    {
+      "name": "atlas-800i-a2",
+      "nodeName": "atlas-800i-a2",
+      "certifiedStack": "atlas-800i-a2-cann852",
+      "phase": "Resolved",
+      "remediation": "DetectOnly",
+      "differences": [
+        {
+          "field": "driverVersion",
+          "expected": "25.5.1",
+          "actual": "24.1.rc2"
+        }
+      ],
+      "observed": {
+        "hardwareClass": "atlas-800i-a2",
+        "driverVersion": "24.1.rc2",
+        "firmwareVersion": "7.8.0.6.201",
+        "cannVersion": "8.5.2"
+      },
+      "attempts": 0,
+      "message": "node matches its certified stack again; no remediation was run",
+      "detectedTime": "2026-10-29T04:12:58Z",
+      "resolvedTime": "2026-10-29T04:18:58Z",
+      "phaseStartTime": "2026-10-29T04:18:58Z",
+      "open": false
+    }
+  ],
+  "totals": {
+    "total": 1,
+    "open": 0,
+    "resolved": 1,
+    "failed": 0,
+    "detectOnly": 0,
+    "byPhase": {
+      "Resolved": 1
+    },
+    "byField": {}
+  },
+  "asOf": "2026-10-29T09:12:52.192353175Z"
+}

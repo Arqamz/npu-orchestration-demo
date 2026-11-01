@@ -1,0 +1,15 @@
+{
+  "drifts": [],
+  "totals": {
+    "total": 1,
+    "open": 0,
+    "resolved": 1,
+    "failed": 0,
+    "detectOnly": 0,
+    "byPhase": {
+      "Resolved": 1
+    },
+    "byField": {}
+  },
+  "asOf": "2026-10-29T09:12:51.97134604Z"
+}

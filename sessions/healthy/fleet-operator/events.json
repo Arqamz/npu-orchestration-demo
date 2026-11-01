@@ -1,0 +1,220 @@
+{
+  "entries": [
+    {
+      "time": "2026-10-29T09:12:51Z",
+      "source": "kubernetes",
+      "severity": "warning",
+      "tenant": "acme",
+      "namespace": "tenant-acme",
+      "object": "PodGroup/acme-oversized",
+      "reason": "Unschedulable",
+      "message": "0/0 tasks in gang unschedulable: pod group is not ready, 1 minAvailable",
+      "count": 7
+    },
+    {
+      "time": "2026-10-29T09:12:50Z",
+      "source": "kubernetes",
+      "severity": "error",
+      "tenant": "acme",
+      "namespace": "tenant-acme",
+      "object": "Job/acme-oversized",
+      "reason": "FailedCreate",
+      "message": "Error creating: pods \"acme-oversized-sdbvh\" is forbidden: exceeded quota: tenant-quota, requested: requests.huawei.com/Ascend910=6, used: requests.huawei.com/Ascend910=1, limited: requests.huawei.com/Ascend910=2",
+      "count": 1
+    },
+    {
+      "time": "2026-10-29T09:12:46Z",
+      "source": "kubernetes",
+      "severity": "error",
+      "tenant": "acme",
+      "namespace": "tenant-acme",
+      "object": "Job/acme-oversized",
+      "reason": "FailedCreate",
+      "message": "Error creating: pods \"acme-oversized-lf72s\" is forbidden: exceeded quota: tenant-quota, requested: requests.huawei.com/Ascend910=6, used: requests.huawei.com/Ascend910=1, limited: requests.huawei.com/Ascend910=2",
+      "count": 1
+    },
+    {
+      "time": "2026-10-29T09:12:44Z",
+      "source": "kubernetes",
+      "severity": "error",
+      "tenant": "acme",
+      "namespace": "tenant-acme",
+      "object": "Job/acme-oversized",
+      "reason": "FailedCreate",
+      "message": "Error creating: pods \"acme-oversized-d7pt7\" is forbidden: exceeded quota: tenant-quota, requested: requests.huawei.com/Ascend910=6, used: requests.huawei.com/Ascend910=1, limited: requests.huawei.com/Ascend910=2",
+      "count": 1
+    },
+    {
+      "time": "2026-10-29T09:12:43Z",
+      "source": "kubernetes",
+      "severity": "error",
+      "tenant": "acme",
+      "namespace": "tenant-acme",
+      "object": "Job/acme-oversized",
+      "reason": "FailedCreate",
+      "message": "Error creating: pods \"acme-oversized-f7tbt\" is forbidden: exceeded quota: tenant-quota, requested: requests.huawei.com/Ascend910=6, used: requests.huawei.com/Ascend910=1, limited: requests.huawei.com/Ascend910=2",
+      "count": 1
+    },
+    {
+      "time": "2026-10-29T09:10:18Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Lease/f441c6a2.ascendfleet.internal",
+      "reason": "LeaderElection",
+      "message": "ascend-fleet-controller-manager-767bf9f8b7-th6q2_7a73e988-8a49-4cdd-813e-cc46a0d94662 became leader",
+      "count": 1
+    },
+    {
+      "time": "2026-10-29T09:10:01Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Deployment/ascend-fleet-controller-manager",
+      "reason": "ScalingReplicaSet",
+      "message": "Scaled down replica set ascend-fleet-controller-manager-7d5656c548 from 1 to 0",
+      "count": 1
+    },
+    {
+      "time": "2026-10-29T09:10:01Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/ascend-fleet-controller-manager-7d5656c548-zthbj",
+      "reason": "Killing",
+      "message": "Stopping container manager",
+      "count": 1
+    },
+    {
+      "time": "2026-10-29T09:10:01Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "ReplicaSet/ascend-fleet-controller-manager-7d5656c548",
+      "reason": "SuccessfulDelete",
+      "message": "Deleted pod: ascend-fleet-controller-manager-7d5656c548-zthbj",
+      "count": 1
+    },
+    {
+      "time": "2026-10-29T09:09:50Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/ascend-fleet-controller-manager-767bf9f8b7-th6q2",
+      "reason": "Started",
+      "message": "Started container manager",
+      "count": 1
+    },
+    {
+      "time": "2026-10-29T09:09:50Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/ascend-fleet-controller-manager-767bf9f8b7-th6q2",
+      "reason": "Created",
+      "message": "Created container: manager",
+      "count": 1
+    },
+    {
+      "time": "2026-10-29T09:09:50Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/ascend-fleet-controller-manager-767bf9f8b7-th6q2",
+      "reason": "Pulled",
+      "message": "Container image \"ascend-fleet-manager:mr4\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-10-29T09:09:46.369844Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/ascend-fleet-controller-manager-767bf9f8b7-th6q2",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/ascend-fleet-controller-manager-767bf9f8b7-th6q2 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-10-29T09:09:46Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Deployment/ascend-fleet-controller-manager",
+      "reason": "ScalingReplicaSet",
+      "message": "Scaled up replica set ascend-fleet-controller-manager-767bf9f8b7 from 0 to 1",
+      "count": 1
+    },
+    {
+      "time": "2026-10-29T09:09:46Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "ReplicaSet/ascend-fleet-controller-manager-767bf9f8b7",
+      "reason": "SuccessfulCreate",
+      "message": "Created pod: ascend-fleet-controller-manager-767bf9f8b7-th6q2",
+      "count": 1
+    },
+    {
+      "time": "2026-10-29T09:08:47Z",
+      "source": "kubernetes",
+      "severity": "warning",
+      "node": "atlas-800i-a2",
+      "namespace": "default",
+      "object": "Node/atlas-800i-a2",
+      "reason": "FreeDiskSpaceFailed",
+      "message": "(combined from similar events): Failed to garbage collect required amount of images. Attempted to free 72345917849 bytes, but only found 0 bytes eligible to free.",
+      "count": 478
+    },
+    {
+      "time": "2026-10-29T04:18:58Z",
+      "source": "drift",
+      "severity": "info",
+      "node": "atlas-800i-a2",
+      "object": "NodeDrift/atlas-800i-a2",
+      "reason": "ResolvedWithoutRemediation"
+    },
+    {
+      "time": "2026-10-29T04:18:58Z",
+      "source": "drift",
+      "severity": "info",
+      "node": "atlas-800i-a2",
+      "object": "NodeDrift/atlas-800i-a2",
+      "reason": "DriftResolved",
+      "message": "node restored to atlas-800i-a2-cann852"
+    },
+    {
+      "time": "2026-10-29T04:18:58Z",
+      "source": "drift",
+      "severity": "info",
+      "node": "atlas-800i-a2",
+      "object": "NodeDrift/atlas-800i-a2",
+      "reason": "Resolved",
+      "message": "node matches its certified stack again; no remediation was run"
+    },
+    {
+      "time": "2026-10-29T04:12:58Z",
+      "source": "drift",
+      "severity": "warning",
+      "node": "atlas-800i-a2",
+      "object": "NodeDrift/atlas-800i-a2",
+      "reason": "DriftDetected",
+      "message": "driverVersion: observed 24.1.rc2, certified 25.5.1"
+    }
+  ],
+  "totals": {
+    "entries": 20,
+    "errors": 4,
+    "warnings": 3,
+    "nodes": 1,
+    "tenants": 1,
+    "dropped": 0
+  },
+  "horizon": {
+    "earliestTrustworthy": "2026-10-29T08:12:51.983913089Z",
+    "eventTTLSeconds": 3600,
+    "truncated": true,
+    "note": "Kubernetes events older than 1h0m0s are deleted by the API server, so this timeline is complete only back to 2026-10-29T08:12:51Z. Drift records outlive them and are shown for the whole window. Before the horizon, an empty timeline means the records are gone, not that nothing happened."
+  },
+  "since": "2026-10-28T09:12:51.983912959Z",
+  "asOf": "2026-10-29T09:12:51.983913089Z"
+}

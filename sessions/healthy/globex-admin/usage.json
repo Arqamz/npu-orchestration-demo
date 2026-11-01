@@ -1,0 +1,28 @@
+{
+  "count": 2,
+  "gaps": null,
+  "observedFor": {
+    "site-a": 150.654836915
+  },
+  "records": [
+    {
+      "cluster": "site-a",
+      "tenant": "globex",
+      "namespace": "tenant-globex",
+      "resource": "huawei.com/Ascend910-5c.1.16g",
+      "deviceSeconds": 557.3120579900001,
+      "deviceHours": 0.15480890499722225
+    },
+    {
+      "cluster": "site-a",
+      "tenant": "globex",
+      "namespace": "tenant-globex",
+      "resource": "huawei.com/Ascend910-5c.1cpu.16g",
+      "deviceSeconds": 65203.92841440704,
+      "deviceHours": 18.11220233733529
+    }
+  ],
+  "since": "2026-10-28T13:08:50.27331466Z",
+  "totalDeviceHours": 18.26701124233251,
+  "totalDeviceSeconds": 65761.24047239704
+}

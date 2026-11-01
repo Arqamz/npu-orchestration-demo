@@ -1,0 +1,58 @@
+{
+  "count": 3,
+  "jobs": [
+    {
+      "name": "acme-oversized",
+      "tenant": "acme",
+      "namespace": "tenant-acme",
+      "queue": "tenant-acme",
+      "image": "docker.io/library/busybox:1.37",
+      "resource": "huawei.com/Ascend910",
+      "devices": 6,
+      "replicas": 1,
+      "active": 0,
+      "succeeded": 0,
+      "failed": 0,
+      "phase": "Pending",
+      "submitter": "d5432993-7ff3-45c7-9ecf-1c3f768f9605",
+      "createdAt": "2026-10-29T09:12:43Z",
+      "startedAt": "2026-10-29T09:12:43Z",
+      "reason": "FailedCreate: Error creating: pods \"acme-oversized-cj2sf\" is forbidden: exceeded quota: tenant-quota, requested: requests.huawei.com/Ascend910=6, used: requests.huawei.com/Ascend910=1, limited: requests.huawei.com/Ascend910=2"
+    },
+    {
+      "name": "acme-train",
+      "tenant": "acme",
+      "namespace": "tenant-acme",
+      "queue": "tenant-acme",
+      "image": "busybox:1.37",
+      "resource": "huawei.com/Ascend910-5c.1cpu.16g",
+      "devices": 1,
+      "replicas": 2,
+      "active": 2,
+      "succeeded": 0,
+      "failed": 0,
+      "phase": "Running",
+      "submitter": "d5432993-7ff3-45c7-9ecf-1c3f768f9605",
+      "createdAt": "2026-10-29T05:07:19Z",
+      "startedAt": "2026-10-29T05:07:19Z"
+    },
+    {
+      "name": "acme-wholecard",
+      "tenant": "acme",
+      "namespace": "tenant-acme",
+      "queue": "tenant-acme",
+      "image": "busybox:1.37",
+      "resource": "huawei.com/Ascend910",
+      "devices": 1,
+      "replicas": 1,
+      "active": 1,
+      "succeeded": 0,
+      "failed": 0,
+      "phase": "Running",
+      "submitter": "d5432993-7ff3-45c7-9ecf-1c3f768f9605",
+      "createdAt": "2026-10-29T05:07:19Z",
+      "startedAt": "2026-10-29T05:07:19Z"
+    }
+  ],
+  "submitEnabled": true
+}

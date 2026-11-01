@@ -1,0 +1,27 @@
+{
+  "allocations": [
+    {
+      "tenant": "acme",
+      "cluster": "site-a",
+      "namespace": "tenant-acme",
+      "resource": "huawei.com/Ascend910",
+      "devices": 1
+    },
+    {
+      "tenant": "acme",
+      "cluster": "site-a",
+      "namespace": "tenant-acme",
+      "resource": "huawei.com/Ascend910-5c.1cpu.16g",
+      "devices": 2
+    },
+    {
+      "tenant": "globex",
+      "cluster": "site-a",
+      "namespace": "tenant-globex",
+      "resource": "huawei.com/Ascend910-5c.1cpu.16g",
+      "devices": 2
+    }
+  ],
+  "count": 3,
+  "devices": 5
+}

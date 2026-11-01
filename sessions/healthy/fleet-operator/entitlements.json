@@ -1,0 +1,67 @@
+{
+  "entitlements": [
+    {
+      "tenant": "acme",
+      "displayName": "Acme Research",
+      "namespace": "tenant-acme",
+      "phase": "Ready",
+      "queueName": "tenant-acme",
+      "quota": {
+        "cpu": "8",
+        "huawei.com/Ascend910-5c.1cpu.16g": "4",
+        "memory": "16Gi",
+        "npu": "2",
+        "pods": "20"
+      },
+      "held": {
+        "huawei.com/Ascend910": 1,
+        "huawei.com/Ascend910-5c.1cpu.16g": 2
+      },
+      "heldDevices": 3,
+      "vnpuMode": "Static",
+      "vnpuTemplates": [
+        "vir05_1c_16g"
+      ],
+      "maxVNPUs": 4,
+      "mutationStrategy": "Recreate",
+      "networkIsolation": "Strict",
+      "restrictEgress": false,
+      "podSecurity": "restricted",
+      "billingAccountID": "acct-001",
+      "billingCostCenter": "cc-research",
+      "subjects": 0
+    },
+    {
+      "tenant": "globex",
+      "displayName": "Globex Labs",
+      "namespace": "tenant-globex",
+      "phase": "Ready",
+      "queueName": "tenant-globex",
+      "quota": {
+        "cpu": "8",
+        "huawei.com/Ascend910-5c.1cpu.16g": "4",
+        "memory": "16Gi",
+        "npu": "2",
+        "pods": "20"
+      },
+      "held": {
+        "huawei.com/Ascend910-5c.1cpu.16g": 2
+      },
+      "heldDevices": 2,
+      "vnpuMode": "Static",
+      "vnpuTemplates": [
+        "vir05_1c_16g"
+      ],
+      "maxVNPUs": 4,
+      "mutationStrategy": "Recreate",
+      "networkIsolation": "Strict",
+      "restrictEgress": false,
+      "podSecurity": "restricted",
+      "billingAccountID": "acct-002",
+      "billingCostCenter": "cc-ml-platform",
+      "subjects": 0
+    }
+  ],
+  "count": 2,
+  "note": "Quota is enforced per extended resource name as the device plugin advertises it, not per template name. A whole card and a vNPU slice of one both count as a single device."
+}

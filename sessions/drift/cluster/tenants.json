@@ -1,0 +1,269 @@
+{
+    "apiVersion": "v1",
+    "items": [
+        {
+            "apiVersion": "platform.ascendfleet.internal/v1alpha1",
+            "kind": "Tenant",
+            "metadata": {
+                "annotations": {
+                    "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"platform.ascendfleet.internal/v1alpha1\",\"kind\":\"Tenant\",\"metadata\":{\"annotations\":{},\"name\":\"acme\"},\"spec\":{\"billing\":{\"accountID\":\"acct-001\",\"costCenter\":\"cc-research\"},\"displayName\":\"Acme Research\",\"network\":{\"isolation\":\"Strict\"},\"queue\":{\"reclaimable\":true,\"weight\":3},\"quota\":{\"cpu\":\"8\",\"extra\":{\"huawei.com/Ascend910-5c.1cpu.16g\":\"4\"},\"memory\":\"16Gi\",\"npu\":\"2\",\"pods\":\"20\"},\"security\":{\"defaultContainerLimits\":{\"cpu\":\"1\",\"memory\":\"2Gi\"},\"podSecurityStandard\":\"restricted\"},\"vnpu\":{\"maxVNPUs\":4,\"mode\":\"Static\",\"mutationStrategy\":\"Recreate\",\"templates\":[\"vir05_1c_16g\"]}}}\n"
+                },
+                "creationTimestamp": "2026-10-28T15:49:52Z",
+                "finalizers": [
+                    "platform.ascendfleet.internal/tenant-cleanup"
+                ],
+                "generation": 1,
+                "name": "acme",
+                "resourceVersion": "678231",
+                "uid": "bbdc23df-427e-49bb-a355-337a5496f004"
+            },
+            "spec": {
+                "access": {},
+                "billing": {
+                    "accountID": "acct-001",
+                    "costCenter": "cc-research"
+                },
+                "displayName": "Acme Research",
+                "namespace": "tenant-acme",
+                "network": {
+                    "isolation": "Strict",
+                    "restrictEgress": false
+                },
+                "queue": {
+                    "reclaimable": true,
+                    "weight": 3
+                },
+                "quota": {
+                    "cpu": "8",
+                    "extra": {
+                        "huawei.com/Ascend910-5c.1cpu.16g": "4"
+                    },
+                    "memory": "16Gi",
+                    "npu": "2",
+                    "pods": "20"
+                },
+                "security": {
+                    "defaultContainerLimits": {
+                        "cpu": "1",
+                        "memory": "2Gi"
+                    },
+                    "podSecurityStandard": "restricted"
+                },
+                "vnpu": {
+                    "maxVNPUs": 4,
+                    "mode": "Static",
+                    "mutationStrategy": "Recreate",
+                    "templates": [
+                        "vir05_1c_16g"
+                    ]
+                }
+            },
+            "status": {
+                "conditions": [
+                    {
+                        "lastTransitionTime": "2026-10-28T15:49:52Z",
+                        "message": "",
+                        "observedGeneration": 1,
+                        "reason": "Reconciled",
+                        "status": "True",
+                        "type": "NamespaceReady"
+                    },
+                    {
+                        "lastTransitionTime": "2026-10-28T15:49:52Z",
+                        "message": "",
+                        "observedGeneration": 1,
+                        "reason": "Reconciled",
+                        "status": "True",
+                        "type": "QuotaReady"
+                    },
+                    {
+                        "lastTransitionTime": "2026-10-28T15:49:52Z",
+                        "message": "",
+                        "observedGeneration": 1,
+                        "reason": "Reconciled",
+                        "status": "True",
+                        "type": "QueueReady"
+                    },
+                    {
+                        "lastTransitionTime": "2026-10-28T15:49:52Z",
+                        "message": "",
+                        "observedGeneration": 1,
+                        "reason": "Reconciled",
+                        "status": "True",
+                        "type": "VNPUPolicyReady"
+                    },
+                    {
+                        "lastTransitionTime": "2026-10-28T15:49:52Z",
+                        "message": "",
+                        "observedGeneration": 1,
+                        "reason": "Reconciled",
+                        "status": "True",
+                        "type": "NetworkPolicyReady"
+                    },
+                    {
+                        "lastTransitionTime": "2026-10-28T15:49:52Z",
+                        "message": "",
+                        "observedGeneration": 1,
+                        "reason": "Reconciled",
+                        "status": "True",
+                        "type": "LimitRangeReady"
+                    },
+                    {
+                        "lastTransitionTime": "2026-10-28T15:49:52Z",
+                        "message": "",
+                        "observedGeneration": 1,
+                        "reason": "Reconciled",
+                        "status": "True",
+                        "type": "RBACReady"
+                    },
+                    {
+                        "lastTransitionTime": "2026-10-28T15:49:52Z",
+                        "message": "",
+                        "observedGeneration": 1,
+                        "reason": "AllObjectsReady",
+                        "status": "True",
+                        "type": "Ready"
+                    }
+                ],
+                "namespace": "tenant-acme",
+                "observedGeneration": 1,
+                "phase": "Ready",
+                "queueName": "tenant-acme"
+            }
+        },
+        {
+            "apiVersion": "platform.ascendfleet.internal/v1alpha1",
+            "kind": "Tenant",
+            "metadata": {
+                "annotations": {
+                    "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"platform.ascendfleet.internal/v1alpha1\",\"kind\":\"Tenant\",\"metadata\":{\"annotations\":{},\"name\":\"globex\"},\"spec\":{\"billing\":{\"accountID\":\"acct-002\",\"costCenter\":\"cc-ml-platform\"},\"displayName\":\"Globex Labs\",\"network\":{\"isolation\":\"Strict\"},\"queue\":{\"reclaimable\":true,\"weight\":1},\"quota\":{\"cpu\":\"8\",\"extra\":{\"huawei.com/Ascend910-5c.1cpu.16g\":\"4\"},\"memory\":\"16Gi\",\"npu\":\"2\",\"pods\":\"20\"},\"security\":{\"defaultContainerLimits\":{\"cpu\":\"1\",\"memory\":\"2Gi\"},\"podSecurityStandard\":\"restricted\"},\"vnpu\":{\"maxVNPUs\":4,\"mode\":\"Static\",\"mutationStrategy\":\"Recreate\",\"templates\":[\"vir05_1c_16g\"]}}}\n"
+                },
+                "creationTimestamp": "2026-10-28T15:49:52Z",
+                "finalizers": [
+                    "platform.ascendfleet.internal/tenant-cleanup"
+                ],
+                "generation": 1,
+                "name": "globex",
+                "resourceVersion": "678262",
+                "uid": "fd386683-bf46-4aa6-83b5-eb1b0ede72a8"
+            },
+            "spec": {
+                "access": {},
+                "billing": {
+                    "accountID": "acct-002",
+                    "costCenter": "cc-ml-platform"
+                },
+                "displayName": "Globex Labs",
+                "namespace": "tenant-globex",
+                "network": {
+                    "isolation": "Strict",
+                    "restrictEgress": false
+                },
+                "queue": {
+                    "reclaimable": true,
+                    "weight": 1
+                },
+                "quota": {
+                    "cpu": "8",
+                    "extra": {
+                        "huawei.com/Ascend910-5c.1cpu.16g": "4"
+                    },
+                    "memory": "16Gi",
+                    "npu": "2",
+                    "pods": "20"
+                },
+                "security": {
+                    "defaultContainerLimits": {
+                        "cpu": "1",
+                        "memory": "2Gi"
+                    },
+                    "podSecurityStandard": "restricted"
+                },
+                "vnpu": {
+                    "maxVNPUs": 4,
+                    "mode": "Static",
+                    "mutationStrategy": "Recreate",
+                    "templates": [
+                        "vir05_1c_16g"
+                    ]
+                }
+            },
+            "status": {
+                "conditions": [
+                    {
+                        "lastTransitionTime": "2026-10-28T15:49:52Z",
+                        "message": "",
+                        "observedGeneration": 1,
+                        "reason": "Reconciled",
+                        "status": "True",
+                        "type": "NamespaceReady"
+                    },
+                    {
+                        "lastTransitionTime": "2026-10-28T15:49:57Z",
+                        "message": "",
+                        "observedGeneration": 1,
+                        "reason": "Reconciled",
+                        "status": "True",
+                        "type": "QuotaReady"
+                    },
+                    {
+                        "lastTransitionTime": "2026-10-28T15:49:52Z",
+                        "message": "",
+                        "observedGeneration": 1,
+                        "reason": "Reconciled",
+                        "status": "True",
+                        "type": "QueueReady"
+                    },
+                    {
+                        "lastTransitionTime": "2026-10-28T15:49:57Z",
+                        "message": "",
+                        "observedGeneration": 1,
+                        "reason": "Reconciled",
+                        "status": "True",
+                        "type": "VNPUPolicyReady"
+                    },
+                    {
+                        "lastTransitionTime": "2026-10-28T15:49:57Z",
+                        "message": "",
+                        "observedGeneration": 1,
+                        "reason": "Reconciled",
+                        "status": "True",
+                        "type": "NetworkPolicyReady"
+                    },
+                    {
+                        "lastTransitionTime": "2026-10-28T15:49:57Z",
+                        "message": "",
+                        "observedGeneration": 1,
+                        "reason": "Reconciled",
+                        "status": "True",
+                        "type": "LimitRangeReady"
+                    },
+                    {
+                        "lastTransitionTime": "2026-10-28T15:49:57Z",
+                        "message": "",
+                        "observedGeneration": 1,
+                        "reason": "Reconciled",
+                        "status": "True",
+                        "type": "RBACReady"
+                    },
+                    {
+                        "lastTransitionTime": "2026-10-28T15:49:57Z",
+                        "message": "",
+                        "observedGeneration": 1,
+                        "reason": "AllObjectsReady",
+                        "status": "True",
+                        "type": "Ready"
+                    }
+                ],
+                "namespace": "tenant-globex",
+                "observedGeneration": 1,
+                "phase": "Ready",
+                "queueName": "tenant-globex"
+            }
+        }
+    ],
+    "kind": "List",
+    "metadata": {
+        "resourceVersion": ""
+    }
+}

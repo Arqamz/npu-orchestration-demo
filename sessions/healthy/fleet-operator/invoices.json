@@ -1,0 +1,100 @@
+{
+  "count": 3,
+  "currency": "USD",
+  "invoices": [
+    {
+      "tenant": "_unattributed",
+      "currency": "USD",
+      "periodFrom": "2026-10-28T13:08:50.27331466Z",
+      "periodTo": "2026-10-29T09:12:52.061432224Z",
+      "lines": [
+        {
+          "namespace": "default",
+          "resource": "huawei.com/Ascend910",
+          "deviceHours": 0.06305564529361112,
+          "unitPrice": 12,
+          "amount": 0.76
+        },
+        {
+          "namespace": "default",
+          "resource": "huawei.com/Ascend910-5c.1cpu.16g",
+          "deviceHours": 0.02128532218611111,
+          "unitPrice": 3.6,
+          "amount": 0.08
+        }
+      ],
+      "total": 0.84,
+      "warnings": [
+        "usage by pods outside any tenant namespace; not chargeable to a customer"
+      ],
+      "usage": {
+        "deviceHours": 0.08434096747972222
+      }
+    },
+    {
+      "tenant": "acme",
+      "accountID": "acct-001",
+      "costCenter": "cc-research",
+      "currency": "USD",
+      "periodFrom": "2026-10-28T13:08:50.27331466Z",
+      "periodTo": "2026-10-29T09:12:52.061432224Z",
+      "lines": [
+        {
+          "namespace": "tenant-acme",
+          "resource": "huawei.com/Ascend910",
+          "deviceHours": 4.9178518084216645,
+          "unitPrice": 12,
+          "amount": 59.01
+        },
+        {
+          "namespace": "tenant-acme",
+          "resource": "huawei.com/Ascend910-5c.1.16g",
+          "deviceHours": 0.10607926195000002,
+          "unitPrice": 3.6,
+          "amount": 0.38
+        },
+        {
+          "namespace": "tenant-acme",
+          "resource": "huawei.com/Ascend910-5c.1cpu.16g",
+          "deviceHours": 17.837715746320836,
+          "unitPrice": 3.6,
+          "amount": 64.22
+        }
+      ],
+      "total": 123.61,
+      "usage": {
+        "deviceHours": 22.8616468166925
+      }
+    },
+    {
+      "tenant": "globex",
+      "accountID": "acct-002",
+      "costCenter": "cc-ml-platform",
+      "currency": "USD",
+      "periodFrom": "2026-10-28T13:08:50.27331466Z",
+      "periodTo": "2026-10-29T09:12:52.061432224Z",
+      "lines": [
+        {
+          "namespace": "tenant-globex",
+          "resource": "huawei.com/Ascend910-5c.1.16g",
+          "deviceHours": 0.15480890499722225,
+          "unitPrice": 3.6,
+          "amount": 0.56
+        },
+        {
+          "namespace": "tenant-globex",
+          "resource": "huawei.com/Ascend910-5c.1cpu.16g",
+          "deviceHours": 18.11220233733529,
+          "unitPrice": 3.6,
+          "amount": 65.2
+        }
+      ],
+      "total": 65.76,
+      "usage": {
+        "deviceHours": 18.26701124233251
+      }
+    }
+  ],
+  "note": "Usage is metered from observed allocations, and carried across restarts by the usage checkpoint. Time during which the control plane was not observing a cluster is excluded and appears under gaps on /fleet/usage.",
+  "total": 190.21
+}

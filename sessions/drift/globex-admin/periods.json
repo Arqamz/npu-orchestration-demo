@@ -1,0 +1,47 @@
+{
+  "count": 1,
+  "note": "A closed period is final. Usage after the last close is on /fleet/invoices and is not yet billable.",
+  "periods": [
+    {
+      "id": "2026-10",
+      "from": "2026-10-28T13:08:50.27331466Z",
+      "to": "2026-10-29T04:02:54.756684636Z",
+      "closedAt": "2026-10-29T04:02:54.756684636Z",
+      "readings": null,
+      "unobservedSeconds": 0,
+      "invoices": [
+        {
+          "tenant": "globex",
+          "accountID": "acct-002",
+          "costCenter": "cc-ml-platform",
+          "currency": "USD",
+          "periodFrom": "2026-10-28T13:08:50.27331466Z",
+          "periodTo": "2026-10-29T04:02:54.756684636Z",
+          "lines": [
+            {
+              "namespace": "tenant-globex",
+              "resource": "huawei.com/Ascend910-5c.1.16g",
+              "deviceHours": 0.15480890499722225,
+              "unitPrice": 3.6,
+              "amount": 0.56
+            },
+            {
+              "namespace": "tenant-globex",
+              "resource": "huawei.com/Ascend910-5c.1cpu.16g",
+              "deviceHours": 8.414863084214714,
+              "unitPrice": 3.6,
+              "amount": 30.29
+            }
+          ],
+          "total": 30.85,
+          "usage": {
+            "deviceHours": 8.569671989211937
+          }
+        }
+      ],
+      "currency": "USD",
+      "total": 30.85,
+      "rateCard": "b3ea0ad6a207af5e"
+    }
+  ]
+}

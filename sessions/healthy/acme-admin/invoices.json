@@ -1,0 +1,43 @@
+{
+  "count": 1,
+  "currency": "USD",
+  "invoices": [
+    {
+      "tenant": "acme",
+      "accountID": "acct-001",
+      "costCenter": "cc-research",
+      "currency": "USD",
+      "periodFrom": "2026-10-28T13:08:50.27331466Z",
+      "periodTo": "2026-10-29T09:12:52.222030271Z",
+      "lines": [
+        {
+          "namespace": "tenant-acme",
+          "resource": "huawei.com/Ascend910",
+          "deviceHours": 4.9178518084216645,
+          "unitPrice": 12,
+          "amount": 59.01
+        },
+        {
+          "namespace": "tenant-acme",
+          "resource": "huawei.com/Ascend910-5c.1.16g",
+          "deviceHours": 0.10607926195000002,
+          "unitPrice": 3.6,
+          "amount": 0.38
+        },
+        {
+          "namespace": "tenant-acme",
+          "resource": "huawei.com/Ascend910-5c.1cpu.16g",
+          "deviceHours": 17.837715746320836,
+          "unitPrice": 3.6,
+          "amount": 64.22
+        }
+      ],
+      "total": 123.61,
+      "usage": {
+        "deviceHours": 22.8616468166925
+      }
+    }
+  ],
+  "note": "Usage is metered from observed allocations, and carried across restarts by the usage checkpoint. Time during which the control plane was not observing a cluster is excluded and appears under gaps on /fleet/usage.",
+  "total": 123.61
+}
