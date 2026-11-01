@@ -29,7 +29,7 @@ year, on a laptop nobody prepared, in front of people who will not wait for an
 install to fail.
 
 ```bash
-node verify.mjs                       # 135 checks against the stub, offline
+node verify.mjs                       # 166 checks against the stub, offline
 node smoke-deployed.mjs <url>         # 37 checks against a deployed copy
 node describe-api.mjs > docs/API-SURFACE.md   # regenerate the API contract
 node build.mjs                        # -> dist/, deployable to Pages

@@ -306,7 +306,7 @@ report('policy covers the recordings');
   for (const persona of Object.values(PERSONAS)) {
     const dir = path.join(HERE, 'sessions', SESSION, persona.subject);
     if (!existsSync(dir)) continue;
-    const { readdir } = await import('node:fs/promises');
+    const { readdir, readFile } = await import('node:fs/promises');
     for (const f of await readdir(dir)) {
       if (!f.endsWith('.json')) continue;
       const leaf = f.replace(/\.json$/, '').split('-')[0];
@@ -322,6 +322,80 @@ report('policy covers the recordings');
     check(`recorded route ${route} has a scope`, known,
       'a recording exists for a route the demo policy would refuse');
   }
+}
+
+/* ------------------------------------------------- the pages themselves */
+
+/* A page with a syntax error is served with a 200 and renders nothing: the
+ * module fails to parse, the error goes to a console nobody has open, and
+ * the surface looks like a fleet with no data in it. smoke-deployed.mjs
+ * checks that pages are SERVED; this checks that they PARSE. */
+report('pages parse');
+{
+  const { readdir, readFile } = await import('node:fs/promises');
+  const { execFileSync } = await import('node:child_process');
+  const { mkdtemp, rm } = await import('node:fs/promises');
+  const { writeFileSync } = await import('node:fs');
+  const { tmpdir } = await import('node:os');
+  const WEB = path.join(HERE, 'web');
+  const scratch = await mkdtemp(path.join(tmpdir(), 'ascend-verify-'));
+
+  /* `node --check` on a real .mjs file.
+   *
+   * Not vm.SourceTextModule, which needs --experimental-vm-modules: a
+   * verifier that only runs with a flag is a verifier nobody runs. Not
+   * --input-type=module over stdin either -- execFile has no `input`
+   * option, so the child waits on a stdin that never closes and the whole
+   * run hangs. */
+  let seq = 0;
+  function parses(source, label) {
+    const file = path.join(scratch, `check-${seq += 1}.mjs`);
+    try {
+      writeFileSync(file, source);
+      execFileSync(process.execPath, ['--check', file], { stdio: 'pipe' });
+      return null;
+    } catch (err) {
+      const msg = String(err.stderr || err.message).split('\n')
+        .find((l) => l.includes('Error')) || String(err.message);
+      return `${label}: ${msg.slice(0, 120)}`;
+    }
+  }
+
+  async function pagesIn(dir) {
+    const out = [];
+    for (const e of await readdir(dir, { withFileTypes: true })) {
+      const full = path.join(dir, e.name);
+      if (e.isDirectory()) out.push(...await pagesIn(full));
+      else if (e.name.endsWith('.html')) out.push(full);
+    }
+    return out;
+  }
+
+  const pages = await pagesIn(WEB);
+  check('every surface has a page', pages.length >= 7, `found ${pages.length}`);
+
+  for (const p of pages) {
+    const html = await readFile(p, 'utf8');
+    const rel = path.relative(HERE, p);
+
+    const m = /<script type="module">([\s\S]*?)<\/script>/.exec(html);
+    check(`${rel} has a module script`, Boolean(m), '');
+    if (!m) continue;
+    const err = parses(m[1], rel);
+    check(`${rel} parses`, err === null, err || '');
+    // Every page must declare a viewport, or it is unreadable on a phone
+    // and nobody notices until it is on one.
+    check(`${rel} declares a viewport`, html.includes('name="viewport"'), '');
+    check(`${rel} loads the stylesheet`, html.includes('/shared/fleet.css'), '');
+  }
+
+  for (const f of ['web/shared/fleet.js', 'server/core.mjs', 'server/policy.mjs',
+    'functions/_middleware.js']) {
+    const src = await readFile(path.join(HERE, f), 'utf8');
+    const err = parses(src, f);
+    check(`${f} parses`, err === null, err || '');
+  }
+  await rm(scratch, { recursive: true, force: true });
 }
 
 /* ---------------------------------------------------------------- report */
