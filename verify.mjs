@@ -383,6 +383,20 @@ report('pages parse');
     if (!m) continue;
     const err = parses(m[1], rel);
     check(`${rel} parses`, err === null, err || '');
+    // FOUND THE HARD WAY. `node --check` is a parse, and a temporal dead
+    // zone is not a parse error: the serving page declared `let chart`
+    // below the block that assigned it, parsed clean, rendered its header
+    // and threw on first assignment -- which looks exactly like an
+    // endpoint with no data, the same quiet failure as every other one in
+    // this project.
+    //
+    // A heuristic, not a scope analysis: a bare `name = ...` at the start
+    // of a line, where `let name` / `const name` appears later in the same
+    // module. That is the shape the bug took and it is cheap to refuse.
+    const tdz = useBeforeDeclare(m[1]);
+    check(`${rel} has no use-before-declare`, tdz === null,
+      tdz ? `${tdz} is assigned before its declaration` : '');
+
     // Every page must declare a viewport, or it is unreadable on a phone
     // and nobody notices until it is on one.
     check(`${rel} declares a viewport`, html.includes('name="viewport"'), '');
@@ -396,6 +410,38 @@ report('pages parse');
     check(`${f} parses`, err === null, err || '');
   }
   await rm(scratch, { recursive: true, force: true });
+}
+
+
+/** useBeforeDeclare finds a top-level `name = ...` that precedes the
+ *  `let name` / `const name` declaring it. Returns the name, or null.
+ *
+ *  Deliberately a heuristic over module-scope lines rather than a scope
+ *  analysis: it catches the shape the real bug took without pulling in a
+ *  parser, and a false positive is fixed by moving a declaration up, which
+ *  is where it belonged anyway. */
+function useBeforeDeclare(source) {
+  const lines = source.split('\n');
+  const declaredAt = new Map();
+  const assignedAt = new Map();
+
+  lines.forEach((raw, i) => {
+    const line = raw.replace(/\/\/.*$/, '');
+    const decl = /^(?:let|const|var)\s+([A-Za-z_$][\w$]*)/.exec(line.trim());
+    if (decl && !declaredAt.has(decl[1])) declaredAt.set(decl[1], i);
+    // A bare assignment at module scope: no indentation beyond two spaces,
+    // no keyword, not a comparison, not a property.
+    const asg = /^\s{0,4}([A-Za-z_$][\w$]*)\s*=\s*[^=]/.exec(line);
+    if (asg && !/^\s*(?:let|const|var|if|for|while|return)\b/.test(line)) {
+      if (!assignedAt.has(asg[1])) assignedAt.set(asg[1], i);
+    }
+  });
+
+  for (const [name, at] of assignedAt) {
+    const d = declaredAt.get(name);
+    if (d !== undefined && d > at) return name;
+  }
+  return null;
 }
 
 /* ---------------------------------------------------------------- report */

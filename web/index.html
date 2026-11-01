@@ -5,81 +5,296 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Ascend Fleet</title>
 <link rel="stylesheet" href="/shared/fleet.css">
+<style>
+/* Page-specific: the pitch layout. Everything reusable lives in fleet.css. */
+.hero { padding: 48px 0 34px; border-bottom: 1px solid var(--line); margin-bottom: 30px; }
+.hero .kicker {
+  font: 600 11px var(--mono); letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 14px;
+}
+.hero h1 {
+  margin: 0 0 16px; font-size: clamp(30px, 5vw, 46px); line-height: 1.08;
+  letter-spacing: -0.03em; max-width: 19ch;
+}
+.hero .lede { font-size: clamp(16px, 2vw, 19px); line-height: 1.55; color: var(--ink-dim); max-width: 64ch; margin: 0 0 22px; }
+.hero .lede strong { color: var(--ink); font-weight: 600; }
+
+.chain { width: 100%; height: auto; display: block; margin: 8px 0 4px; }
+.chain text { font-family: var(--mono); }
+
+.layer { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); }
+.layer .box {
+  border: 1px solid var(--line); border-radius: 10px; padding: 15px 16px; background: var(--panel-2);
+}
+.layer .box h4 { margin: 0 0 6px; font-size: 13.5px; }
+.layer .box p { margin: 0; font-size: 12.5px; color: var(--ink-dim); line-height: 1.55; }
+.layer .box .who { font: 600 10px var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin-bottom: 7px; }
+
+.aud { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); }
+.aud a {
+  display: block; text-decoration: none; color: inherit;
+  border: 1px solid var(--line); border-radius: 11px; padding: 17px 18px; background: var(--panel-2);
+}
+.aud a:hover { border-color: var(--accent); }
+.aud h4 { margin: 0 0 3px; font-size: 15px; }
+.aud .role { font: 600 10px var(--mono); letter-spacing: 0.07em; text-transform: uppercase; color: var(--accent); }
+.aud .ask { margin: 9px 0 0; font-size: 13px; color: var(--ink); font-style: italic; }
+.aud .ans { margin: 7px 0 0; font-size: 12.5px; color: var(--ink-dim); line-height: 1.55; }
+.aud .go { margin-top: 11px; font: 11px var(--mono); color: var(--accent); }
+
+ul.ticks { list-style: none; padding: 0; margin: 0; }
+ul.ticks li { padding: 7px 0 7px 24px; position: relative; font-size: 13.5px; line-height: 1.55; border-bottom: 1px solid color-mix(in srgb, var(--line) 55%, transparent); }
+ul.ticks li:last-child { border-bottom: 0; }
+ul.ticks li::before { content: ""; position: absolute; left: 4px; top: 14px; width: 7px; height: 7px; border-radius: 50%; background: var(--ok); }
+ul.ticks li.no::before { background: var(--ink-faint); }
+ul.ticks li.part::before { background: var(--warn); }
+ul.ticks li strong { font-weight: 600; }
+ul.ticks li span { color: var(--ink-dim); }
+</style>
 </head>
 <body>
 <main id="app"></main>
 <script type="module">
-import { demo, call, el, card, chrome, pageTitle, pill, table, setPersona } from '/shared/fleet.js';
+import { demo, el, card, table, pill, chrome, setPersona } from '/shared/fleet.js';
 
 const app = document.getElementById('app');
 await chrome('/');
 
-app.append(pageTitle(
-  'Ascend Fleet',
-  'A control plane that turns racks of Huawei Ascend NPUs into capacity a data centre can '
-  + 'rent out by the second — to customers who can rent it out again.'));
+/* ------------------------------------------------------------------ hero */
 
-/* ------------------------------------------------------------- honesty */
+app.append(el('section', { class: 'hero' },
+  el('div', { class: 'kicker' }, 'Multi-tenant control plane for Huawei Ascend NPUs'),
+  el('h1', {}, 'Turn a rack of NPUs into capacity you can rent by the second.'),
+  el('p', { class: 'lede' },
+    'Ascend Fleet is the software layer between Huawei’s hardware and the people who '
+    + 'ultimately pay for compute. It takes raw Atlas servers and makes them ',
+    el('strong', {}, 'multi-tenant, self-healing, metered and resellable'),
+    ' — so a data centre can sell capacity to an AI company, which can sell it on to '
+    + 'its own customers, with every device-second attributed and invoiced at each hop.'),
+  el('p', { class: 'lede' },
+    'Everything on these pages was ',
+    el('strong', {}, 'recorded from a real control plane'),
+    ' running on an Atlas 800I A2 with eight Ascend 910B3 cards. Nothing is a mock-up.')));
 
-app.append(card('What you are looking at',
-  el('p', {},
-    'Every number on these pages was recorded from a real control plane running on a real '
-    + 'Atlas 800I A2 with eight Ascend 910B3 cards. The recordings were taken through each '
-    + 'persona’s own Keycloak token, so a page shows exactly what that login returns — '
-    + 'including the refusals.'),
+/* --------------------------------------------------------------- problem */
+
+app.append(card('The problem',
+  el('div', { class: 'cols two' },
+    el('div', {},
+      el('p', {},
+        'A data centre that buys Ascend hardware owns a very expensive pool of devices and '
+        + 'no way to sell access to it. Kubernetes schedules containers, not tenancies. It has '
+        + 'no concept of who owns a card, what they agreed to pay, or how to stop one customer '
+        + 'from seeing another.'),
+      el('p', {},
+        'So the fallback is dedicated clusters per customer: a card sits idle because it '
+        + 'belongs to someone who is not using it tonight, and the operator carries the cost '
+        + 'of every machine nobody is on.')),
+    el('div', {},
+      el('p', {},
+        'The pieces to fix this exist on NVIDIA and barely exist on Ascend. The device plugin '
+        + 'and scheduler are there; what is missing is everything above them — tenancy, '
+        + 'quota, isolation, metering, billing, resale, audit, and an API a customer can '
+        + 'build against.'),
+      el('p', {},
+        'That gap is what this is. It is deliberately not a fork of anything: it sits on top '
+        + 'of Huawei’s own MindCluster stack and makes it sellable.')))));
+
+/* ----------------------------------------------------------- value chain */
+
+const chain = `
+<svg class="chain" viewBox="0 0 980 232" xmlns="http://www.w3.org/2000/svg" role="img"
+     aria-label="The value chain: Huawei supplies hardware to a data centre, which sells capacity to AI companies and enterprises, which serve their own end customers. Ascend Fleet is the layer that makes each hop meterable.">
+  <defs>
+    <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L10 5 L0 10 z" fill="currentColor"/>
+    </marker>
+  </defs>
+  <g font-size="11" fill="currentColor">
+    <!-- layer boxes -->
+    <g>
+      <rect x="8"   y="34" width="188" height="66" rx="9" fill="none" stroke="currentColor" stroke-opacity=".32"/>
+      <text x="22" y="56" font-weight="700">Huawei</text>
+      <text x="22" y="74" fill-opacity=".72">Atlas 800 · Ascend 910B</text>
+      <text x="22" y="90" fill-opacity=".72">CANN · MindCluster</text>
+    </g>
+    <g>
+      <rect x="236" y="34" width="188" height="66" rx="9" fill="none" stroke="currentColor" stroke-opacity=".32"/>
+      <text x="250" y="56" font-weight="700">Data centre</text>
+      <text x="250" y="74" fill-opacity=".72">buys the racks,</text>
+      <text x="250" y="90" fill-opacity=".72">sells the capacity</text>
+    </g>
+    <g>
+      <rect x="464" y="34" width="188" height="66" rx="9" fill="none" stroke="currentColor" stroke-opacity=".32"/>
+      <text x="478" y="56" font-weight="700">AI company</text>
+      <text x="478" y="74" fill-opacity=".72">token factory, SaaS,</text>
+      <text x="478" y="90" fill-opacity=".72">research lab</text>
+    </g>
+    <g>
+      <rect x="692" y="34" width="188" height="66" rx="9" fill="none" stroke="currentColor" stroke-opacity=".32"/>
+      <text x="706" y="56" font-weight="700">Their customers</text>
+      <text x="706" y="74" fill-opacity=".72">teams, tenants,</text>
+      <text x="706" y="90" fill-opacity=".72">API consumers</text>
+    </g>
+    <!-- arrows -->
+    <g stroke="currentColor" stroke-opacity=".55" marker-end="url(#ar)" fill="none">
+      <path d="M200 67 H230"/>
+      <path d="M428 67 H458"/>
+      <path d="M656 67 H686"/>
+    </g>
+    <text x="206" y="26" font-size="10" fill-opacity=".6">hardware</text>
+    <text x="432" y="26" font-size="10" fill-opacity=".6">capacity</text>
+    <text x="660" y="26" font-size="10" fill-opacity=".6">tokens / jobs</text>
+
+    <!-- the platform band -->
+    <rect x="236" y="128" width="644" height="60" rx="9" fill="currentColor" fill-opacity=".07"
+          stroke="currentColor" stroke-opacity=".45"/>
+    <text x="252" y="152" font-weight="700">Ascend Fleet</text>
+    <text x="252" y="170" fill-opacity=".78">tenancy · quota · isolation · scheduling · metering · resale billing · audit</text>
+
+    <g stroke="currentColor" stroke-opacity=".3" stroke-dasharray="3 3">
+      <path d="M330 100 V128"/><path d="M558 100 V128"/><path d="M786 100 V128"/>
+    </g>
+    <text x="252" y="212" font-size="10" fill-opacity=".6">every hop is metered, quota-bounded and invoiced separately — this is the B2B2B2C part</text>
+  </g>
+</svg>`;
+
+app.append(card('Where it sits',
+  el('div', { html: chain }),
   el('p', { class: 'note' },
-    'The backend serving this demo is a replay of those recordings. The routing, the bearer '
-    + 'authentication, the closed-list scope policy and the status codes are the real logic, '
-    + 'mirrored from the Go control plane. Nothing on these pages is invented: where a field '
-    + 'was never captured it is shown as missing rather than filled in.')));
+    'Huawei sells hardware. A data centre buys it and wants to sell capacity. Their customer '
+    + 'is often itself a platform with customers of its own. Each of those hops is a separate '
+    + 'commercial relationship, and each needs its own quota, its own isolation boundary and '
+    + 'its own invoice — computed from the same device-seconds, without double-counting.')));
 
-/* ------------------------------------------------------------ personas */
+/* ---------------------------------------------------------- what it does */
 
-const personas = (await demo.personas()).body || [];
-const grid = el('div', { class: 'persona-grid' });
-for (const p of personas) {
-  grid.append(el('a', {
-    class: 'persona-card',
-    href: '#',
-    onclick: (e) => {
-      e.preventDefault();
-      setPersona(p.token);
-      location.href = p.operator ? '/console/'
-        : p.username === 'maas-co-admin' ? '/serving/'
-          : p.tenantAdmin ? '/finance/' : '/workspace/';
-    },
+app.append(card('What it does',
+  el('div', { class: 'layer' },
+    el('div', { class: 'box' },
+      el('div', { class: 'who' }, 'Tenancy'),
+      el('h4', {}, 'Four levels deep'),
+      el('p', {}, 'A tenant can have tenants. Quota is contained at every level, a parent is '
+        + 'liable for what its children spend, and a child cannot escape the ceiling it was sold.')),
+    el('div', { class: 'box' },
+      el('div', { class: 'who' }, 'Isolation'),
+      el('h4', {}, 'Namespace, network, Pod Security'),
+      el('p', {}, 'Each tenant gets a namespace, a Volcano queue, a ResourceQuota, a '
+        + 'NetworkPolicy and a Pod Security Standard. A sub-tenant cannot open a path its '
+        + 'parent closed.')),
+    el('div', { class: 'box' },
+      el('div', { class: 'who' }, 'Scheduling'),
+      el('h4', {}, 'Whole cards and slices'),
+      el('p', {}, 'Gang-scheduled multi-card jobs through Volcano, plus vNPU slices for '
+        + 'workloads that need a fraction of a card. Both metered the same way.')),
+    el('div', { class: 'box' },
+      el('div', { class: 'who' }, 'Serving'),
+      el('h4', {}, 'Autoscaling inference'),
+      el('p', {}, 'A model runs as a long-lived endpoint that scales on real demand and stops '
+        + 'at the quota ceiling. Demonstrated 1→4→1 on real hardware.')),
+    el('div', { class: 'box' },
+      el('div', { class: 'who' }, 'Training'),
+      el('h4', {}, 'Fine-tuning with storage'),
+      el('p', {}, 'Datasets mounted read-only, checkpoints that outlive the pod, a sized '
+        + '/dev/shm for DataLoader workers, and credentials injected rather than embedded.')),
+    el('div', { class: 'box' },
+      el('div', { class: 'who' }, 'Metering'),
+      el('h4', {}, 'Device-seconds, not estimates'),
+      el('p', {}, 'Usage comes from observations actually made, never a PromQL integral. '
+        + 'Periods close as meter-reading differences, so they always sum to the lifetime total.')),
+    el('div', { class: 'box' },
+      el('div', { class: 'who' }, 'Billing'),
+      el('h4', {}, 'Recursive, without double-counting'),
+      el('p', {}, 'A reseller’s statement rolls its customers’ usage up to whoever '
+        + 'pays, carrying the path. A rollup that counted a grandchild twice would look like '
+        + 'a healthy business and be fraud.')),
+    el('div', { class: 'box' },
+      el('div', { class: 'who' }, 'Trust'),
+      el('h4', {}, 'An audit log the operator cannot rewrite'),
+      el('p', {}, 'Hash-chained, Merkle-rooted, signed, and anchored into every closed '
+        + 'invoice. Verification runs outside the server, so a customer can check it '
+        + 'themselves.')),
+    el('div', { class: 'box' },
+      el('div', { class: 'who' }, 'Operations'),
+      el('h4', {}, 'Self-healing against a certified stack'),
+      el('p', {}, 'Nodes are checked against the driver, firmware and CANN versions they are '
+        + 'certified for. Drift cordons, drains and remediates rather than waiting for a '
+        + 'ticket.')))));
+
+/* ------------------------------------------------------------- audiences */
+
+const AUD = [
+  {
+    role: 'Hardware vendor', name: 'Huawei',
+    ask: '“Does this make our silicon easier to sell?”',
+    ans: 'It is the commercial layer Ascend does not have. It builds on MindCluster and the '
+       + 'Ascend device plugin rather than around them, and every finding we hit on real '
+       + 'hardware is written down — including the ones that are upstream bugs.',
+    href: '/console/', persona: 'demo-fleet-operator', go: 'See the fleet as an operator',
   },
-  el('div', { class: 'role' }, p.role),
-  el('h3', {}, p.username),
-  el('p', {}, p.blurb),
-  el('div', { class: 'row', style: 'margin-top:9px' },
-    p.operator ? pill('operator', 'ok') : null,
-    p.tenantAdmin ? pill('tenant-admin', 'policy') : null,
-    ...(p.reach || []).map((t) => pill(t)))));
+  {
+    role: 'Data centre / infrastructure', name: 'Sky47',
+    ask: '“Can I rent this out, and will the invoice be defensible?”',
+    ans: 'Tenants, quota, isolation and metering from device-seconds the platform actually '
+       + 'observed. Closed periods are append-only and carry a signed audit checkpoint, so a '
+       + 'customer disputing a bill can verify it without trusting you.',
+    href: '/finance/', persona: 'demo-dc-shanghai-admin', go: 'See a reseller’s statement',
+  },
+  {
+    role: 'AI factory / MaaS', name: 'Model-as-a-service platform',
+    ask: '“Can I serve a model and resell it to my own users?”',
+    ans: 'An endpoint that autoscales on live demand and never exceeds the NPUs you bought. '
+       + 'Sub-tenancy means your customers are tenants of you, billed by you, invisible to '
+       + 'each other.',
+    href: '/serving/', persona: 'demo-maas-co-admin', go: 'Watch it scale 1→4→1',
+  },
+  {
+    role: 'Enterprise / research', name: 'Fine-tuning and HPO',
+    ask: '“Can my team actually run training here?”',
+    ans: 'Gang-scheduled multi-card jobs with datasets, checkpoint storage, a sized /dev/shm '
+       + 'and injected credentials. Engineers read their own logs; they cannot read your '
+       + 'invoices.',
+    href: '/workspace/', persona: 'demo-acme-engineer', go: 'Submit work as an engineer',
+  },
+  {
+    role: 'Platform / channel partner', name: 'Reseller with sub-tenants',
+    ask: '“How deep does the resale go?”',
+    ans: 'Four levels. dc-shanghai sells to acme, acme sells to acme-research, and each hop '
+       + 'is quota-contained and separately invoiced from the same device-seconds.',
+    href: '/tenant/', persona: 'demo-dc-shanghai-admin', go: 'See the tenant tree',
+  },
+  {
+    role: 'Security / compliance', name: 'Whoever signs off',
+    ask: '“What stops the operator changing the numbers?”',
+    ans: 'Every mutating call writes its intent before it acts. The trail is a hash chain '
+       + 'with an RFC 6962 Merkle root, signed and anchored into invoices you keep. '
+       + 'Verification is a separate binary, deliberately outside the server.',
+    href: '/support/', persona: 'demo-fleet-operator', go: 'Inspect the audit trail',
+  },
+];
+
+const audGrid = el('div', { class: 'aud' });
+for (const a of AUD) {
+  audGrid.append(el('a', {
+    href: a.href,
+    onclick: () => setPersona(a.persona),
+  },
+  el('div', { class: 'role' }, a.role),
+  el('h4', {}, a.name),
+  el('p', { class: 'ask' }, a.ask),
+  el('p', { class: 'ans' }, a.ans),
+  el('div', { class: 'go' }, `${a.go}  →`)));
 }
-app.append(card('Sign in as', grid));
+app.append(card('Who it is for — and what to show them',
+  el('p', { class: 'note' },
+    'Each card opens the demo as the login that audience would have. The persona switcher in '
+    + 'the header changes it at any time; the refusals you hit are real policy decisions, not '
+    + 'hidden buttons.'),
+  audGrid));
 
-/* ------------------------------------------------------------ surfaces */
+/* ----------------------------------------------------------------- proof */
 
-app.append(card('The six surfaces', table(
-  ['Surface', 'Who it is for', 'What it answers'],
-  [
-    ['Fleet console', 'Data-centre operator', 'Is the hardware healthy, and who is on it?'],
-    ['Serving', 'MaaS customer', 'Is my model up, and how many cards is it holding?'],
-    ['Workspace', 'Engineer', 'Did my job run, and if not, why?'],
-    ['Tenancy', 'Tenant administrator', 'What did I buy, and what have I resold?'],
-    ['Finance', 'Whoever pays', 'What do I owe, and what can I bill on?'],
-    ['Audit & support', 'Operator, and the customer’s auditor', 'Who changed what, and can I prove it?'],
-  ],
-  (r) => el('tr', {},
-    el('td', {}, el('strong', {}, r[0])),
-    el('td', { class: 'muted' }, r[1]),
-    el('td', { class: 'wrap' }, r[2])))));
-
-/* -------------------------------------------------------------- proven */
-
-const hw = await demo.hardware('npu-smi-info.txt');
-app.append(card('The hardware these recordings came from',
+app.append(card('Measured on the hardware, not estimated',
   el('div', { class: 'stats' },
     el('div', { class: 'stat' }, el('div', { class: 'k' }, 'Node'),
       el('div', { class: 'v' }, '1'), el('div', { class: 'n' }, 'Atlas 800I A2')),
@@ -88,15 +303,124 @@ app.append(card('The hardware these recordings came from',
     el('div', { class: 'stat ok' }, el('div', { class: 'k' }, 'Tenants'),
       el('div', { class: 'v' }, '6'), el('div', { class: 'n' }, 'across 3 levels')),
     el('div', { class: 'stat' }, el('div', { class: 'k' }, 'KV cache'),
-      el('div', { class: 'v' }, '35.5'), el('div', { class: 'n' }, 'GiB, 3.1M tokens')),
+      el('div', { class: 'v' }, '35.5'), el('div', { class: 'n' }, 'GiB — 3.1M tokens')),
     el('div', { class: 'stat ok' }, el('div', { class: 'k' }, 'Throughput'),
-      el('div', { class: 'v' }, '1501'), el('div', { class: 'n' }, 'tok/s, 64-way')),
+      el('div', { class: 'v' }, '1501'), el('div', { class: 'n' }, 'tok/s at 64-way')),
     el('div', { class: 'stat' }, el('div', { class: 'k' }, 'Requests served'),
       el('div', { class: 'v' }, '4535'), el('div', { class: 'n' }, 'in the recorded run'))),
-  hw.ok ? el('details', { style: 'margin-top:14px' },
-    el('summary', { class: 'muted' }, 'npu-smi info, as recorded'),
-    el('pre', { class: 'logs', style: 'margin-top:9px' }, hw.body.text))
-    : el('p', { class: 'muted' }, 'npu-smi output was not captured in this session.')));
+  el('p', { class: 'note' },
+    'And the number that is not flattering: a new replica takes ',
+    el('strong', {}, 'four to five minutes'),
+    ' to start serving — the image is 9GB and vLLM compiles graphs on first start. In the '
+    + 'recorded run the autoscaler reaches four replicas in 47 seconds and the second one only '
+    + 'begins answering at t+258s. Scaling is immediate; capacity is not. It is on the serving '
+    + 'page, visible, because a demo that hid it would be selling rather than describing.')));
+
+/* ------------------------------------------------------------- readiness */
+
+app.append(card('Where it stands, honestly',
+  el('div', { class: 'cols two' },
+    el('div', {},
+      el('h4', { style: 'margin:0 0 8px;font-size:13px;color:var(--ink-dim)' }, 'Run on real hardware'),
+      el('ul', { class: 'ticks' },
+        el('li', {}, el('strong', {}, 'Multi-tenant scheduling'), ' ',
+          el('span', {}, '— whole cards and vNPU slices, gang-scheduled')),
+        el('li', {}, el('strong', {}, 'Four-level tenancy'), ' ',
+          el('span', {}, '— quota, network and Pod Security all contained')),
+        el('li', {}, el('strong', {}, 'Autoscaling inference'), ' ',
+          el('span', {}, '— 1→4→1, capped at the quota ceiling')),
+        el('li', {}, el('strong', {}, 'Metering and recursive billing'), ' ',
+          el('span', {}, '— a real period closed at 665.12 USD')),
+        el('li', {}, el('strong', {}, 'Tamper-evident audit'), ' ',
+          el('span', {}, '— verified, and a forged trail refused')),
+        el('li', {}, el('strong', {}, 'OIDC through Keycloak'), ' ',
+          el('span', {}, '— eight real logins, scoped end to end')))),
+    el('div', {},
+      el('h4', { style: 'margin:0 0 8px;font-size:13px;color:var(--ink-dim)' }, 'Not there yet'),
+      el('ul', { class: 'ticks' },
+        el('li', { class: 'no' }, el('strong', {}, 'No public endpoint address'), ' ',
+          el('span', {}, '— ClusterIP only; no ingress or TLS')),
+        el('li', { class: 'no' }, el('strong', {}, 'Billing is device-seconds, not tokens'), ' ',
+          el('span', {}, '— a mismatch for a token factory')),
+        el('li', { class: 'no' }, el('strong', {}, 'No per-caller API keys'), ' ',
+          el('span', {}, '— anything in-cluster can call an endpoint')),
+        el('li', { class: 'part' }, el('strong', {}, 'Self-healing is armed, not proven'), ' ',
+          el('span', {}, '— one node, nowhere to drain to')),
+        el('li', { class: 'part' }, el('strong', {}, 'Single cluster'), ' ',
+          el('span', {}, '— cross-cluster is refused until validated')),
+        el('li', { class: 'no' }, el('strong', {}, 'Nothing scrapes the metrics'), ' ',
+          el('span', {}, '— no Prometheus, no history'))))),
+  el('p', { class: 'note' },
+    'The full list, checked against the code rather than remembered, is in ',
+    el('a', { href: 'https://github.com/Arqamz/npu-orchestration-demo/blob/main/docs/WHAT-IS-MISSING.md' },
+      'WHAT-IS-MISSING.md'), '.')));
+
+/* ------------------------------------------------------------ what next */
+
+app.append(card('What this opens up',
+  el('div', { class: 'layer' },
+    el('div', { class: 'box' },
+      el('div', { class: 'who' }, 'Near'),
+      el('h4', {}, 'Token-based billing'),
+      el('p', {}, 'vLLM already reports prompt and completion tokens. Metering them alongside '
+        + 'device-seconds turns this into a platform an AI company bills its own users from.')),
+    el('div', { class: 'box' },
+      el('div', { class: 'who' }, 'Near'),
+      el('h4', {}, 'Public endpoints with issued keys'),
+      el('p', {}, 'Ingress, TLS and per-caller API keys make a tenant’s endpoint a product '
+        + 'their customers can call — and make token metering attributable.')),
+    el('div', { class: 'box' },
+      el('div', { class: 'who' }, 'Next'),
+      el('h4', {}, 'Reservations and commitments'),
+      el('p', {}, '“64 NPUs for three months” is how capacity is actually sold and is '
+        + 'unrepresentable today. Quota is a ceiling, not a guarantee.')),
+    el('div', { class: 'box' },
+      el('div', { class: 'who' }, 'Next'),
+      el('h4', {}, 'Multi-cluster, multi-site'),
+      el('p', {}, 'The CRDs exist and cross-cluster scheduling is deliberately refused until a '
+        + 'second cluster validates it. That is what turns one data centre into a fleet.')),
+    el('div', { class: 'box' },
+      el('div', { class: 'who' }, 'Later'),
+      el('h4', {}, 'Self-service onboarding'),
+      el('p', {}, 'A reseller creating its own customers through the API, with its own margin, '
+        + 'is what makes the channel a business rather than a support queue.')),
+    el('div', { class: 'box' },
+      el('div', { class: 'who' }, 'Later'),
+      el('h4', {}, 'A marketplace of certified stacks'),
+      el('p', {}, 'Nodes are already validated against a CertifiedStack. The same mechanism '
+        + 'could publish vetted model and framework images per hardware generation.')))));
+
+/* ------------------------------------------------------------- the demo */
+
+const personas = (await demo.personas()).body || [];
+app.append(card('Every login in this demo',
+  el('p', { class: 'note' },
+    'Captured through each persona’s own Keycloak token, so a page shows exactly what '
+    + 'that login returns — including the endpoints it is refused.'),
+  table(['Login', 'Role', 'Operator', 'Tenant admin', 'Reaches'],
+    personas,
+    (p) => el('tr', {},
+      el('td', {}, el('a', {
+        href: '#', onclick: (e) => { e.preventDefault(); setPersona(p.token); location.href = '/console/'; },
+      }, el('strong', {}, p.username))),
+      el('td', { class: 'muted' }, p.role),
+      el('td', {}, p.operator ? pill('yes', 'ok') : el('span', { class: 'muted' }, '—')),
+      el('td', {}, p.tenantAdmin ? pill('yes', 'policy') : el('span', { class: 'muted' }, '—')),
+      el('td', { class: 'mono muted' }, (p.reach || []).join(', ') || '—')))));
+
+app.append(card('How the demo is built',
+  el('p', {},
+    'The bodies are replayed from recordings. Everything else is the real thing: the routes, '
+    + 'the bearer authentication, the closed-list scope policy, the status codes, the refusals '
+    + 'and the state a mutation leaves behind. The policy file mirrors the Go control plane’s, '
+    + 'so a flow that works here works against the real API.'),
+  el('p', { class: 'note' },
+    'Nothing is synthesised. Where a field was never captured it is absent here too, because a '
+    + 'demo that fills in a plausible number is a mock-up of a product that does not exist.'),
+  el('div', { class: 'row', style: 'margin-top:12px' },
+    el('a', { class: 'btn', href: 'https://github.com/Arqamz/npu-orchestration' }, 'Control plane →'),
+    el('a', { class: 'btn', href: 'https://github.com/Arqamz/npu-orchestration-demo' }, 'This demo →'),
+    el('a', { class: 'btn', href: 'https://github.com/Arqamz/npu-orchestration-demo/blob/main/docs/API-SURFACE.md' }, 'API surface →'))));
 </script>
 </body>
 </html>

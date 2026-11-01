@@ -14,6 +14,7 @@ import {
   call, demo, el, card, table, pill, phasePill, refusal,
   chrome, pageTitle, val, ago,
 } from '/shared/fleet.js';
+import { AutoscaleChart } from '/shared/chart.js';
 
 const app = document.getElementById('app');
 const me = await chrome('/serving/');
@@ -41,22 +42,40 @@ const clock = el('span', { class: 'mono muted' }, 'idle');
 runCard.append(el('div', { class: 'row', style: 'margin-bottom:14px' },
   playBtn, stopBtn, clock));
 
-const canvas = el('canvas', { class: 'chart' });
-runCard.append(canvas);
-runCard.append(el('div', { class: 'legend' },
-  el('span', {}, el('i', { style: 'background:#5b9dff' }), 'replicas'),
-  el('span', {}, el('i', { style: 'background:#3fb950' }), 'ready'),
-  el('span', {}, el('i', { style: 'background:#d29922' }), 'running requests'),
-  el('span', {}, el('i', { style: 'background:#f85149' }), 'quota ceiling')));
+const chartHost = el('div', {});
+runCard.append(chartHost);
 
 const conditionsCard = card('What the controller decided');
 app.append(conditionsCard);
 
 /* ---------------------------------------------------------------- data */
 
+/* Declared before the block that assigns it. It was below, which is a
+ * temporal dead zone error: the page parsed, rendered its header and then
+ * threw on the first assignment, which looks exactly like an endpoint with
+ * no data. */
+let chart = null;
+
 const seriesRes = await demo.series();
 const series = seriesRes.body?.series || [];
 const meta = seriesRes.body?.meta || null;
+
+if (series.length) {
+  chart = new AutoscaleChart(chartHost, series, { target: 16 });
+  chart.setPlayhead(0);
+  runCard.append(el('div', { class: 'legend' },
+    el('span', {}, el('i', { style: 'background:var(--series-held)' }), 'NPUs held'),
+    el('span', {}, el('i', { style: 'background:var(--series-serving)' }), 'replicas serving'),
+    el('span', {}, el('i', { style: 'background:var(--series-ceiling)' }), 'quota ceiling (threshold)'),
+    el('span', {}, el('i', { style: 'background:var(--series-load)' }), 'requests in flight')));
+
+  const rows = chart.tableRows();
+  runCard.append(el('details', { class: 'table-view' },
+    el('summary', {}, 'the same run as a table'),
+    table(['t', 'NPUs held', 'serving', 'ceiling', 'in flight'], rows,
+      (r) => el('tr', {}, ...r.map((c, i) =>
+        el('td', { class: i === 0 ? 'mono' : 'num' }, String(c)))))));
+}
 
 if (meta) {
   runCard.append(el('p', { class: 'note' },
@@ -68,75 +87,7 @@ if (meta) {
 /* ------------------------------------------------------------ the chart */
 
 function drawChart(upto = Infinity) {
-  const dpr = window.devicePixelRatio || 1;
-  const w = canvas.clientWidth || 800;
-  const h = 230;
-  canvas.width = w * dpr;
-  canvas.height = h * dpr;
-  const ctx = canvas.getContext('2d');
-  ctx.scale(dpr, dpr);
-  ctx.clearRect(0, 0, w, h);
-  if (!series.length) return;
-
-  const css = getComputedStyle(document.body);
-  const line = css.getPropertyValue('--line').trim() || '#262c38';
-  const dim = css.getPropertyValue('--ink-faint').trim() || '#6b7489';
-
-  const padL = 34, padR = 34, padT = 12, padB = 24;
-  const maxOff = series[series.length - 1].offset || 1;
-  const maxRep = Math.max(4, ...series.map((s) => Math.max(s.replicas, s.quotaCeiling)));
-  const maxMet = Math.max(1, ...series.map((s) => s.observedMetric));
-
-  const x = (o) => padL + (o / maxOff) * (w - padL - padR);
-  const yRep = (v) => h - padB - (v / maxRep) * (h - padT - padB);
-  const yMet = (v) => h - padB - (v / maxMet) * (h - padT - padB);
-
-  // gridlines
-  ctx.strokeStyle = line; ctx.lineWidth = 1; ctx.font = '10px ui-monospace, monospace';
-  ctx.fillStyle = dim;
-  for (let r = 0; r <= maxRep; r += 1) {
-    const y = yRep(r);
-    ctx.globalAlpha = 0.35;
-    ctx.beginPath(); ctx.moveTo(padL, y); ctx.lineTo(w - padR, y); ctx.stroke();
-    ctx.globalAlpha = 1;
-    ctx.fillText(String(r), 6, y + 3);
-  }
-  // x labels
-  for (let o = 0; o <= maxOff; o += 60) {
-    ctx.fillText(`${o}s`, x(o) - 8, h - 7);
-  }
-
-  const visible = series.filter((s) => s.offset <= upto);
-  if (!visible.length) return;
-
-  const stroke = (pts, color, width = 2, step = true) => {
-    ctx.strokeStyle = color; ctx.lineWidth = width;
-    ctx.beginPath();
-    pts.forEach(([px, py], i) => {
-      if (i === 0) ctx.moveTo(px, py);
-      else {
-        if (step) ctx.lineTo(px, pts[i - 1][1]);
-        ctx.lineTo(px, py);
-      }
-    });
-    ctx.stroke();
-  };
-
-  // quota ceiling — the line the autoscaler is not allowed to cross
-  ctx.setLineDash([4, 4]);
-  stroke(visible.map((s) => [x(s.offset), yRep(s.quotaCeiling)]), '#f85149', 1.5);
-  ctx.setLineDash([]);
-
-  stroke(visible.map((s) => [x(s.offset), yMet(s.observedMetric)]), '#d29922', 1.5, false);
-  stroke(visible.map((s) => [x(s.offset), yRep(s.replicas)]), '#5b9dff', 2.5);
-  stroke(visible.map((s) => [x(s.offset), yRep(s.readyReplicas)]), '#3fb950', 2);
-
-  // playhead
-  if (upto !== Infinity && upto <= maxOff) {
-    ctx.strokeStyle = dim; ctx.globalAlpha = 0.7; ctx.lineWidth = 1;
-    ctx.beginPath(); ctx.moveTo(x(upto), padT); ctx.lineTo(x(upto), h - padB); ctx.stroke();
-    ctx.globalAlpha = 1;
-  }
+  if (chart) chart.setPlayhead(upto);
 }
 
 /* --------------------------------------------------------- the endpoint */
@@ -321,8 +272,6 @@ const endpoint = await loadStatic();
 if (!endpoint) {
   runCard.style.display = 'none';
   conditionsCard.style.display = 'none';
-} else {
-  window.addEventListener('resize', () => drawChart(timer ? undefined : 0));
 }
 
 /* ------------------------------------------------------- what is missing */

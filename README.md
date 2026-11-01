@@ -29,7 +29,7 @@ year, on a laptop nobody prepared, in front of people who will not wait for an
 install to fail.
 
 ```bash
-node verify.mjs                       # 166 checks against the stub, offline
+node verify.mjs                       # 173 checks against the stub, offline
 node smoke-deployed.mjs <url>         # 37 checks against a deployed copy
 node describe-api.mjs > docs/API-SURFACE.md   # regenerate the API contract
 node build.mjs                        # -> dist/, deployable to Pages
@@ -37,15 +37,15 @@ node build.mjs                        # -> dist/, deployable to Pages
 
 ## Deployed
 
-| URL | Surface |
-|---|---|
-| [npu-orchestration.pages.dev](https://npu-orchestration.pages.dev) | Overview and persona picker |
-| [npu-console.pages.dev](https://npu-console.pages.dev) | Fleet console — operator |
-| [npu-serving.pages.dev](https://npu-serving.pages.dev) | **Serving — the autoscaling endpoint** |
-| [npu-workspace.pages.dev](https://npu-workspace.pages.dev) | Workspace — engineer, jobs and logs |
-| [npu-tenant.pages.dev](https://npu-tenant.pages.dev) | Tenancy — the tenant tree |
-| [npu-finance.pages.dev](https://npu-finance.pages.dev) | Finance — invoices and reseller statements |
-| [npu-support.pages.dev](https://npu-support.pages.dev) | Audit and support |
+| URL | Surface | Show it to |
+|---|---|---|
+| [npu-orchestration.pages.dev](https://npu-orchestration.pages.dev) | **Start here** — what this is, who it serves, where it stands | anyone, first |
+| [npu-console.pages.dev](https://npu-console.pages.dev) | Fleet console — nodes, drift, who holds what | Huawei; data-centre ops |
+| [npu-serving.pages.dev](https://npu-serving.pages.dev) | **Serving — the autoscaling endpoint** | AI factories, MaaS platforms |
+| [npu-workspace.pages.dev](https://npu-workspace.pages.dev) | Workspace — submit work, read logs | enterprise / research teams |
+| [npu-tenant.pages.dev](https://npu-tenant.pages.dev) | Tenancy — the four-level tenant tree | resellers, channel partners |
+| [npu-finance.pages.dev](https://npu-finance.pages.dev) | Finance — invoices, periods, resale statements | whoever signs the contract |
+| [npu-support.pages.dev](https://npu-support.pages.dev) | Audit — the trail, proofs, signed checkpoints | security and compliance |
 
 Each subdomain is its own Pages project carrying the whole app and its own
 backend, so every link in the nav works from any of them. A `*.pages.dev`
