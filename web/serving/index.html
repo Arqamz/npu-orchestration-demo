@@ -5,6 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Serving</title>
 <link rel="stylesheet" href="/shared/fleet.css">
+<script>
+  // Before first paint, or the page flashes the wrong theme.
+  try { var t = localStorage.getItem('ascend-demo-theme');
+        if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+</script>
 </head>
 <body>
 <main id="app"></main>
@@ -13,16 +18,43 @@
 import {
   call, demo, el, card, table, pill, phasePill, refusal,
   chrome, pageTitle, val, ago,
+  lede, kpis, section, callout, hint, readiness,
 } from '/shared/fleet.js';
+import { Tour, launcher } from '/shared/tour.js';
 import { AutoscaleChart } from '/shared/chart.js';
 
 const app = document.getElementById('app');
 const me = await chrome('/serving/');
 
-app.append(pageTitle(
-  'Serving',
-  'A model running as a long-lived endpoint, scaled by demand and bounded by the tenant’s quota. '
-  + 'The run below is real: 64 concurrent clients against Qwen2-0.5B on one Atlas 800I A2, recorded frame by frame.'));
+const tour = new Tour("serving", [
+  {
+    target: null,
+    title: "What an inference endpoint is",
+    body: ["A model server that never finishes. You give it a model and a size range; the platform gives it a stable address and keeps the right number of copies running.", "This is the shape behind model-as-a-service: a customer sells tokens to their own customers and never thinks about a card again."],
+  },
+  {
+    target: "[data-tour=\"kpis\"]",
+    title: "What the endpoint is doing now",
+    body: ["Replicas held is what is being billed. Serving is how many are actually ready \u2014 the gap between them is a replica still starting, which on this hardware takes minutes rather than seconds."],
+  },
+  {
+    target: "main > section:nth-of-type(1)",
+    title: "The autoscaling run, as it happened",
+    body: ["Two panels on one time axis, never one chart with two scales: the crossing point of two differently-scaled lines is an artifact of the scaling, and a reader draws a causal conclusion from it that is not there.", "Load rises in the lower panel; replicas follow in the upper one. The dashed line is the quota ceiling \u2014 the number the autoscaler is not allowed to cross however much demand arrives."],
+  },
+  {
+    target: "main > section:nth-of-type(2)",
+    title: "Why scale-down is slower than scale-up",
+    body: ["Adding a replica waits 30 seconds; removing one waits 300. The asymmetry is deliberate. A queue building costs latency now, while removing a replica throws away a warmed KV cache and buys a 258-second cold start.", "Scaling down eagerly to save device-seconds that cost less than the restart is a loss dressed as an optimisation."],
+  },
+]);
+
+app.append(lede({
+  eyebrow: "Tenant surface \u00b7 model serving",
+  title: "Serving",
+  sub: "A model running as a long-lived endpoint: given an address, scaled by demand, bounded by the quota the tenant holds, and billed by the second. The run below is real \u2014 64 concurrent clients against Qwen2-0.5B on one Atlas 800I A2, recorded frame by frame.",
+  aside: launcher(tour),
+}));
 
 /* ---------------------------------------------------------- the endpoint */
 
@@ -295,6 +327,7 @@ app.append(card('What this flow does not do yet',
     el('li', {}, el('strong', {}, 'Multi-card replicas are untested. '),
       'devicesPerReplica > 1 is implemented and has never been run; a 70B model needing '
       + 'tensor parallelism across four cards is unproven.'))));
+tour.offer();
 </script>
 </body>
 </html>

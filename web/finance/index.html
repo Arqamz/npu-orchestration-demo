@@ -5,13 +5,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Finance</title>
 <link rel="stylesheet" href="/shared/fleet.css">
+<script>
+  // Before first paint, or the page flashes the wrong theme.
+  try { var t = localStorage.getItem('ascend-demo-theme');
+        if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+</script>
 </head>
 <body>
 <main id="app"></main>
 <script type="module">
 import {
   call, demo, el, card, table, pill, refusal, chrome, pageTitle, val, money, ago,
+  lede, kpis, section, callout, hint, readiness,
 } from '/shared/fleet.js';
+import { Tour, launcher } from '/shared/tour.js';
 
 const app = document.getElementById('app');
 const me = await chrome('/finance/');
@@ -19,9 +26,35 @@ const tree = (await demo.tree()).body || {};
 const reach = me?.reach || me?.tenants || [];
 const choices = reach.length ? reach : Object.keys(tree);
 
-app.append(pageTitle('Finance',
-  'Device-seconds in, invoices out — and for a reseller, the same usage rolled up to '
-  + 'whoever actually pays for it.'));
+const tour = new Tour("finance", [
+  {
+    target: null,
+    title: "Why billing is the hard part",
+    body: ["Renting hardware by the second sounds like multiplication. It is not. The meter has to survive a manager restart, a scrape gap, a replica being destroyed and a customer closing their account.", "Every number here comes from observations actually made. Nothing uses a PromQL rate(), which extrapolates, interpolates across gaps and expires at retention."],
+  },
+  {
+    target: "[data-tour=\"kpis\"]",
+    title: "The period",
+    body: ["A closed period is append-only and is computed as the difference between two cumulative readings. That means periods always sum to the lifetime total, closing is repeatable, and a lost checkpoint cannot make the past unreconstructible."],
+  },
+  {
+    target: "main > section:nth-of-type(1)",
+    title: "Usage, attributed",
+    body: ["Unattributed usage is reported, never dropped. Per-tenant figures must reconcile against the fleet total, and a gap that is hidden is a gap nobody finds until an invoice is disputed."],
+  },
+  {
+    target: "main > section:nth-of-type(2)",
+    title: "Reselling, without double-counting",
+    body: ["Rolling a sub-tenant\u2019s usage up to its payer may MOVE it; it must never duplicate it. A rollup that counts a grandchild under both its parent and its grandparent looks like a healthy business and is fraud."],
+  },
+]);
+
+app.append(lede({
+  eyebrow: "Commercial surface",
+  title: "Finance",
+  sub: "Device-seconds in, invoices out \u2014 and for a reseller, the same usage rolled up to whoever actually pays for it. Every figure here is a difference between two meter readings, never an integral over a metrics series.",
+  aside: launcher(tour),
+}));
 
 const picker = el('select', {});
 for (const t of choices) picker.append(el('option', { value: t }, t));
@@ -199,6 +232,7 @@ app.append(card('What finance cannot do yet',
       'Only pay-as-you-go against a quota ceiling.'),
     el('li', {}, el('strong', {}, 'No currency beyond the rate card’s. '),
       'No FX, no tax, no per-region pricing.'))));
+tour.offer();
 </script>
 </body>
 </html>

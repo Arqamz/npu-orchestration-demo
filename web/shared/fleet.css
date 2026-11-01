@@ -1,402 +1,674 @@
-/* One stylesheet for every surface.
+/* The design system for every surface.
  *
- * Dense and quiet on purpose: these are operations screens, read for hours
- * by people who need to find one wrong number among three hundred right
- * ones. Colour is reserved for state, never for decoration, so that when
- * something IS coloured it means something.
+ * WHAT WAS WRONG WITH THE LAST ONE, because it explains every choice here.
+ *
+ * It had one text size, one surface colour and one card. Every panel on a
+ * page carried identical visual weight, so a page of eleven cards gave the
+ * reader no idea which one mattered -- and the answer to "where do I look
+ * first" was "read all of it". That is acceptable for a log viewer and not
+ * for something shown to somebody deciding whether to buy.
+ *
+ * THE THREE THINGS THAT FIX IT
+ *
+ * 1. A TYPE SCALE with real jumps. Hierarchy is carried by size and weight
+ *    before it is carried by colour or by a box. A 44px number next to a
+ *    11px label says "this is the answer" with no chrome at all. Adjacent
+ *    steps that differ by 1px are not a hierarchy; they are a mistake
+ *    nobody can see.
+ *
+ * 2. ELEVATION INSTEAD OF OUTLINES. The old sheet drew a 1px line around
+ *    everything, which makes every element equally important and the page
+ *    a grid of boxes. Here there are three depths -- sunken, surface,
+ *    raised -- and only what is raised asks for attention.
+ *
+ * 3. SPACE AS PUNCTUATION. A section gap is three times an in-section gap,
+ *    so the structure of the page is legible before a word is read.
+ *
+ * WHAT IS KEPT: colour is reserved for state, never decoration, so when
+ * something IS coloured it means something. These are screens people read
+ * for hours; the restraint was the one thing the old sheet had right.
  */
 
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+/* ============================================================== tokens */
+
 :root {
-  --bg: #0e1116;
-  --panel: #161a22;
-  --panel-2: #1c212b;
-  --line: #262c38;
-  --ink: #e6e9ef;
-  --ink-dim: #9aa4b5;
-  --ink-faint: #6b7489;
+  /* --- neutrals: a real ramp, not three greys ----------------------- */
+  --bg: #0a0c10;
+  --surface: #11141a;
+  --raised: #171b23;
+  --sunken: #0d1015;
+  --line: #222835;
+  --line-soft: #1a1f29;
 
-  --accent: #5b9dff;
+  --ink: #eef1f6;
+  --ink-dim: #a4aebe;
+  --ink-faint: #6d7788;
+
+  /* --- brand -------------------------------------------------------- */
+  --brand: #4c7ef3;
+  --brand-ink: #8fb3ff;
+  --brand-wash: #4c7ef31f;
+
+  /* --- state. Each has an ink (text) and a wash (background), so a
+   *     status never puts small text on a saturated fill. ------------- */
   --ok: #3fb950;
-  --warn: #d29922;
-  --bad: #f85149;
+  --ok-wash: #3fb9501c;
+  --warn: #d6a01f;
+  --warn-wash: #d6a01f1c;
+  --bad: #f1707b;
+  --bad-wash: #f1707b1c;
   --policy: #a371f7;
+  --policy-wash: #a371f71c;
 
-  /* Validated categorical slots 1 and 3, plus a status threshold and a
-   * second-panel hue. The pair that was here before (amber vs green)
-   * failed CVD separation at ΔE 5.1 for protanopia. */
+  /* --- chart series. Validated slots: the earlier amber/green pair
+   *     failed CVD separation at deltaE 5.1 for protanopia. Unchanged,
+   *     because they were the one part of the old sheet that had been
+   *     computed rather than chosen. ----------------------------------- */
   --series-held: #3987e5;
   --series-serving: #199e70;
   --series-load: #d95926;
   --series-ceiling: #e66767;
 
-  --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
-  --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, sans-serif;
-  --radius: 10px;
+  /* --- aliases kept so the surfaces and chart.js do not all have to
+   *     change in the same commit as the design system. --------------- */
+  --panel: var(--surface);
+  --panel-2: var(--raised);
+  --accent: var(--brand);
+
+  /* --- type --------------------------------------------------------- */
+  --sans: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  --t-display: 2.625rem;
+  --t-h1: 1.75rem;
+  --t-h2: 1.1875rem;
+  --t-h3: 0.9375rem;
+  --t-body: 0.9375rem;
+  --t-small: 0.8125rem;
+  --t-micro: 0.6875rem;
+
+  /* --- space: a 4px base, used in jumps ----------------------------- */
+  --s1: 4px;  --s2: 8px;  --s3: 12px; --s4: 16px;
+  --s5: 24px; --s6: 32px; --s7: 48px; --s8: 72px;
+
+  --radius: 12px;
+  --radius-sm: 8px;
+  --radius-pill: 999px;
+
+  --shadow-1: 0 1px 2px #0006;
+  --shadow-2: 0 4px 16px -4px #0009, 0 1px 3px #0006;
+  --shadow-pop: 0 16px 48px -12px #000c, 0 2px 8px #0008;
+
+  --max: 1240px;
 }
 
+/* Light mode is SELECTED, not an inversion: each value is picked against a
+ * white surface rather than computed by flipping the dark one. */
 :root:not([data-theme="dark"]) {
   @media (prefers-color-scheme: light) {
-    --bg: #f6f7f9;
-    --panel: #ffffff;
-    --panel-2: #f1f3f6;
-    --line: #dfe3ea;
-    --ink: #11151c;
-    --ink-dim: #5b6472;
-    --ink-faint: #878f9d;
-    --accent: #1f6feb;
-    --ok: #1a7f37;
-    --warn: #9a6700;
-    --bad: #cf222e;
-    --policy: #8250df;
-  --series-held: #2a78d6;
-  --series-serving: #1baf7a;
-  --series-load: #eb6834;
-  --series-ceiling: #e34948;
+    --bg: #f7f8fa;
+    --surface: #ffffff;
+    --raised: #ffffff;
+    --sunken: #f0f2f6;
+    --line: #e2e6ed;
+    --line-soft: #eef0f4;
+    --ink: #0d1117;
+    --ink-dim: #596273;
+    --ink-faint: #848d9c;
+    --brand: #2563eb;
+    --brand-ink: #1d4ed8;
+    --brand-wash: #2563eb14;
+    --ok: #15803d;
+    --ok-wash: #15803d14;
+    --warn: #a16207;
+    --warn-wash: #a1620714;
+    --bad: #be123c;
+    --bad-wash: #be123c14;
+    --policy: #7c3aed;
+    --policy-wash: #7c3aed14;
+    --series-held: #2a78d6;
+    --series-serving: #1baf7a;
+    --series-load: #eb6834;
+    --series-ceiling: #e34948;
+    --shadow-1: 0 1px 2px #0f172a0f;
+    --shadow-2: 0 4px 16px -4px #0f172a1a, 0 1px 3px #0f172a0f;
+    --shadow-pop: 0 16px 48px -12px #0f172a2e, 0 2px 8px #0f172a14;
   }
 }
 
 :root[data-theme="light"] {
+  --bg: #f7f8fa;
+  --surface: #ffffff;
+  --raised: #ffffff;
+  --sunken: #f0f2f6;
+  --line: #e2e6ed;
+  --line-soft: #eef0f4;
+  --ink: #0d1117;
+  --ink-dim: #596273;
+  --ink-faint: #848d9c;
+  --brand: #2563eb;
+  --brand-ink: #1d4ed8;
+  --brand-wash: #2563eb14;
+  --ok: #15803d;
+  --ok-wash: #15803d14;
+  --warn: #a16207;
+  --warn-wash: #a1620714;
+  --bad: #be123c;
+  --bad-wash: #be123c14;
+  --policy: #7c3aed;
+  --policy-wash: #7c3aed14;
   --series-held: #2a78d6;
   --series-serving: #1baf7a;
   --series-load: #eb6834;
   --series-ceiling: #e34948;
-  --bg: #f6f7f9;
-  --panel: #ffffff;
-  --panel-2: #f1f3f6;
-  --line: #dfe3ea;
-  --ink: #11151c;
-  --ink-dim: #5b6472;
-  --ink-faint: #878f9d;
-  --accent: #1f6feb;
-  --ok: #1a7f37;
-  --warn: #9a6700;
-  --bad: #cf222e;
-  --policy: #8250df;
+  --shadow-1: 0 1px 2px #0f172a0f;
+  --shadow-2: 0 4px 16px -4px #0f172a1a, 0 1px 3px #0f172a0f;
+  --shadow-pop: 0 16px 48px -12px #0f172a2e, 0 2px 8px #0f172a14;
 }
 
+/* ================================================================ base */
+
 * { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}
 
 body {
   margin: 0;
   background: var(--bg);
   color: var(--ink);
-  font: 14px/1.5 var(--sans);
+  font-family: var(--sans);
+  font-size: var(--t-body);
+  line-height: 1.55;
   -webkit-font-smoothing: antialiased;
 }
 
-main {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 24px 16px 80px;
+main { max-width: var(--max); margin: 0 auto; padding: var(--s6) var(--s4) var(--s8); }
+
+a { color: var(--brand-ink); text-decoration: none; }
+a:hover { text-decoration: underline; }
+:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; border-radius: 4px; }
+
+h1, h2, h3 { margin: 0; font-weight: 650; letter-spacing: -0.015em; line-height: 1.25; }
+h1 { font-size: var(--t-h1); }
+h2 { font-size: var(--t-h2); }
+h3 { font-size: var(--t-h3); font-weight: 600; }
+p { margin: 0; }
+
+.mono { font-family: var(--mono); font-size: 0.8125rem; font-variant-ligatures: none; }
+.num { font-family: var(--mono); font-variant-numeric: tabular-nums; text-align: right; }
+.muted { color: var(--ink-dim); }
+.faint { color: var(--ink-faint); }
+.wrap { white-space: normal; }
+
+/* A label. Always uppercase and tracked, never larger. It is the one
+ * typographic device that reads as "label" at a glance, which is what
+ * lets the value beside it be large and unadorned. */
+.label {
+  font-size: var(--t-micro); font-weight: 600; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--ink-faint);
 }
 
-/* ------------------------------------------------------------- chrome */
+/* ============================================================== top bar */
 
 .top {
-  position: sticky;
-  top: 0;
-  z-index: 20;
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 10px 16px;
-  background: color-mix(in srgb, var(--panel) 92%, transparent);
-  backdrop-filter: blur(8px);
+  position: sticky; top: 0; z-index: 50;
+  display: flex; align-items: center; gap: var(--s4);
+  padding: 0 var(--s4); height: 56px;
+  background: color-mix(in srgb, var(--bg) 86%, transparent);
+  backdrop-filter: saturate(180%) blur(12px);
   border-bottom: 1px solid var(--line);
-  flex-wrap: wrap;
 }
 
 .brand {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-weight: 650;
-  color: var(--ink);
-  text-decoration: none;
-  letter-spacing: -0.01em;
+  display: inline-flex; align-items: center; gap: var(--s2);
+  font-weight: 700; font-size: 0.9375rem; letter-spacing: -0.02em;
+  color: var(--ink); white-space: nowrap;
 }
-
+.brand:hover { text-decoration: none; }
 .brand .dot {
-  width: 9px; height: 9px; border-radius: 50%;
-  background: var(--accent);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent);
+  width: 10px; height: 10px; border-radius: 3px;
+  background: linear-gradient(135deg, var(--brand), var(--policy));
 }
 
-.top nav { display: flex; gap: 2px; flex-wrap: wrap; }
-
+/* The nav scrolls rather than wrapping, and min-width:0 is what lets it
+ * actually shrink -- a flex child defaults to min-width:auto and refuses
+ * to go below its content, so without it the nav pushed the controls off
+ * the bar and clipped itself mid-word. */
+.top nav { display: flex; gap: 2px; overflow-x: auto; scrollbar-width: none; min-width: 0; }
+.top nav::-webkit-scrollbar { display: none; }
 .top nav a {
-  padding: 6px 11px;
-  border-radius: 7px;
-  color: var(--ink-dim);
-  text-decoration: none;
-  font-size: 13px;
-  white-space: nowrap;
+  padding: 6px 11px; border-radius: var(--radius-sm);
+  color: var(--ink-dim); font-size: var(--t-small); font-weight: 500; white-space: nowrap;
 }
-.top nav a:hover { background: var(--panel-2); color: var(--ink); }
-.top nav a.on { background: var(--panel-2); color: var(--ink); font-weight: 600; }
+.top nav a:hover { background: var(--raised); color: var(--ink); text-decoration: none; }
+.top nav a.on { background: var(--brand-wash); color: var(--brand-ink); font-weight: 600; }
 
 .spacer { flex: 1; }
 
 .demo-tag {
-  font-size: 11px;
-  font-family: var(--mono);
-  color: var(--ink-faint);
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  padding: 2px 9px;
-  cursor: help;
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 3px 9px; border: 1px solid var(--line); border-radius: var(--radius-pill);
+  font-size: var(--t-micro); font-weight: 600; letter-spacing: 0.06em;
+  text-transform: uppercase; color: var(--ink-faint); cursor: help;
 }
+.demo-tag::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--ok); }
 
-.persona {
-  background: var(--panel-2);
-  color: var(--ink);
-  border: 1px solid var(--line);
-  border-radius: 7px;
-  padding: 6px 9px;
-  font: 13px var(--sans);
-  max-width: 320px;
+select.persona { max-width: 230px; text-overflow: ellipsis; }
+
+select.persona, button.ghost {
+  background: var(--raised); color: var(--ink); border: 1px solid var(--line);
+  border-radius: var(--radius-sm); padding: 6px 10px;
+  font: inherit; font-size: var(--t-small); cursor: pointer;
 }
+select.persona:hover, button.ghost:hover { border-color: var(--brand); }
 
-/* -------------------------------------------------------------- layout */
+/* ================================================================ hero */
 
-.page-head { margin: 20px 0 18px; }
-.page-head h1 { margin: 0 0 4px; font-size: 24px; letter-spacing: -0.02em; }
-.page-head .sub { margin: 0; color: var(--ink-dim); max-width: 78ch; }
+/* Every surface opens with a lede that answers "what am I looking at"
+ * before anything else. Capped at a readable measure rather than the
+ * container width, because a 1240px line of prose is not read. */
+.page-head { margin-bottom: var(--s6); }
+.page-head .eyebrow { display: flex; align-items: center; gap: var(--s2); margin-bottom: var(--s3); flex-wrap: wrap; }
+.page-head h1 { margin-bottom: var(--s3); }
+.page-head .sub { max-width: 68ch; font-size: 1.0625rem; line-height: 1.6; color: var(--ink-dim); }
+
+/* ================================================================ KPIs */
+
+/* The answer strip. Large numerals, quiet labels, and a line underneath
+ * that says what the number MEANS rather than restating it. */
+.kpis {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 1px; background: var(--line);
+  border: 1px solid var(--line); border-radius: var(--radius);
+  overflow: hidden; margin-bottom: var(--s6);
+}
+.kpi {
+  background: var(--surface); padding: var(--s4);
+  display: flex; flex-direction: column; gap: 2px;
+  /* A grid child defaults to min-width:auto and refuses to shrink below
+   * its content, so a long note overflows into the next cell instead of
+   * wrapping. This is the fix, and it is needed on every grid child that
+   * contains prose. */
+  min-width: 0;
+}
+.kpi .v {
+  font-size: var(--t-display); font-weight: 650; letter-spacing: -0.03em;
+  line-height: 1.05; font-variant-numeric: tabular-nums; margin: 4px 0 6px;
+}
+.kpi .v .unit { font-size: 1rem; font-weight: 500; color: var(--ink-faint); letter-spacing: 0; margin-left: 3px; }
+.kpi .n { font-size: var(--t-small); color: var(--ink-dim); line-height: 1.45; overflow-wrap: anywhere; max-width: 100%; }
+.kpi.ok .v { color: var(--ok); }
+.kpi.warn .v { color: var(--warn); }
+.kpi.bad .v { color: var(--bad); }
+.kpi.brand .v { color: var(--brand-ink); }
+
+/* ============================================================ sections */
+
+.section { margin-bottom: var(--s7); }
+.section > header {
+  display: flex; align-items: baseline; gap: var(--s3); flex-wrap: wrap;
+  margin-bottom: var(--s4); padding-bottom: var(--s3);
+  border-bottom: 1px solid var(--line-soft);
+}
+.section > header .why { flex: 1 1 100%; max-width: 76ch; font-size: var(--t-small); color: var(--ink-dim); }
+
+/* =============================================================== cards */
 
 .card {
-  background: var(--panel);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  padding: 16px;
-  margin-bottom: 16px;
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: var(--s5); margin-bottom: var(--s4);
 }
-.card h2 {
-  margin: 0 0 12px;
-  font-size: 13px;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--ink-dim);
-  font-weight: 650;
+.card > h3 { margin-bottom: var(--s3); }
+.card.raised { background: var(--raised); box-shadow: var(--shadow-2); }
+.card.flush { padding: 0; overflow: hidden; }
+.card.flush > h3 { padding: var(--s4) var(--s5) var(--s2); }
+.card.flush > .note { padding: 0 var(--s5) var(--s3); }
+
+.grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: var(--s4); }
+
+/* A callout is for the one sentence on a page that is a JUDGEMENT rather
+ * than a reading -- a limitation, a refusal, a design decision. Left rule
+ * and a wash; never a saturated fill behind body text. */
+.callout {
+  display: flex; gap: var(--s3); padding: var(--s4);
+  border-radius: var(--radius-sm); border-left: 3px solid var(--ink-faint);
+  background: var(--sunken); font-size: var(--t-small); line-height: 1.6;
+  margin-bottom: var(--s4);
+}
+.callout .ic { flex: none; font-size: 1rem; line-height: 1.4; }
+.callout strong { display: block; margin-bottom: 3px; font-size: var(--t-body); color: var(--ink); }
+.callout.warn { border-left-color: var(--warn); background: var(--warn-wash); }
+.callout.bad { border-left-color: var(--bad); background: var(--bad-wash); }
+.callout.ok { border-left-color: var(--ok); background: var(--ok-wash); }
+.callout.policy { border-left-color: var(--policy); background: var(--policy-wash); }
+.callout.brand { border-left-color: var(--brand); background: var(--brand-wash); }
+
+.note { font-size: var(--t-small); color: var(--ink-dim); line-height: 1.6; max-width: 76ch; }
+
+/* ============================================================== tables */
+
+/* Quiet rows, no vertical rules, a sticky header. Zebra striping and full
+ * gridlines both make the table louder than the number in it. */
+.tbl-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: var(--t-small); }
+thead th {
+  /* DELIBERATELY NOT STICKY.
+   *
+   * It was, at top:56px to clear the bar. Sticky resolves against the
+   * nearest SCROLLING ancestor, and .tbl-wrap creates one with its
+   * overflow-x -- so the header stuck 56px down from the top of a
+   * container only 60px tall, and rendered BELOW its own rows. The table
+   * looked empty with a stray header floating under it, which is exactly
+   * the "a page that is wrong looks like a fleet that is empty" failure.
+   *
+   * These tables are short. A sticky header buys nothing here and cannot
+   * be made correct inside a horizontal scroller without giving up the
+   * horizontal scroller, which phones need more. */
+  background: var(--surface);
+  text-align: left; padding: var(--s2) var(--s3);
+  font-size: var(--t-micro); font-weight: 600; letter-spacing: 0.07em;
+  text-transform: uppercase; color: var(--ink-faint);
+  border-bottom: 1px solid var(--line); white-space: nowrap;
+}
+thead th.num { text-align: right; }
+tbody td { padding: var(--s3); border-bottom: 1px solid var(--line-soft); vertical-align: top; }
+tbody tr:last-child td { border-bottom: 0; }
+tbody tr:hover td { background: var(--sunken); }
+.empty { padding: var(--s5); text-align: center; color: var(--ink-faint); font-size: var(--t-small); }
+
+/* =============================================================== pills */
+
+.pill {
+  display: inline-flex; align-items: center; gap: 5px; padding: 2px 8px;
+  border-radius: var(--radius-pill); font-size: var(--t-micro);
+  font-weight: 600; letter-spacing: 0.03em; white-space: nowrap;
+  background: var(--sunken); color: var(--ink-dim); border: 1px solid var(--line);
+}
+/* Identity is never colour alone: a dot AND a word, so a state survives
+ * greyscale, printing and colour-vision deficiency. */
+.pill::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: currentColor; flex: none; }
+.pill.plain::before { display: none; }
+.pill.ok { color: var(--ok); background: var(--ok-wash); border-color: transparent; }
+.pill.warn { color: var(--warn); background: var(--warn-wash); border-color: transparent; }
+.pill.bad { color: var(--bad); background: var(--bad-wash); border-color: transparent; }
+.pill.policy { color: var(--policy); background: var(--policy-wash); border-color: transparent; }
+.pill.brand { color: var(--brand-ink); background: var(--brand-wash); border-color: transparent; }
+
+.row { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+
+/* ================================================================ logs */
+
+pre.logs {
+  margin: 0; padding: var(--s3) var(--s4);
+  background: var(--sunken); border: 1px solid var(--line); border-radius: var(--radius-sm);
+  font-family: var(--mono); font-size: 0.75rem; line-height: 1.6; color: var(--ink-dim);
+  overflow: auto; max-height: 420px; white-space: pre-wrap; word-break: break-word;
+}
+details > summary { cursor: pointer; font-size: var(--t-small); }
+details > summary::marker { color: var(--ink-faint); }
+
+/* =============================================================== chart */
+
+.chart-tip {
+  position: absolute; pointer-events: none;
+  background: var(--raised); border: 1px solid var(--line);
+  border-radius: var(--radius-sm); box-shadow: var(--shadow-pop);
+  padding: var(--s2) var(--s3); font-size: var(--t-small);
+  display: grid; gap: 2px; min-width: 190px;
+}
+.chart-tip strong { display: block; margin-bottom: 3px; }
+.chart-tip span { display: flex; align-items: center; gap: 6px; color: var(--ink-dim); }
+.chart-tip b { margin-left: auto; color: var(--ink); font-variant-numeric: tabular-nums; }
+.chart-tip i { width: 8px; height: 8px; border-radius: 2px; flex: none; }
+
+/* ================================================================ tour */
+
+/* THE GUIDED WALKTHROUGH.
+ *
+ * The brief these pages failed: opening a link should be enough to
+ * understand what is going on. A dense operations screen cannot manage
+ * that on its own however well it is laid out, because the reader does
+ * not yet know what the product IS -- so the first visit is walked
+ * through it, and the button to replay it never goes away.
+ *
+ * FOUR BACKDROP PANELS, NOT ONE WITH A CUT-OUT. The usual trick is a
+ * single element with an enormous box-shadow spread, which dims the
+ * spotlit element along with everything else and defeats the point.
+ * Four rectangles around the target leave a true hole.
+ */
+.tour-backdrop { position: fixed; background: #000; opacity: .62; z-index: 900; transition: all .2s ease; }
+:root[data-theme="light"] .tour-backdrop { opacity: .35; }
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) .tour-backdrop { opacity: .35; }
+}
+.tour-ring {
+  position: fixed; z-index: 901; border-radius: var(--radius);
+  box-shadow: 0 0 0 2px var(--brand), 0 0 0 7px var(--brand-wash);
+  pointer-events: none; transition: all .2s ease;
+}
+.tour-pop {
+  position: fixed; z-index: 902; width: min(390px, calc(100vw - 32px));
+  background: var(--raised); border: 1px solid var(--line);
+  border-radius: var(--radius); box-shadow: var(--shadow-pop);
+  padding: var(--s4) var(--s5); transition: all .2s ease;
+}
+.tour-pop h3 { margin-bottom: var(--s2); }
+.tour-pop p { font-size: var(--t-small); color: var(--ink-dim); line-height: 1.6; }
+.tour-pop p + p { margin-top: var(--s2); }
+.tour-foot {
+  display: flex; align-items: center; gap: var(--s2);
+  margin-top: var(--s4); padding-top: var(--s3); border-top: 1px solid var(--line-soft);
+}
+.tour-dots { display: flex; gap: 5px; margin-right: auto; align-items: center; }
+.tour-dots i { width: 6px; height: 6px; border-radius: 50%; background: var(--line); transition: all .2s ease; }
+.tour-dots i.on { background: var(--brand); width: 18px; border-radius: 3px; }
+.tour-pop button.primary {
+  background: var(--brand); color: #fff; border: 1px solid transparent;
+  border-radius: var(--radius-sm); padding: 7px 15px;
+  font: inherit; font-size: var(--t-small); font-weight: 600; cursor: pointer;
+}
+.tour-pop button.primary:hover { filter: brightness(1.1); }
+.tour-pop button.link {
+  background: none; border: 0; color: var(--ink-faint);
+  font: inherit; font-size: var(--t-small); cursor: pointer; padding: 7px 4px;
+}
+.tour-pop button.link:hover { color: var(--ink); text-decoration: underline; }
+
+.tour-launch {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 6px 12px; border-radius: var(--radius-pill);
+  border: 1px solid var(--brand); background: var(--brand-wash);
+  color: var(--brand-ink); font: inherit; font-size: var(--t-small);
+  font-weight: 600; cursor: pointer; white-space: nowrap;
+}
+.tour-launch:hover { background: var(--brand); color: #fff; }
+
+/* =============================================================== hints */
+
+/* A hover tip on any term the reader might not know. A dotted underline
+ * is the one affordance that reads as "there is more here" without
+ * competing with a link. */
+.hint { border-bottom: 1px dashed var(--ink-faint); cursor: help; position: relative; }
+.hint:hover { border-bottom-color: var(--brand); }
+.hint > .hint-body {
+  position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%);
+  width: max-content; max-width: 300px; padding: var(--s2) var(--s3);
+  background: var(--raised); border: 1px solid var(--line);
+  border-radius: var(--radius-sm); box-shadow: var(--shadow-pop);
+  font-size: var(--t-small); font-weight: 400; line-height: 1.5;
+  color: var(--ink-dim); text-transform: none; letter-spacing: 0;
+  opacity: 0; visibility: hidden; transition: opacity .12s ease;
+  z-index: 60; white-space: normal; text-align: left;
+}
+.hint:hover > .hint-body, .hint:focus-visible > .hint-body { opacity: 1; visibility: visible; }
+
+/* ============================================================ flow map */
+
+/* How a thing actually happens, left to right, with the current position
+ * marked. Used where a page documents a sequence, because a numbered list
+ * reads as documentation and this reads as a mechanism. */
+.flow { display: flex; gap: 0; flex-wrap: wrap; margin-bottom: var(--s4); }
+.flow .step {
+  flex: 1 1 155px; min-width: 155px;
+  padding: var(--s3) var(--s3) var(--s3) var(--s5);
+  background: var(--surface); border: 1px solid var(--line); border-left: 0; position: relative;
+}
+.flow .step:first-child { border-left: 1px solid var(--line); border-radius: var(--radius-sm) 0 0 var(--radius-sm); padding-left: var(--s4); }
+.flow .step:last-child { border-radius: 0 var(--radius-sm) var(--radius-sm) 0; }
+.flow .step::before {
+  content: ''; position: absolute; left: -9px; top: 50%;
+  width: 16px; height: 16px; transform: translateY(-50%) rotate(45deg);
+  background: var(--surface); border-top: 1px solid var(--line); border-right: 1px solid var(--line);
+}
+.flow .step:first-child::before { display: none; }
+.flow .step .n { font-size: var(--t-micro); font-weight: 700; color: var(--brand-ink); letter-spacing: 0.08em; }
+.flow .step .t { font-weight: 600; font-size: var(--t-small); margin: 2px 0; }
+.flow .step .d { font-size: var(--t-micro); color: var(--ink-dim); line-height: 1.5; }
+.flow .step.done { background: var(--sunken); }
+.flow .step.done::before { background: var(--sunken); }
+.flow .step.now { background: var(--brand-wash); border-color: var(--brand); }
+.flow .step.now::before { background: var(--brand-wash); border-color: var(--brand); }
+
+/* ============================================================ readiness */
+
+/* A claim with its readiness attached is worth more than three without,
+ * and these pages are shown to people deciding whether to believe us. */
+.ready-list { display: grid; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+.ready { display: grid; grid-template-columns: 118px 1fr; gap: var(--s4); padding: var(--s3) var(--s4); background: var(--surface); align-items: start; }
+.ready .t { font-weight: 600; font-size: var(--t-small); }
+.ready .d { font-size: var(--t-small); color: var(--ink-dim); margin-top: 2px; }
+
+/* =========================================================== responsive */
+
+@media (max-width: 720px) {
+  :root { --t-display: 2.125rem; --t-h1: 1.4375rem; }
+  main { padding: var(--s5) var(--s4) var(--s7); }
+  .top { height: auto; flex-wrap: wrap; padding: var(--s2) var(--s4); gap: var(--s2); }
+  .top nav { order: 3; flex-basis: 100%; }
+  .ready { grid-template-columns: 1fr; gap: var(--s1); }
+  .flow .step { border-left: 1px solid var(--line); border-radius: var(--radius-sm); margin-bottom: 2px; }
+  .flow .step::before { display: none; }
 }
 
-.cols { display: grid; gap: 16px; }
-@media (min-width: 900px) {
+/* ====================================================== surface pieces */
+
+/* These are the components the individual surfaces build with. They were
+ * in the old sheet as flat boxes; restyled here into the same three
+ * depths and one type scale as everything above, rather than carried over.
+ */
+
+/* .stats is the old answer strip. Aliased onto .kpis so that every
+ * existing strip gets the large-numeral treatment without each surface
+ * being rewritten in the same commit as the design system. New code
+ * should call kpis(). */
+.stats {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+  gap: 1px; background: var(--line);
+  border: 1px solid var(--line); border-radius: var(--radius);
+  overflow: hidden; margin-bottom: var(--s5);
+}
+.stat { background: var(--surface); padding: var(--s4); display: flex; flex-direction: column; min-width: 0; }
+.stat .k {
+  font-size: var(--t-micro); font-weight: 600; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--ink-faint);
+}
+.stat .v {
+  font-size: 2rem; font-weight: 650; letter-spacing: -0.03em; line-height: 1.1;
+  font-variant-numeric: tabular-nums; margin: 5px 0 4px;
+}
+.stat .n { font-size: var(--t-small); color: var(--ink-dim); line-height: 1.45; overflow-wrap: break-word; }
+.stat.ok .v { color: var(--ok); }
+.stat.warn .v { color: var(--warn); }
+.stat.bad .v { color: var(--bad); }
+
+.cols { display: grid; gap: var(--s4); }
+@media (min-width: 860px) {
   .cols.two { grid-template-columns: 1fr 1fr; }
   .cols.three { grid-template-columns: repeat(3, 1fr); }
   .cols.side { grid-template-columns: 1.6fr 1fr; }
 }
 
-/* --------------------------------------------------------------- stats */
-
-.stats { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
-
-.stat {
-  background: var(--panel-2);
-  border: 1px solid var(--line);
-  border-radius: 9px;
-  padding: 12px 14px;
-}
-.stat .k {
-  font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em;
-  color: var(--ink-faint); margin-bottom: 6px;
-}
-.stat .v { font: 600 24px/1.1 var(--mono); letter-spacing: -0.02em; }
-.stat .n { font-size: 12px; color: var(--ink-dim); margin-top: 4px; }
-.stat.ok .v { color: var(--ok); }
-.stat.warn .v { color: var(--warn); }
-.stat.bad .v { color: var(--bad); }
-
-/* --------------------------------------------------------------- table */
-
-table.grid { width: 100%; border-collapse: collapse; font-size: 13px; }
-table.grid th {
-  text-align: left; padding: 7px 10px;
-  color: var(--ink-faint); font-weight: 600; font-size: 11px;
-  text-transform: uppercase; letter-spacing: 0.05em;
-  border-bottom: 1px solid var(--line); white-space: nowrap;
-}
-table.grid td {
-  padding: 8px 10px;
-  border-bottom: 1px solid color-mix(in srgb, var(--line) 55%, transparent);
-  vertical-align: top;
-}
-table.grid tbody tr:hover { background: var(--panel-2); }
-table.grid td.num, table.grid th.num { text-align: right; font-family: var(--mono); }
-.mono { font-family: var(--mono); font-size: 12px; }
-.muted { color: var(--ink-faint); }
-.wrap { white-space: normal; max-width: 52ch; }
-
-/* --------------------------------------------------------------- pills */
-
-.pill {
-  display: inline-block;
-  padding: 1px 8px;
-  border-radius: 999px;
-  font: 500 11px/1.7 var(--mono);
-  background: var(--panel-2);
-  border: 1px solid var(--line);
-  color: var(--ink-dim);
-  white-space: nowrap;
-}
-.pill.ok { color: var(--ok); border-color: color-mix(in srgb, var(--ok) 40%, transparent); }
-.pill.warn { color: var(--warn); border-color: color-mix(in srgb, var(--warn) 40%, transparent); }
-.pill.bad { color: var(--bad); border-color: color-mix(in srgb, var(--bad) 40%, transparent); }
-.pill.policy { color: var(--policy); border-color: color-mix(in srgb, var(--policy) 40%, transparent); }
-
-/* ------------------------------------------------------------ refusals */
-
-/* A refusal gets a panel of its own rather than an empty table, because
- * "you may not see this" and "there is nothing here" are different facts
- * and a customer who confuses them files a support ticket. */
-.refusal {
-  display: flex; gap: 12px; align-items: flex-start;
-  padding: 12px 14px;
-  background: color-mix(in srgb, var(--policy) 7%, var(--panel-2));
-  border: 1px solid color-mix(in srgb, var(--policy) 28%, transparent);
-  border-radius: 9px;
-  margin-bottom: 10px;
-}
-.refusal strong { display: block; font-size: 13px; margin-bottom: 2px; }
-.refusal p { margin: 0; color: var(--ink-dim); font-size: 13px; }
-
-/* -------------------------------------------------------------- buttons */
-
-button, .btn {
-  background: var(--panel-2);
-  color: var(--ink);
-  border: 1px solid var(--line);
-  border-radius: 7px;
-  padding: 7px 13px;
-  font: 500 13px var(--sans);
-  cursor: pointer;
-}
-button:hover, .btn:hover { border-color: var(--accent); }
-button:disabled { opacity: 0.45; cursor: not-allowed; }
-button.primary {
-  background: var(--accent);
-  border-color: var(--accent);
-  color: #fff;
-}
-button.primary:hover { filter: brightness(1.08); }
-.row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
-
-input[type=text], input[type=number], select {
-  background: var(--panel-2); color: var(--ink);
-  border: 1px solid var(--line); border-radius: 7px;
-  padding: 7px 9px; font: 13px var(--sans);
-}
-
-/* ----------------------------------------------------------- the ladder */
-
-/* Replica cards for the serving page: one per NPU. The product is that
- * these appear and disappear, so they animate in. */
-.replicas { display: grid; gap: 10px; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); }
-
+/* Replica tiles on the serving page: one per NPU. The product IS that
+ * these appear and disappear, so they animate in -- the one place on
+ * these pages where motion carries meaning rather than decoration. */
+.replicas { display: grid; gap: var(--s2); grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); }
 .replica {
-  border: 1px solid var(--line);
-  border-radius: 9px;
-  padding: 11px 12px;
-  background: var(--panel-2);
-  animation: pop 220ms ease-out;
+  border: 1px solid var(--line); border-radius: var(--radius-sm);
+  padding: var(--s3); background: var(--raised);
+  animation: pop 200ms ease-out;
+  /* A column, not a free-flowing block: the badges were laid out beside
+   * the card id and overlapped the pod name, which is the one piece of
+   * text on the tile somebody actually copies. */
+  display: flex; flex-direction: column; gap: var(--s2); min-width: 0;
 }
-.replica.ready { border-color: color-mix(in srgb, var(--ok) 45%, transparent); }
-.replica.pending { border-color: color-mix(in srgb, var(--warn) 45%, transparent); }
-.replica .card-id { font: 600 13px var(--mono); margin-bottom: 4px; }
-.replica .pod { font: 11px var(--mono); color: var(--ink-faint); word-break: break-all; }
+.replica .row { gap: 4px; }
+.replica > .row:last-child { margin-top: auto; }
+.replica.ready { border-color: color-mix(in srgb, var(--ok) 50%, transparent); background: var(--ok-wash); }
+.replica.pending { border-color: color-mix(in srgb, var(--warn) 50%, transparent); background: var(--warn-wash); }
+.replica .card-id { font-family: var(--mono); font-weight: 500; font-size: var(--t-small); margin-bottom: 3px; }
+.replica .pod { font-family: var(--mono); font-size: var(--t-micro); color: var(--ink-faint); word-break: break-all; }
+@keyframes pop { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
 
-@keyframes pop { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: none; } }
-
+/* An empty slot: capacity the tenant could use and is not. Dashed,
+ * because the whole point is that nothing is there. */
 .slot {
-  border: 1px dashed var(--line);
-  border-radius: 9px;
-  padding: 11px 12px;
-  color: var(--ink-faint);
-  font: 12px var(--mono);
+  border: 1px dashed var(--line); border-radius: var(--radius-sm);
+  padding: var(--s3); color: var(--ink-faint);
+  font-family: var(--mono); font-size: var(--t-micro);
   display: flex; align-items: center; justify-content: center;
-  min-height: 62px;
+  text-align: center; min-height: 66px;
 }
 
-/* ---------------------------------------------------------------- chart */
-
-.chart { width: 100%; height: 230px; display: block; }
-.legend { display: flex; gap: 14px; flex-wrap: wrap; font-size: 12px; color: var(--ink-dim); margin-top: 8px; }
-.legend i { display: inline-block; width: 10px; height: 2px; vertical-align: middle; margin-right: 5px; }
-
-/* ----------------------------------------------------------------- logs */
-
-.logs {
-  background: #0a0c10;
-  color: #c9d1d9;
-  border: 1px solid var(--line);
-  border-radius: 9px;
-  padding: 11px 13px;
-  font: 11.5px/1.65 var(--mono);
-  max-height: 440px;
-  overflow: auto;
-  white-space: pre-wrap;
-  word-break: break-word;
+.chart { width: 100%; display: block; }
+.legend {
+  display: flex; gap: var(--s4); flex-wrap: wrap;
+  font-size: var(--t-small); color: var(--ink-dim); margin-top: var(--s3);
 }
-:root[data-theme="light"] .logs { background: #0d1117; }
+.legend i { display: inline-block; width: 12px; height: 2px; vertical-align: middle; margin-right: 6px; border-radius: 1px; }
 
-/* ----------------------------------------------------------------- tree */
-
-.tree { font: 13px var(--mono); }
-.tree .node { padding: 5px 0 5px 0; display: flex; gap: 8px; align-items: center; }
-.tree .depth-1 { padding-left: 22px; }
-.tree .depth-2 { padding-left: 44px; }
-.tree .depth-3 { padding-left: 66px; }
-.tree .you { outline: 1px solid var(--accent); border-radius: 6px; padding-left: 6px; }
-
-/* ----------------------------------------------------------------- misc */
-
-.note {
-  font-size: 12.5px; color: var(--ink-dim);
-  border-left: 2px solid var(--line);
-  padding-left: 11px; margin: 10px 0;
+/* The tenant tree. Indentation carries the hierarchy, so the rows stay
+ * quiet and the structure is what the eye follows. */
+.tree { font-family: var(--mono); font-size: var(--t-small); }
+.tree .node {
+  padding: var(--s2) var(--s2); display: flex; gap: var(--s2);
+  align-items: center; border-radius: var(--radius-sm);
 }
+.tree .node:hover { background: var(--sunken); }
+.tree .depth-1 { margin-left: 24px; }
+.tree .depth-2 { margin-left: 48px; }
+.tree .depth-3 { margin-left: 72px; }
+.tree .you { box-shadow: inset 0 0 0 1px var(--brand); background: var(--brand-wash); }
+
+/* A named gap: something this platform does not yet do, stated where it
+ * would be used rather than in a document. */
 .gap {
-  font-size: 12.5px;
-  background: color-mix(in srgb, var(--warn) 8%, var(--panel-2));
-  border: 1px solid color-mix(in srgb, var(--warn) 25%, transparent);
-  border-radius: 8px; padding: 9px 12px; margin: 10px 0;
+  font-size: var(--t-small); line-height: 1.6;
+  background: var(--warn-wash);
+  border-left: 3px solid var(--warn);
+  border-radius: var(--radius-sm);
+  padding: var(--s3) var(--s4); margin: var(--s3) 0;
 }
 .gap strong { color: var(--warn); }
 
-a { color: var(--accent); }
+/* The accessible fallback for every chart: identity is never colour
+ * alone, so the numbers behind the picture are always one click away. */
+details.table-view { margin-top: var(--s3); }
+details.table-view summary { color: var(--ink-dim); font-size: var(--t-small); cursor: pointer; }
+details.table-view table { margin-top: var(--s2); }
 
-.persona-grid { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
-.persona-card {
-  display: block; text-decoration: none; color: inherit;
-  background: var(--panel-2); border: 1px solid var(--line);
-  border-radius: 9px; padding: 14px;
+button, .btn {
+  background: var(--raised); color: var(--ink);
+  border: 1px solid var(--line); border-radius: var(--radius-sm);
+  padding: 6px 12px; font: inherit; font-size: var(--t-small); cursor: pointer;
 }
-.persona-card:hover { border-color: var(--accent); }
-.persona-card h3 { margin: 0 0 3px; font-size: 14px; }
-.persona-card .role { font-size: 11px; color: var(--accent); text-transform: uppercase; letter-spacing: 0.04em; }
-.persona-card p { margin: 7px 0 0; font-size: 12.5px; color: var(--ink-dim); }
-
-/* ---------------------------------------------------------------- charts */
-
-.chart-tip {
-  position: absolute;
-  pointer-events: none;
-  background: var(--panel-2);
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  padding: 8px 10px;
-  font: 11.5px/1.7 var(--mono);
-  color: var(--ink);
-  box-shadow: 0 6px 20px rgb(0 0 0 / 0.28);
-  min-width: 170px;
-  z-index: 3;
+button:hover, .btn:hover { border-color: var(--brand); }
+button.primary, .btn.primary {
+  background: var(--brand); color: #fff; border-color: transparent; font-weight: 600;
 }
-.chart-tip strong { display: block; margin-bottom: 4px; color: var(--ink-dim); }
-.chart-tip span { display: flex; align-items: center; gap: 6px; }
-.chart-tip i { width: 9px; height: 2px; border-radius: 1px; flex: none; }
-.chart-tip b { margin-left: auto; font-weight: 600; }
-
-/* The table view. Identity is never colour alone, and a reader who cannot
- * use the chart still gets the numbers. */
-details.table-view { margin-top: 12px; }
-details.table-view summary { color: var(--ink-dim); font-size: 12.5px; cursor: pointer; }
-details.table-view table { margin-top: 9px; }
+button.primary:hover, .btn.primary:hover { filter: brightness(1.1); border-color: transparent; }

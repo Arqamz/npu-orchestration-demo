@@ -35,6 +35,18 @@ node describe-api.mjs > docs/API-SURFACE.md   # regenerate the API contract
 node build.mjs                        # -> dist/, deployable to Pages
 ```
 
+## Opening a link is enough
+
+Every surface opens with a **lede** that says what it is and who it is for, an
+**answer strip** of the few numbers the page is actually about, and a
+**guided walkthrough** that runs on a first visit and can be replayed from the
+"Show me around" button in the header. Terms a reader has no reason to know --
+vNPU, device-second, PodGroup -- carry a hover explanation rather than living
+in a glossary nobody opens.
+
+Add `?notour` to any URL to suppress the walkthrough, which is what the
+screenshots use.
+
 ## Deployed
 
 | URL | Surface | Show it to |

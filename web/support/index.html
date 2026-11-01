@@ -5,20 +5,49 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Audit &amp; support</title>
 <link rel="stylesheet" href="/shared/fleet.css">
+<script>
+  // Before first paint, or the page flashes the wrong theme.
+  try { var t = localStorage.getItem('ascend-demo-theme');
+        if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+</script>
 </head>
 <body>
 <main id="app"></main>
 <script type="module">
 import {
   call, demo, el, card, table, pill, refusal, chrome, pageTitle, val, ago, statusPill,
+  lede, kpis, section, callout, hint, readiness,
 } from '/shared/fleet.js';
+import { Tour, launcher } from '/shared/tour.js';
 
 const app = document.getElementById('app');
 const me = await chrome('/support/');
 const reach = me?.reach || me?.tenants || [];
 
-app.append(pageTitle('Audit & support',
-  'Who did what, and whether the operator can be caught changing the answer afterwards.'));
+const tour = new Tour("support", [
+  {
+    target: null,
+    title: "Why an audit log the operator holds is worth nothing on its own",
+    body: ["The operator holds the records, the tree and the signing key, and could rewrite all three consistently. What they cannot do is reconcile a rewrite with a commitment already sitting in a customer\u2019s records.", "So the signed head is anchored onto every closed billing period \u2014 a document that is append-only and has already been sent to the customer."],
+  },
+  {
+    target: "[data-tour=\"kpis\"]",
+    title: "The chain",
+    body: ["Each record carries the hash of the one before it and its own sequence number. A rewritten record fails its own hash, a removed one breaks the next record\u2019s link, and a re-sealed chain still shows a sequence gap."],
+  },
+  {
+    target: "main > section:nth-of-type(1)",
+    title: "Records",
+    body: ["A mutating call writes its intent BEFORE the handler runs and is refused with 503 if that write fails. One record written afterwards is not enough: between closing a period and the audit write, the process can be killed, and what remains is a changed period with nothing saying who changed it.", "Rejected credentials are recorded too, marked \u201cunauthenticated\u201d rather than \u201canonymous\u201d. A stream of them is the only signal that somebody is guessing."],
+  },
+]);
+
+app.append(lede({
+  eyebrow: "Trust surface",
+  title: "Audit & support",
+  sub: "Who did what \u2014 and whether the operator can be caught changing the answer afterwards. The trail is a hash chain with a signed Merkle head, anchored onto every closed billing period, so a customer holds a commitment the operator cannot quietly rewrite.",
+  aside: launcher(tour),
+}));
 
 /* ----------------------------------------------------------- checkpoint */
 
@@ -196,6 +225,7 @@ app.append(card('What audit cannot do yet',
       + 'no Grafana, no retention.'),
     el('li', {}, el('strong', {}, 'No structured faults. '),
       'npu-smi fault output reaches the node object as raw split strings.'))));
+tour.offer();
 </script>
 </body>
 </html>

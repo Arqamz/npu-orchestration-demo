@@ -131,31 +131,52 @@ export function statusPill(status) {
   return pill(String(status), 'bad');
 }
 
+/* Tables scroll horizontally on their own rather than widening the page:
+ * a column count that works on a laptop does not fit a phone, and the
+ * failure of the old sheet was the whole page gaining a scrollbar. */
 export function table(columns, rows, renderRow) {
-  const t = el('table', { class: 'grid' });
-  t.append(el('thead', {}, el('tr', {}, ...columns.map((c) => el('th', {}, c)))));
+  const t = el('table', {});
+  t.append(el('thead', {}, el('tr', {}, ...columns.map((c) => {
+    const label = typeof c === 'string' ? c : c.label;
+    const cls = typeof c === 'string' ? '' : (c.align === 'right' ? 'num' : '');
+    return el('th', { class: cls }, label);
+  }))));
   const body = el('tbody');
   if (!rows || rows.length === 0) {
-    body.append(el('tr', {}, el('td', { class: 'muted', colspan: String(columns.length) },
-      'nothing here')));
+    // An empty table must say WHY it is empty where it can. "nothing
+    // here" under a heading is indistinguishable from a page that failed
+    // to load, which is the single most common way a dashboard lies.
+    body.append(el('tr', {}, el('td', {
+      class: 'empty', colspan: String(columns.length),
+    }, 'Nothing to show — this tenancy has none right now.')));
   } else {
     for (const r of rows) body.append(renderRow(r));
   }
   t.append(body);
-  return t;
+  return el('div', { class: 'tbl-wrap' }, t);
 }
 
 export function card(title, ...children) {
   return el('section', { class: 'card' },
-    title ? el('h2', {}, title) : null,
-    ...children);
+    title ? el('h3', {}, title) : null,
+    ...children.filter(Boolean));
+}
+
+/** tableCard is a card whose body is a table, with the padding removed so
+ *  the rows run to the card's own edges. A table inset inside a padded
+ *  card reads as a picture of a table. */
+export function tableCard(title, why, columns, rows, renderRow) {
+  return el('section', { class: 'card flush' },
+    title ? el('h3', {}, title) : null,
+    why ? el('p', { class: 'note' }, why) : null,
+    table(columns, rows, renderRow));
 }
 
 /** A panel that shows a refusal honestly, including WHY. The reason string
  *  comes from the control plane and is written to be read by a human. */
 export function refusal(res, what) {
-  return el('div', { class: 'refusal' },
-    statusPill(res.status),
+  return el('div', { class: 'callout policy' },
+    el('span', { class: 'ic' }, statusPill(res.status)),
     el('div', {},
       el('strong', {}, what),
       el('p', {}, res.body?.reason || res.body?.errorDescription || 'no reason given')));
@@ -191,6 +212,26 @@ const SURFACES = [
   ['/support/', 'Audit & support'],
 ];
 
+/* The theme is a CHOICE, remembered, defaulting to the system. An
+ * operations console that is light when the rest of somebody's desktop
+ * is dark gets closed. */
+const THEME_KEY = 'ascend-demo-theme';
+
+export function applyTheme() {
+  let t = null;
+  try { t = localStorage.getItem(THEME_KEY); } catch { /* private window */ }
+  if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+}
+
+function toggleTheme() {
+  const cur = document.documentElement.getAttribute('data-theme');
+  const sysLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+  const now = cur || (sysLight ? 'light' : 'dark');
+  const next = now === 'light' ? 'dark' : 'light';
+  document.documentElement.setAttribute('data-theme', next);
+  try { localStorage.setItem(THEME_KEY, next); } catch { /* not worth failing over */ }
+}
+
 export async function chrome(active) {
   const header = el('header', { class: 'top' });
   const nav = el('nav', {});
@@ -217,11 +258,112 @@ export async function chrome(active) {
       el('span', { class: 'dot' }), 'Ascend Fleet'),
     nav,
     el('div', { class: 'spacer' }),
-    el('span', { class: 'demo-tag', title: 'Every body on these pages was recorded from a real control plane on real Ascend hardware. Nothing is synthesised.' }, 'recorded'),
+    el('span', {
+      class: 'demo-tag',
+      title: 'Every response on these pages was recorded from a real control plane on '
+        + 'real Ascend hardware. Nothing here is synthesised.',
+    }, 'recorded'),
+    el('button', {
+      class: 'ghost', type: 'button', title: 'Switch between light and dark',
+      onclick: toggleTheme,
+    }, '◐'),
     picker,
   );
   document.body.prepend(header);
   return (res.body || []).find((p) => p.token === me) || null;
+}
+
+/* --------------------------------------------------------- page scaffold */
+
+/* WHY THESE EXIST RATHER THAN EACH PAGE LAYING ITSELF OUT.
+ *
+ * The previous surfaces were a flat stack of identical cards, so nothing
+ * on any page said what to look at first. These are the three levels of
+ * the hierarchy -- the lede, the answer, the detail -- as functions, so a
+ * page cannot accidentally render its most important number in the same
+ * weight as a table caption. */
+
+/** lede is the top of every surface: who it is for and what it answers. */
+export function lede({ eyebrow, title, sub, aside = null }) {
+  const head = el('div', { class: 'page-head' });
+  const brow = el('div', { class: 'eyebrow' });
+  if (eyebrow) brow.append(el('span', { class: 'label' }, eyebrow));
+  if (aside) brow.append(aside);
+  head.append(brow, el('h1', {}, title));
+  if (sub) head.append(el('p', { class: 'sub' }, sub));
+  return head;
+}
+
+/** kpis is the answer strip: the few numbers the page is actually about.
+ *
+ * Each takes a note, and the note must say what the number MEANS rather
+ * than restate the label. "4 of 8 cards" under a value of 4 is noise;
+ * "the other four are held by a reservation until March" is the answer. */
+export function kpis(...items) {
+  const strip = el('div', { class: 'kpis', 'data-tour': 'kpis' });
+  for (const it of items) {
+    if (!it) continue;
+    strip.append(el('div', { class: `kpi ${it.kind || ''}` },
+      el('div', { class: 'label' }, it.label),
+      el('div', { class: 'v' }, String(it.value),
+        it.unit ? el('span', { class: 'unit' }, it.unit) : null),
+      it.note ? el('div', { class: 'n' }, it.note) : null));
+  }
+  return strip;
+}
+
+/** section groups related detail under a heading and one line of why. */
+export function section(title, why, ...children) {
+  const s = el('section', { class: 'section' });
+  const head = el('header', {}, el('h2', {}, title));
+  if (why) head.append(el('p', { class: 'why' }, why));
+  s.append(head, ...children.filter(Boolean));
+  return s;
+}
+
+/** callout is for a judgement rather than a reading: a limitation, a
+ *  refusal, a design decision somebody should disagree with knowingly. */
+export function callout(kind, title, ...body) {
+  const icons = { warn: '!', bad: '✕', ok: '✓', policy: '§', brand: 'i', '': 'i' };
+  return el('div', { class: `callout ${kind}` },
+    el('span', { class: 'ic', 'aria-hidden': 'true' }, icons[kind] ?? 'i'),
+    el('div', {},
+      title ? el('strong', {}, title) : null,
+      ...body.map((b) => (typeof b === 'string' ? el('span', {}, b) : b))));
+}
+
+/** hint wraps a term with a hover explanation. The product is full of
+ *  words a reader has no reason to know -- vNPU, PodGroup, device-second
+ *  -- and a glossary nobody opens is not an answer. */
+export function hint(text, explanation) {
+  return el('span', { class: 'hint', tabindex: '0' },
+    text, el('span', { class: 'hint-body' }, explanation));
+}
+
+/** flow draws a sequence with the current position marked. */
+export function flow(steps) {
+  const f = el('div', { class: 'flow' });
+  steps.forEach((s, i) => {
+    f.append(el('div', { class: `step ${s.state || ''}` },
+      el('div', { class: 'n' }, String(i + 1).padStart(2, '0')),
+      el('div', { class: 't' }, s.title),
+      el('div', { class: 'd' }, s.detail)));
+  });
+  return f;
+}
+
+/** readiness states how real a capability is, next to the claim.
+ *
+ *  Carried on the page rather than in a document, because a roadmap in a
+ *  README can say anything and a row beside the feature cannot. */
+export function readiness(rows) {
+  const list = el('div', { class: 'ready-list' });
+  for (const r of rows) {
+    list.append(el('div', { class: 'ready' },
+      el('div', {}, pill(r.state, r.kind)),
+      el('div', {}, el('div', { class: 't' }, r.title), el('div', { class: 'd' }, r.detail))));
+  }
+  return list;
 }
 
 export function pageTitle(title, subtitle) {

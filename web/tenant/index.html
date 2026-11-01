@@ -5,21 +5,49 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Tenancy</title>
 <link rel="stylesheet" href="/shared/fleet.css">
+<script>
+  // Before first paint, or the page flashes the wrong theme.
+  try { var t = localStorage.getItem('ascend-demo-theme');
+        if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+</script>
 </head>
 <body>
 <main id="app"></main>
 <script type="module">
 import {
   call, demo, el, card, table, pill, refusal, chrome, pageTitle, val,
+  lede, kpis, section, callout, hint, readiness,
 } from '/shared/fleet.js';
+import { Tour, launcher } from '/shared/tour.js';
 
 const app = document.getElementById('app');
 const me = await chrome('/tenant/');
 const reach = me?.reach || me?.tenants || [];
 
-app.append(pageTitle('Tenancy',
-  'Who you sold capacity to, and who they sold it to. A parent administers its sub-tenants: '
-  + 'it bought the capacity and is liable for what they spend.'));
+const tour = new Tour("tenant", [
+  {
+    target: null,
+    title: "The B2B2B part of the product",
+    body: ["An operator sells to a data centre. The data centre sells to an AI company. The AI company sells to its own customers. Four levels, each billing the one below.", "Every platform can do one level. The difficulty is that usage has to roll UP without being counted twice, and a sub-tenant must not be able to escape the quota of the tenant that is liable for it."],
+  },
+  {
+    target: "[data-tour=\"kpis\"]",
+    title: "The tree, in numbers",
+    body: ["Quota is containment, not a sum: the children\u2019s limits must fit inside the parent\u2019s, and a child that declares no limit at all is unbounded \u2014 which would let one child take the whole parent\u2019s allowance while the declared numbers add to almost nothing."],
+  },
+  {
+    target: "main > section:nth-of-type(1)",
+    title: "A parent\u2019s view of its customers",
+    body: ["A tenant\u2019s parent is immutable. Reparenting would move who was liable for usage that has already been metered, so it is refused rather than audited."],
+  },
+]);
+
+app.append(lede({
+  eyebrow: "Reseller surface",
+  title: "Tenancy",
+  sub: "Who you sold capacity to, and who they sold it to. A parent administers its sub-tenants because it bought the capacity and is liable for what they spend \u2014 which is what makes a data centre able to resell to a software house that resells to its own customers.",
+  aside: launcher(tour),
+}));
 
 /* ---------------------------------------------------------------- tree */
 
@@ -161,6 +189,7 @@ app.append(card('What tenancy cannot do yet',
     el('li', {}, el('strong', {}, 'No reservations. '),
       '"Rent 64 NPUs for three months" is unrepresentable: quota is a ceiling, not a '
       + 'commitment, and nothing holds capacity for a future date.'))));
+tour.offer();
 </script>
 </body>
 </html>

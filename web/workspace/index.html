@@ -5,22 +5,49 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Workspace</title>
 <link rel="stylesheet" href="/shared/fleet.css">
+<script>
+  // Before first paint, or the page flashes the wrong theme.
+  try { var t = localStorage.getItem('ascend-demo-theme');
+        if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+</script>
 </head>
 <body>
 <main id="app"></main>
 <script type="module">
 import {
   call, demo, el, card, table, pill, phasePill, refusal, chrome, pageTitle, val, ago, statusPill,
+  lede, kpis, section, callout, hint, readiness,
 } from '/shared/fleet.js';
+import { Tour, launcher } from '/shared/tour.js';
 
 const app = document.getElementById('app');
 const me = await chrome('/workspace/');
 const myTenant = (me?.reach || me?.tenants || [])[0] || null;
 
-app.append(pageTitle('Workspace',
-  'Submit work, watch it schedule, and read why it did not. '
-  + 'An engineer is a member of the tenancy and deliberately not an administrator: '
-  + 'the billing pages below are refused to this login.'));
+const tour = new Tour("workspace", [
+  {
+    target: null,
+    title: "This is the engineer\u2019s desk",
+    body: ["Everything a person who writes models needs, and nothing else. Submit a job, see where it is, read its logs.", "The refusals further down are the interesting part: the same person who can spend the tenancy\u2019s cards cannot read the tenancy\u2019s invoices. Being able to run work and being able to see what it costs are different grants."],
+  },
+  {
+    target: "[data-tour=\"kpis\"]",
+    title: "What this tenancy is running",
+    body: ["Jobs are work that finishes. Devices held is what is being billed right now, across every shape of workload."],
+  },
+  {
+    target: "main > section:nth-of-type(1)",
+    title: "Submitted work",
+    body: ["A job that is Pending has a reason, and the reason is written to be read by the person who submitted it rather than by an operator.", "Most of the refusals this platform makes happen BEFORE a job is admitted, which is the only useful place: once the scheduler has committed, the quota is spent and the error surfaces as something about virtual devices."],
+  },
+]);
+
+app.append(lede({
+  eyebrow: "Tenant surface \u00b7 engineering",
+  title: "Workspace",
+  sub: "Where an engineer submits work, watches it schedule, and reads why it did not. This login is a member of the tenancy and deliberately not an administrator, so the billing pages are refused to it \u2014 you can see the refusals below.",
+  aside: launcher(tour),
+}));
 
 /* ---------------------------------------------------------------- jobs */
 
@@ -182,6 +209,7 @@ app.append(card('What this surface cannot do yet',
       + 'FailedCreate event, and /fleet/events is operator-only.'),
     el('li', {}, el('strong', {}, 'No checkpoint/resume convention. '),
       'A job running for months across node reboots has nothing to resume from.'))));
+tour.offer();
 </script>
 </body>
 </html>

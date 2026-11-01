@@ -3,136 +3,271 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Fleet console</title>
+<title>Fleet console — Ascend Fleet</title>
+<meta name="description" content="Every node, what it is certified to run, and whether it has drifted from that.">
 <link rel="stylesheet" href="/shared/fleet.css">
+<script>
+  // Before first paint, or the page flashes the wrong theme.
+  try { var t = localStorage.getItem('ascend-demo-theme');
+        if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+</script>
 </head>
 <body>
 <main id="app"></main>
 <script type="module">
 import {
-  call, demo, el, card, table, pill, phasePill, refusal, chrome, pageTitle, val, ago,
+  call, demo, el, card, tableCard, table, pill, phasePill, refusal, chrome,
+  lede, kpis, section, callout, hint, readiness, val,
 } from '/shared/fleet.js';
+import { Tour, launcher } from '/shared/tour.js';
 
 const app = document.getElementById('app');
 const me = await chrome('/console/');
 
-app.append(pageTitle('Fleet console',
-  'Every node, what it is certified to run, and whether it has drifted from that. '
-  + 'Operator-only: a customer has no business knowing how many nodes exist.'));
+const tour = new Tour('console', [
+  {
+    target: null,
+    title: 'This is the operator’s view of the hardware',
+    body: [
+      'Everything on this page is fleet-wide: the physical machines, the software '
+      + 'versions they are certified to run, and whether any of them has drifted.',
+      'A customer never sees it. Knowing how many nodes exist and what else runs on '
+      + 'them is commercially sensitive, so the control plane refuses this data to '
+      + 'anyone without the operator grant — you can watch it refuse by switching '
+      + 'persona in the top right.',
+    ],
+  },
+  {
+    target: '[data-tour="kpis"]',
+    title: 'Start here',
+    body: [
+      'The four numbers that decide whether anyone can run anything today. Cards are '
+      + 'the unit that is sold, so "cards available" is the only capacity figure that '
+      + 'means money.',
+      'A faulted card is one npu-smi reports a hardware error on. It is still attached '
+      + 'to the node, so it still counts against the node’s inventory and must not be '
+      + 'scheduled onto.',
+    ],
+  },
+  {
+    target: '[data-tour="nodes"]',
+    title: 'The machines themselves',
+    body: [
+      'One row per physical server. The certified stack is the driver, firmware and '
+      + 'CANN version combination this node is approved to run — not a version it '
+      + 'happens to have.',
+      'That distinction is the whole reason the next section exists.',
+    ],
+  },
+  {
+    target: '[data-tour="drift"]',
+    title: 'Drift is what this platform is for',
+    body: [
+      'An NPU node is a stack of versions that have to match: a driver, a firmware, a '
+      + 'CANN toolkit. When one moves, workloads fail in ways that look like broken '
+      + 'code rather than a broken node.',
+      'The platform notices, cordons the node so nothing new lands on it, drains what '
+      + 'is running, repairs it and puts it back. That loop is the difference between '
+      + 'renting out a data centre and operating one.',
+    ],
+  },
+  {
+    target: '[data-tour="allocations"]',
+    title: 'Who is holding what, right now',
+    body: [
+      'Live attribution: which tenant holds which device on which node. This is the '
+      + 'same data the meter bills from, so an operator and a customer are always '
+      + 'looking at one number rather than two that nearly agree.',
+    ],
+  },
+]);
+
+app.append(lede({
+  eyebrow: 'Operator surface',
+  title: 'Fleet console',
+  sub: 'The hardware itself: every node, the software stack it is certified to run, '
+     + 'whether it has drifted from that, and which tenant is holding each card right '
+     + 'now. Operator-only, because node counts and neighbour workloads are not a '
+     + 'customer’s business.',
+  aside: launcher(tour),
+}));
 
 /* --------------------------------------------------------------- nodes */
 
 const nodesRes = await call('/fleet/nodes');
+
 if (!nodesRes.ok) {
-  app.append(card('Nodes', refusal(nodesRes, 'The fleet inventory is operator-only'),
-    el('p', { class: 'note' },
-      'This is the correct answer, not a failure. The node list is fleet-wide, and a '
-      + 'tenant reading it would learn how much hardware exists and what else runs on it. '
-      + 'Switch to fleet-operator to see it.')));
+  app.append(callout('policy', 'This is the control plane working, not failing',
+    el('p', {},
+      'The node inventory is fleet-wide. A tenant reading it would learn how much '
+      + 'hardware exists and what else runs beside their own work, so the scope '
+      + 'policy refuses it to anyone without the operator grant. Switch the persona '
+      + 'in the top right to fleet-operator to see the page it protects.')));
+  app.append(card(null, refusal(nodesRes, 'Fleet inventory is operator-only')));
 } else {
   const nodes = nodesRes.body.nodes || [];
   const ready = nodes.filter((n) => n.ready).length;
   const faulted = nodes.filter((n) => n.faulted).length;
   const cordoned = nodes.filter((n) => n.cordoned).length;
 
-  app.append(card('Fleet', el('div', { class: 'stats' },
-    el('div', { class: 'stat' }, el('div', { class: 'k' }, 'Nodes'),
-      el('div', { class: 'v' }, String(nodes.length))),
-    el('div', { class: 'stat ok' }, el('div', { class: 'k' }, 'Ready'),
-      el('div', { class: 'v' }, String(ready))),
-    el('div', { class: `stat ${faulted ? 'warn' : ''}` }, el('div', { class: 'k' }, 'Faulted'),
-      el('div', { class: 'v' }, String(faulted)),
-      el('div', { class: 'n' }, 'reported by npu-smi')),
-    el('div', { class: `stat ${cordoned ? 'warn' : ''}` }, el('div', { class: 'k' }, 'Cordoned'),
-      el('div', { class: 'v' }, String(cordoned))))));
+  const allocRes = await call('/fleet/allocations');
+  const allocs = allocRes.ok
+    ? (allocRes.body.allocations || allocRes.body.records || []) : [];
+  const held = allocs.reduce((a, r) => a + Number(r.devices ?? r.count ?? 0), 0);
 
-  app.append(card('Nodes', table(
-    ['Node', 'Cluster', 'Hardware class', 'Certified stack', 'State', 'Faults'],
-    nodes,
-    (n) => el('tr', {},
-      el('td', {}, el('strong', {}, n.name)),
-      el('td', { class: 'mono' }, val(n.cluster)),
-      el('td', { class: 'mono' }, val(n.hardwareClass)),
-      el('td', { class: 'mono' }, val(n.certifiedStack)),
-      el('td', {}, el('div', { class: 'row' },
-        n.ready ? pill('ready', 'ok') : pill('not ready', 'bad'),
-        n.cordoned ? pill('cordoned', 'warn') : null,
-        n.remediating ? pill('remediating', 'warn') : null,
-        n.faulted ? pill('faulted', 'warn') : null)),
-      el('td', { class: 'wrap' }, (n.faults || []).length
-        ? el('details', {}, el('summary', { class: 'muted' }, `${n.faults.length} lines`),
-          el('pre', { class: 'logs', style: 'max-height:200px;margin-top:6px' }, (n.faults || []).join('\n')))
-        : el('span', { class: 'muted' }, 'none'))))));
+  app.append(kpis(
+    { label: 'Nodes ready', value: `${ready}/${nodes.length}`, kind: ready === nodes.length ? 'ok' : 'warn',
+      note: ready === nodes.length ? 'Every machine is schedulable.'
+          : 'A node that is not ready holds cards nobody can rent.' },
+    { label: 'Cards held', value: held, kind: 'brand',
+      note: 'Devices a tenant is holding and being billed for at this instant.' },
+    { label: 'Faulted cards', value: faulted, kind: faulted ? 'bad' : '',
+      note: faulted ? 'npu-smi reports a hardware error. Still attached, so still '
+                    + 'counted — and must not be scheduled onto.'
+                    : 'No card is reporting a hardware error.' },
+    { label: 'Cordoned', value: cordoned, kind: cordoned ? 'warn' : '',
+      note: cordoned ? 'Draining or under repair. Existing work finishes; nothing new lands.'
+                     : 'Nothing is being drained or repaired.' },
+  ));
 
-  app.append(card('A real finding, left visible',
-    el('p', { class: 'note' },
-      'The fault list above is the raw npu-smi output split on commas, which is why it reads '
-      + 'as fragments of JSON rather than as a fault. The node agent collects it correctly and '
-      + 'nothing parses it into a structured fault with a code, a severity and an action. '
-      + 'A console cannot show "card 3 has a recoverable ECC fault" from this, and that is a '
-      + 'gap in the control plane, not in the page.')));
+  app.append(section('The machines',
+    'One row per physical server. The certified stack is the driver, firmware and CANN '
+    + 'combination this node is APPROVED to run — not whatever it happens to have '
+    + 'installed, which is the next section.',
+    el('div', { 'data-tour': 'nodes' }, tableCard(null, null,
+      ['Node', 'Cluster', 'Hardware class', 'Certified stack', 'State', 'Faults'],
+      nodes,
+      (n) => el('tr', {},
+        el('td', {}, el('strong', {}, n.name)),
+        el('td', { class: 'mono muted' }, val(n.cluster)),
+        el('td', { class: 'mono' }, val(n.hardwareClass)),
+        el('td', { class: 'mono' }, val(n.certifiedStack)),
+        el('td', {}, el('div', { class: 'row' },
+          n.ready ? pill('ready', 'ok') : pill('not ready', 'bad'),
+          n.cordoned ? pill('cordoned', 'warn') : null,
+          n.remediating ? pill('remediating', 'warn') : null,
+          n.faulted ? pill('faulted', 'bad') : null)),
+        el('td', { class: 'wrap' }, (n.faults || []).length
+          ? el('details', {}, el('summary', { class: 'muted' }, `${n.faults.length} lines`),
+            el('pre', { class: 'logs', style: 'max-height:200px;margin-top:8px' },
+              (n.faults || []).join('\n')))
+          : el('span', { class: 'faint' }, 'none'))))),
+    callout('warn', 'A real gap, left visible',
+      el('p', {},
+        'The fault lines above are raw npu-smi output split on commas, which is why '
+        + 'they read as fragments rather than as faults. The node agent collects them '
+        + 'correctly and nothing parses them into a structured fault with a code, a '
+        + 'severity and an action. A console cannot show “card 3 has a recoverable ECC '
+        + 'fault” from this. That is a gap in the control plane, not in the page, and '
+        + 'it is on the roadmap rather than hidden.'))));
+
+  /* ---------------------------------------------------------- compliance */
+
+  const compRes = await call('/fleet/compliance');
+  const driftRes = await call('/fleet/drift?all=true');
+  const comp = compRes.ok ? (compRes.body.nodes || compRes.body.results || []) : [];
+  const drifts = driftRes.ok
+    ? (driftRes.body.drifts || driftRes.body.items || driftRes.body.nodes || []) : [];
+
+  app.append(section('Drift and self-healing',
+    'An NPU node is a stack of versions that must match. When one moves, workloads fail '
+    + 'in ways that look like broken code rather than a broken node — so the platform '
+    + 'watches for it and repairs the node rather than leaving a customer to debug it.',
+    el('div', { 'data-tour': 'drift' },
+      flowStrip(drifts),
+      el('div', { class: 'grid-2' },
+        tableCard('Certified stack compliance',
+          'Compliant means the versions the node reports match the stack it is assigned. '
+          + 'An unreadable version is an error, never an absent one — empty reads as '
+          + 'drift and would drain a healthy node.',
+          ['Node', 'Stack', 'Compliant', 'Detail'], comp, (r) => el('tr', {},
+            el('td', { class: 'mono' }, val(r.node ?? r.name)),
+            el('td', { class: 'mono' }, val(r.certifiedStack ?? r.stack)),
+            el('td', {}, r.compliant ? pill('yes', 'ok') : pill('no', 'warn')),
+            el('td', { class: 'wrap muted' }, val(r.reason ?? r.message ?? r.detail, { missing: '' })))),
+        tableCard('Drift, and what was done about it',
+          'A drift record names the FIELD that moved, not just the node. "cannVersion '
+          + '8.5.2 → 8.5.1" is actionable; "this node has drifted" is not.',
+          ['Node', 'Phase', 'What moved', 'Outcome'], drifts, (d) => el('tr', {},
+            el('td', { class: 'mono' }, val(d.nodeName ?? d.node ?? d.name)),
+            el('td', {}, phasePill(d.phase)),
+            el('td', {}, differences(d)),
+            el('td', { class: 'wrap muted' }, val(d.message, { missing: '' }))))))));
+
+  /* --------------------------------------------------------- allocations */
+
+  app.append(section('Who is holding cards right now',
+    'Live attribution: tenant, device, node. The meter bills from this same data, so an '
+    + 'operator and a customer are never looking at two numbers that nearly agree.',
+    el('div', { 'data-tour': 'allocations' }, tableCard(null, null,
+      ['Tenant', 'Namespace', 'Resource', { label: 'Devices', align: 'right' }, 'Node'],
+      allocs, (r) => el('tr', {},
+        el('td', {}, el('strong', {}, val(r.tenant))),
+        el('td', { class: 'mono muted' }, val(r.namespace)),
+        el('td', { class: 'mono' }, val(r.resource)),
+        el('td', { class: 'num' }, val(r.devices ?? r.count)),
+        el('td', { class: 'mono muted' }, val(r.node, { missing: '' })))))));
+
+  /* ------------------------------------------------------------ evidence */
+
+  const hw = await demo.hardware('npu-smi-info.txt');
+  if (hw.ok) {
+    app.append(section('The cards, as the node reported them',
+      'No API returns this. It is here because once the pilot node is gone, this is the '
+      + 'only evidence the hardware was real.',
+      el('details', { class: 'card' },
+        el('summary', { class: 'muted' }, 'npu-smi info — recorded on the Atlas 800I A2'),
+        el('pre', { class: 'logs', style: 'margin-top:12px' }, hw.body.text))));
+  }
 }
 
-/* ------------------------------------------------------------ compliance */
-
-const compRes = await call('/fleet/compliance');
-if (compRes.ok) {
-  const c = compRes.body;
-  const rows = c.nodes || c.results || [];
-  app.append(card('Certified stack compliance',
-    el('p', { class: 'note' },
-      'A node is compliant when the driver, firmware and CANN versions it reports match the '
-      + 'CertifiedStack it is assigned. An unreadable version is treated as an error, never as '
-      + 'an absent one — empty reads as drift and would drain a healthy node.'),
-    table(['Node', 'Stack', 'Compliant', 'Detail'], rows, (r) => el('tr', {},
-      el('td', { class: 'mono' }, val(r.node ?? r.name)),
-      el('td', { class: 'mono' }, val(r.certifiedStack ?? r.stack)),
-      el('td', {}, r.compliant ? pill('yes', 'ok') : pill('no', 'warn')),
-      el('td', { class: 'wrap muted' }, val(r.reason ?? r.message ?? r.detail, { missing: '' }))))));
+/* A drift's differences, as the field that moved rather than as a blob.
+ *
+ * The previous version rendered d.observed, which is an OBJECT of every
+ * version the node reports -- so the column read "[object Object]" and
+ * said less than an empty cell would have. The useful fact is in
+ * d.differences: which field, what was expected, what is actually there. */
+function differences(d) {
+  const diffs = d.differences || [];
+  if (!diffs.length) {
+    return el('span', { class: 'faint' }, 'no field recorded');
+  }
+  return el('div', {}, ...diffs.map((x) => el('div', { class: 'mono', style: 'line-height:1.7' },
+    el('span', { class: 'muted' }, `${x.field} `),
+    el('span', {}, String(x.expected)),
+    el('span', { class: 'faint' }, ' → '),
+    el('strong', {}, String(x.actual)))));
 }
 
-/* ---------------------------------------------------------------- drift */
-
-const driftRes = await call('/fleet/drift?all=true');
-if (driftRes.ok) {
-  const items = driftRes.body.drifts || driftRes.body.items || driftRes.body.nodes || [];
-  app.append(card('Drift and remediation', table(
-    ['Node', 'Phase', 'Observed', 'Expected', 'Action'],
-    items,
-    (d) => el('tr', {},
-      el('td', { class: 'mono' }, val(d.node ?? d.name)),
-      el('td', {}, phasePill(d.phase)),
-      el('td', { class: 'mono wrap' }, val(d.observed ?? d.observedVersion, { missing: '' })),
-      el('td', { class: 'mono wrap' }, val(d.expected ?? d.expectedVersion, { missing: '' })),
-      el('td', { class: 'wrap muted' }, val(d.action ?? d.reason, { missing: '' }))))));
+/* The repair loop as a mechanism rather than a paragraph. */
+function flowStrip(drifts) {
+  const phases = new Set(drifts.map((d) => String(d.phase || '').toLowerCase()));
+  const at = (names) => (names.some((n) => phases.has(n)) ? 'now' : '');
+  return flowEl([
+    { title: 'Observe', detail: 'The node agent reports driver, firmware and CANN.',
+      state: 'done' },
+    { title: 'Compare', detail: 'Against the CertifiedStack the node is assigned.',
+      state: drifts.length ? 'done' : 'now' },
+    { title: 'Cordon', detail: 'Nothing new is scheduled onto it.', state: at(['cordoned', 'cordoning']) },
+    { title: 'Drain', detail: 'Running work is evicted, never killed mid-write.',
+      state: at(['draining', 'drained']) },
+    { title: 'Remediate', detail: 'The stack is brought back to the certified versions.',
+      state: at(['remediating', 'repairing']) },
+    { title: 'Return', detail: 'Uncordoned once it reports compliant again.',
+      state: at(['complete', 'resolved']) },
+  ]);
 }
 
-/* ------------------------------------------------------------ who is on */
-
-const allocRes = await call('/fleet/allocations');
-if (allocRes.ok) {
-  const a = allocRes.body.allocations || allocRes.body.records || [];
-  app.append(card('Who is holding cards right now', table(
-    ['Tenant', 'Namespace', 'Resource', 'Devices', 'Node'],
-    a,
-    (r) => el('tr', {},
-      el('td', {}, el('strong', {}, val(r.tenant))),
-      el('td', { class: 'mono' }, val(r.namespace)),
-      el('td', { class: 'mono' }, val(r.resource)),
-      el('td', { class: 'num' }, val(r.devices ?? r.count)),
-      el('td', { class: 'mono muted' }, val(r.node, { missing: '' }))))));
+function flowEl(steps) {
+  const f = el('div', { class: 'flow' });
+  steps.forEach((s, i) => f.append(el('div', { class: `step ${s.state || ''}` },
+    el('div', { class: 'n' }, String(i + 1).padStart(2, '0')),
+    el('div', { class: 't' }, s.title),
+    el('div', { class: 'd' }, s.detail))));
+  return f;
 }
 
-/* ------------------------------------------------------------ the cards */
-
-const hw = await demo.hardware('npu-smi-info.txt');
-if (hw.ok) {
-  app.append(card('npu-smi, as recorded on the node',
-    el('p', { class: 'note' },
-      'No API returns this. It is here because once the node is gone this is the only '
-      + 'evidence the cards were real.'),
-    el('pre', { class: 'logs' }, hw.body.text)));
-}
+tour.offer();
 </script>
 </body>
 </html>

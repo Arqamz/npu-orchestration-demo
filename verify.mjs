@@ -19,6 +19,7 @@ import { DemoAPI, Recordings, Timeline, Overlay, DemoAudit, PERSONAS } from './s
 import { POLICY } from './server/policy.mjs';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
+const { readFile: readFileP } = await import('node:fs/promises');
 const SESSION = process.env.SESSION || 'baseline';
 
 let pass = 0;
@@ -442,6 +443,87 @@ function useBeforeDeclare(source) {
     if (d !== undefined && d > at) return name;
   }
   return null;
+}
+
+/* ------------------------------------------------------------ stylesheet */
+
+report('every class a page uses is actually styled');
+
+/* Every surface, by path under web/. Named once rather than globbed, so
+ * adding a page without adding it here is a visible omission rather than
+ * a silently unchecked file. */
+const PAGES = [
+  'index.html', 'console/index.html', 'serving/index.html',
+  'workspace/index.html', 'tenant/index.html', 'finance/index.html',
+  'support/index.html',
+];
+
+/* THE REGRESSION THIS CATCHES.
+ *
+ * Rewriting the design system dropped twelve class names the surfaces
+ * were still using. Nothing failed: CSS silently ignores a class it has
+ * no rule for, so the pages rendered as unstyled blocks and every other
+ * check in this file went on passing. A page that is WRONG looks like a
+ * fleet that is EMPTY, which is the failure mode this whole verifier
+ * exists to stop -- and it had a hole exactly where the styling was.
+ *
+ * Deliberately a name-level check rather than a selector-matching one.
+ * Resolving real CSS specificity would need a parser and would be a
+ * second implementation of a browser; "there is at least one rule
+ * mentioning this class" catches a dropped component without pretending
+ * to more precision than it has.
+ */
+{
+  const selectorClasses = (css) => {
+    const out = new Set();
+    // Strip comments and at-rule preludes, then take every selector.
+    const body = css.replace(/\/\*[\s\S]*?\*\//g, '');
+    for (const m of body.matchAll(/([^{}]+)\{/g)) {
+      const sel = m[1];
+      if (sel.trimStart().startsWith('@')) continue;
+      for (const c of sel.matchAll(/\.([a-zA-Z0-9_-]+)/g)) out.add(c[1]);
+    }
+    return out;
+  };
+
+  const sheet = await readFileP(path.join(HERE, 'web/shared/fleet.css'), 'utf8');
+  const styled = selectorClasses(sheet);
+
+  for (const page of PAGES) {
+    const html = await readFileP(path.join(HERE, 'web', page), 'utf8');
+    const used = new Set();
+    for (const m of html.matchAll(/class: *'([^']*)'/g)) {
+      for (const c of m[1].split(/\s+/)) if (c) used.add(c);
+    }
+    for (const m of html.matchAll(/class="([^"]*)"/g)) {
+      for (const c of m[1].split(/\s+/)) if (c) used.add(c);
+    }
+    // A page may carry its own <style>; those classes are styled too.
+    const own = new Set();
+    for (const m of html.matchAll(/<style>([\s\S]*?)<\/style>/g)) {
+      for (const c of selectorClasses(m[1])) own.add(c);
+    }
+    const orphans = [...used].filter((c) => !styled.has(c) && !own.has(c)).sort();
+    check(`${page}: every class it uses has a rule`, orphans.length === 0,
+      orphans.length ? `no rule for: ${orphans.join(', ')}` : '');
+  }
+}
+
+report('the guided tour is wired on every surface');
+
+/* A tour nobody can replay is a tour that runs once and is gone. Every
+ * surface must define one, offer it on a first visit, and keep a visible
+ * way back to it. */
+{
+  for (const page of PAGES) {
+    const html = await readFileP(path.join(HERE, 'web', page), 'utf8');
+    if (page === 'index.html') continue; // the pitch page explains itself
+    check(`${page}: defines a tour`, html.includes('new Tour('));
+    check(`${page}: offers it on a first visit`, html.includes('tour.offer()'));
+    check(`${page}: keeps a way to replay it`, html.includes('launcher(tour'));
+    check(`${page}: opens with a lede rather than a bare title`,
+      html.includes('lede({'));
+  }
 }
 
 /* ---------------------------------------------------------------- report */
