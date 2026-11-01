@@ -1,0 +1,7 @@
+{
+  "count": 0,
+  "currency": "USD",
+  "invoices": [],
+  "note": "Usage is metered from observed allocations, and carried across restarts by the usage checkpoint. Time during which the control plane was not observing a cluster is excluded and appears under gaps on /fleet/usage.",
+  "total": 0
+}

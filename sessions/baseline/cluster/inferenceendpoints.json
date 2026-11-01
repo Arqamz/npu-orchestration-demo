@@ -1,0 +1,97 @@
+{
+    "apiVersion": "v1",
+    "items": [
+        {
+            "apiVersion": "platform.ascendfleet.internal/v1alpha1",
+            "kind": "InferenceEndpoint",
+            "metadata": {
+                "annotations": {
+                    "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"platform.ascendfleet.internal/v1alpha1\",\"kind\":\"InferenceEndpoint\",\"metadata\":{\"annotations\":{},\"name\":\"qwen-chat\",\"namespace\":\"tenant-maas-co\"},\"spec\":{\"args\":[\"vllm serve Qwen/Qwen2-0.5B-Instruct \\\\\\n  --max-model-len 4096 --port 8000 --host 0.0.0.0 \\\\\\n  --gpu-memory-utilization 0.45\\n\"],\"autoscaling\":{\"enabled\":true,\"metric\":\"RunningRequests\",\"scaleDownStabilizationSeconds\":120,\"scaleUpStabilizationSeconds\":20,\"target\":\"16\"},\"command\":[\"/bin/bash\",\"-lc\"],\"cpu\":\"16\",\"devicesPerReplica\":1,\"env\":{\"HF_HOME\":\"/hf\",\"HF_HUB_OFFLINE\":\"1\"},\"image\":\"quay.io/ascend/vllm-ascend:v0.18.0\",\"maxReplicas\":4,\"memory\":\"64Gi\",\"minReplicas\":1,\"model\":\"Qwen/Qwen2-0.5B-Instruct\",\"modelCache\":{\"mountPath\":\"/hf\",\"persistentVolumeClaim\":\"models-qwen\"},\"port\":8000,\"startupSeconds\":900,\"tenant\":\"maas-co\"}}\n"
+                },
+                "creationTimestamp": "2026-10-31T04:06:07Z",
+                "generation": 2,
+                "name": "qwen-chat",
+                "namespace": "tenant-maas-co",
+                "resourceVersion": "1044454",
+                "uid": "898c9e20-f3c3-4274-a51b-e57be665f69a"
+            },
+            "spec": {
+                "args": [
+                    "vllm serve Qwen/Qwen2-0.5B-Instruct \\\n  --max-model-len 4096 --port 8000 --host 0.0.0.0 \\\n  --gpu-memory-utilization 0.45\n"
+                ],
+                "autoscaling": {
+                    "enabled": true,
+                    "metric": "RunningRequests",
+                    "scaleDownStabilizationSeconds": 120,
+                    "scaleUpStabilizationSeconds": 20,
+                    "target": "16"
+                },
+                "command": [
+                    "/bin/bash",
+                    "-lc"
+                ],
+                "cpu": "16",
+                "devicesPerReplica": 1,
+                "env": {
+                    "HF_HOME": "/hf",
+                    "HF_HUB_OFFLINE": "1"
+                },
+                "healthPath": "/health",
+                "image": "quay.io/ascend/vllm-ascend:v0.18.0",
+                "maxReplicas": 4,
+                "memory": "64Gi",
+                "metricsPath": "/metrics",
+                "minReplicas": 1,
+                "model": "Qwen/Qwen2-0.5B-Instruct",
+                "modelCache": {
+                    "mountPath": "/hf",
+                    "persistentVolumeClaim": "models-qwen"
+                },
+                "port": 8000,
+                "resource": "huawei.com/Ascend910",
+                "runtimeClassName": "ascend",
+                "shmSizeGi": 8,
+                "startupSeconds": 900,
+                "tenant": "maas-co"
+            },
+            "status": {
+                "address": "http://qwen-chat.tenant-maas-co.svc.cluster.local:8000",
+                "conditions": [
+                    {
+                        "lastTransitionTime": "2026-10-31T04:06:07Z",
+                        "message": "tenant quota allows 4 replicas of 1 device(s)",
+                        "reason": "QuotaCeiling",
+                        "status": "False",
+                        "type": "QuotaBounded"
+                    },
+                    {
+                        "lastTransitionTime": "2026-10-31T04:06:07Z",
+                        "message": "RunningRequests per replica 0.00 is at target 16.00; holding 1",
+                        "reason": "Evaluated",
+                        "status": "True",
+                        "type": "Scaling"
+                    },
+                    {
+                        "lastTransitionTime": "2026-11-01T17:58:50Z",
+                        "message": "1 of 1 replicas serving",
+                        "reason": "ReadyReplicas",
+                        "status": "True",
+                        "type": "Available"
+                    }
+                ],
+                "desiredReplicas": 1,
+                "devicesHeld": 1,
+                "lastScaleTime": "2026-10-31T04:24:20Z",
+                "observedMetric": "0.00",
+                "phase": "Ready",
+                "quotaCeiling": 4,
+                "readyReplicas": 1,
+                "replicas": 1
+            }
+        }
+    ],
+    "kind": "List",
+    "metadata": {
+        "resourceVersion": ""
+    }
+}

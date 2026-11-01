@@ -1,0 +1,1 @@
+{"error":"Bad Request","reason":"caller holds 4 tenancies; name one with ?tenant=","tenants":["acme","acme-research","dc-shanghai","globex"]}

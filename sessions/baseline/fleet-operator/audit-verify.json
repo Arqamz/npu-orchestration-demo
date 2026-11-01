@@ -1,0 +1,8 @@
+{
+  "chainHead": "45d427df5faf3c268ae4a6cbca9a27e16133f94ff1260718fedf2f8c3deb7395",
+  "from": "2026-10-31T01:12:24.826250256Z",
+  "path": "/var/lib/ascend-fleet/audit/trail.jsonl",
+  "records": 83,
+  "to": "2026-11-01T19:04:05.593339656Z",
+  "verified": true
+}

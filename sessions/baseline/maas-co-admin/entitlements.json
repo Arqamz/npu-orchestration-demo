@@ -1,0 +1,31 @@
+{
+  "entitlements": [
+    {
+      "tenant": "maas-co",
+      "displayName": "MaaS Co (token factory)",
+      "namespace": "tenant-maas-co",
+      "phase": "Ready",
+      "queueName": "tenant-maas-co",
+      "quota": {
+        "cpu": "80",
+        "memory": "320Gi",
+        "npu": "4",
+        "pods": "32"
+      },
+      "held": {
+        "huawei.com/Ascend910": 1
+      },
+      "heldDevices": 1,
+      "vnpuMode": "None",
+      "vnpuTemplates": [],
+      "mutationStrategy": "Recreate",
+      "networkIsolation": "Strict",
+      "restrictEgress": false,
+      "podSecurity": "baseline",
+      "billingAccountID": "ACC-MAAS-CO",
+      "subjects": 0
+    }
+  ],
+  "count": 1,
+  "note": "Quota is enforced per extended resource name as the device plugin advertises it, not per template name. A whole card and a vNPU slice of one both count as a single device."
+}

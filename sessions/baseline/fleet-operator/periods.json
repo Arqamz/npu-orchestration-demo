@@ -1,0 +1,321 @@
+{
+  "count": 2,
+  "note": "A closed period is final. Usage after the last close is on /fleet/invoices and is not yet billable.",
+  "periods": [
+    {
+      "id": "2026-10",
+      "from": "2026-10-28T13:08:50.27331466Z",
+      "to": "2026-10-29T04:02:54.756684636Z",
+      "closedAt": "2026-10-29T04:02:54.756684636Z",
+      "readings": [
+        {
+          "cluster": "site-a",
+          "tenant": "_unattributed",
+          "namespace": "default",
+          "resource": "huawei.com/Ascend910",
+          "deviceSeconds": 76.62715987
+        },
+        {
+          "cluster": "site-a",
+          "tenant": "_unattributed",
+          "namespace": "default",
+          "resource": "huawei.com/Ascend910-5c.1cpu.16g",
+          "deviceSeconds": 76.62715987
+        },
+        {
+          "cluster": "site-a",
+          "tenant": "acme",
+          "namespace": "tenant-acme",
+          "resource": "huawei.com/Ascend910-5c.1.16g",
+          "deviceSeconds": 381.88534302000005
+        },
+        {
+          "cluster": "site-a",
+          "tenant": "acme",
+          "namespace": "tenant-acme",
+          "resource": "huawei.com/Ascend910-5c.1cpu.16g",
+          "deviceSeconds": 29305.355375520958
+        },
+        {
+          "cluster": "site-a",
+          "tenant": "globex",
+          "namespace": "tenant-globex",
+          "resource": "huawei.com/Ascend910-5c.1.16g",
+          "deviceSeconds": 557.3120579900001
+        },
+        {
+          "cluster": "site-a",
+          "tenant": "globex",
+          "namespace": "tenant-globex",
+          "resource": "huawei.com/Ascend910-5c.1cpu.16g",
+          "deviceSeconds": 30293.50710317297
+        }
+      ],
+      "unobservedSeconds": 0,
+      "invoices": [
+        {
+          "tenant": "_unattributed",
+          "currency": "USD",
+          "periodFrom": "2026-10-28T13:08:50.27331466Z",
+          "periodTo": "2026-10-29T04:02:54.756684636Z",
+          "lines": [
+            {
+              "namespace": "default",
+              "resource": "huawei.com/Ascend910",
+              "deviceHours": 0.02128532218611111,
+              "unitPrice": 12,
+              "amount": 0.26
+            },
+            {
+              "namespace": "default",
+              "resource": "huawei.com/Ascend910-5c.1cpu.16g",
+              "deviceHours": 0.02128532218611111,
+              "unitPrice": 3.6,
+              "amount": 0.08
+            }
+          ],
+          "total": 0.34,
+          "warnings": [
+            "usage by pods outside any tenant namespace; not chargeable to a customer"
+          ],
+          "usage": {
+            "deviceHours": 0.04257064437222222
+          }
+        },
+        {
+          "tenant": "acme",
+          "accountID": "acct-001",
+          "costCenter": "cc-research",
+          "currency": "USD",
+          "periodFrom": "2026-10-28T13:08:50.27331466Z",
+          "periodTo": "2026-10-29T04:02:54.756684636Z",
+          "lines": [
+            {
+              "namespace": "tenant-acme",
+              "resource": "huawei.com/Ascend910-5c.1.16g",
+              "deviceHours": 0.10607926195000002,
+              "unitPrice": 3.6,
+              "amount": 0.38
+            },
+            {
+              "namespace": "tenant-acme",
+              "resource": "huawei.com/Ascend910-5c.1cpu.16g",
+              "deviceHours": 8.140376493200266,
+              "unitPrice": 3.6,
+              "amount": 29.31
+            }
+          ],
+          "total": 29.69,
+          "usage": {
+            "deviceHours": 8.246455755150267
+          }
+        },
+        {
+          "tenant": "globex",
+          "accountID": "acct-002",
+          "costCenter": "cc-ml-platform",
+          "currency": "USD",
+          "periodFrom": "2026-10-28T13:08:50.27331466Z",
+          "periodTo": "2026-10-29T04:02:54.756684636Z",
+          "lines": [
+            {
+              "namespace": "tenant-globex",
+              "resource": "huawei.com/Ascend910-5c.1.16g",
+              "deviceHours": 0.15480890499722225,
+              "unitPrice": 3.6,
+              "amount": 0.56
+            },
+            {
+              "namespace": "tenant-globex",
+              "resource": "huawei.com/Ascend910-5c.1cpu.16g",
+              "deviceHours": 8.414863084214714,
+              "unitPrice": 3.6,
+              "amount": 30.29
+            }
+          ],
+          "total": 30.85,
+          "usage": {
+            "deviceHours": 8.569671989211937
+          }
+        }
+      ],
+      "currency": "USD",
+      "total": 60.88,
+      "rateCard": "b3ea0ad6a207af5e"
+    },
+    {
+      "id": "verify-1793412867",
+      "from": "2026-10-29T04:02:54.756684636Z",
+      "to": "2026-10-31T02:14:27.63689663Z",
+      "closedAt": "2026-10-31T02:14:27.63689663Z",
+      "readings": [
+        {
+          "cluster": "site-a",
+          "tenant": "_unattributed",
+          "namespace": "default",
+          "resource": "huawei.com/Ascend910",
+          "deviceSeconds": 1500.2810986
+        },
+        {
+          "cluster": "site-a",
+          "tenant": "_unattributed",
+          "namespace": "default",
+          "resource": "huawei.com/Ascend910-5c.1cpu.16g",
+          "deviceSeconds": 99.758417971
+        },
+        {
+          "cluster": "site-a",
+          "tenant": "acme",
+          "namespace": "tenant-acme",
+          "resource": "huawei.com/Ascend910",
+          "deviceSeconds": 89404.713234833
+        },
+        {
+          "cluster": "site-a",
+          "tenant": "acme",
+          "namespace": "tenant-acme",
+          "resource": "huawei.com/Ascend910-5c.1.16g",
+          "deviceSeconds": 381.88534302000005
+        },
+        {
+          "cluster": "site-a",
+          "tenant": "acme",
+          "namespace": "tenant-acme",
+          "resource": "huawei.com/Ascend910-5c.1cpu.16g",
+          "deviceSeconds": 207767.22529528913
+        },
+        {
+          "cluster": "site-a",
+          "tenant": "acme-research",
+          "namespace": "tenant-acme-research",
+          "resource": "huawei.com/Ascend910",
+          "deviceSeconds": 1667.4987434400005
+        },
+        {
+          "cluster": "site-a",
+          "tenant": "globex",
+          "namespace": "tenant-globex",
+          "resource": "huawei.com/Ascend910-5c.1.16g",
+          "deviceSeconds": 557.3120579900001
+        },
+        {
+          "cluster": "site-a",
+          "tenant": "globex",
+          "namespace": "tenant-globex",
+          "resource": "huawei.com/Ascend910-5c.1cpu.16g",
+          "deviceSeconds": 208604.82186343713
+        }
+      ],
+      "unobservedSeconds": 0,
+      "invoices": [
+        {
+          "tenant": "_unattributed",
+          "currency": "USD",
+          "periodFrom": "2026-10-29T04:02:54.756684636Z",
+          "periodTo": "2026-10-31T02:14:27.63689663Z",
+          "lines": [
+            {
+              "namespace": "default",
+              "resource": "huawei.com/Ascend910",
+              "deviceHours": 0.395459427425,
+              "unitPrice": 12,
+              "amount": 4.75
+            },
+            {
+              "namespace": "default",
+              "resource": "huawei.com/Ascend910-5c.1cpu.16g",
+              "deviceHours": 0.0064253494725,
+              "unitPrice": 3.6,
+              "amount": 0.02
+            }
+          ],
+          "total": 4.77,
+          "warnings": [
+            "usage by pods outside any tenant namespace; not chargeable to a customer"
+          ],
+          "usage": {
+            "deviceHours": 0.4018847768975
+          }
+        },
+        {
+          "tenant": "acme",
+          "accountID": "ACC-ACME",
+          "currency": "USD",
+          "periodFrom": "2026-10-29T04:02:54.756684636Z",
+          "periodTo": "2026-10-31T02:14:27.63689663Z",
+          "lines": [
+            {
+              "namespace": "tenant-acme",
+              "resource": "huawei.com/Ascend910",
+              "deviceHours": 24.83464256523139,
+              "unitPrice": 12,
+              "amount": 298.02
+            },
+            {
+              "namespace": "tenant-acme",
+              "resource": "huawei.com/Ascend910-5c.1cpu.16g",
+              "deviceHours": 49.57274164438005,
+              "unitPrice": 3.6,
+              "amount": 178.46
+            }
+          ],
+          "total": 476.48,
+          "usage": {
+            "deviceHours": 74.40738420961145
+          }
+        },
+        {
+          "tenant": "acme-research",
+          "accountID": "ACC-ACME-RESEARCH",
+          "currency": "USD",
+          "periodFrom": "2026-10-29T04:02:54.756684636Z",
+          "periodTo": "2026-10-31T02:14:27.63689663Z",
+          "lines": [
+            {
+              "namespace": "tenant-acme-research",
+              "resource": "huawei.com/Ascend910",
+              "deviceHours": 0.4631940954000001,
+              "unitPrice": 12,
+              "amount": 5.56
+            }
+          ],
+          "total": 5.56,
+          "usage": {
+            "deviceHours": 0.4631940954000001
+          }
+        },
+        {
+          "tenant": "globex",
+          "accountID": "ACC-GLOBEX",
+          "currency": "USD",
+          "periodFrom": "2026-10-29T04:02:54.756684636Z",
+          "periodTo": "2026-10-31T02:14:27.63689663Z",
+          "lines": [
+            {
+              "namespace": "tenant-globex",
+              "resource": "huawei.com/Ascend910-5c.1cpu.16g",
+              "deviceHours": 49.530920766740046,
+              "unitPrice": 3.6,
+              "amount": 178.31
+            }
+          ],
+          "total": 178.31,
+          "usage": {
+            "deviceHours": 49.530920766740046
+          }
+        }
+      ],
+      "currency": "USD",
+      "total": 665.12,
+      "rateCard": "b3ea0ad6a207af5e",
+      "auditCheckpoint": {
+        "origin": "ascend-fleet-audit/ascend-fleet-system",
+        "size": 54,
+        "root": "374f34a20e22f335b7beb72f9b647d52f013272f97eb172c3811d03725fd3b4f",
+        "time": "2026-10-31T02:14:27Z",
+        "keyID": "6b3d541711a8c391",
+        "signature": "NwcCcImfg9A7N2hm9iQ0SrAYUrwCRWrk5aU4g4aDuAC602JNx6prShmsZjFVygiQACbiTGBwQXn80TJQX2BaCg=="
+      }
+    }
+  ]
+}

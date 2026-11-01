@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ascend Fleet</title>
+<link rel="stylesheet" href="/shared/fleet.css">
+</head>
+<body>
+<main id="app"></main>
+<script type="module">
+import { demo, call, el, card, chrome, pageTitle, pill, table, setPersona } from '/shared/fleet.js';
+
+const app = document.getElementById('app');
+await chrome('/');
+
+app.append(pageTitle(
+  'Ascend Fleet',
+  'A control plane that turns racks of Huawei Ascend NPUs into capacity a data centre can '
+  + 'rent out by the second — to customers who can rent it out again.'));
+
+/* ------------------------------------------------------------- honesty */
+
+app.append(card('What you are looking at',
+  el('p', {},
+    'Every number on these pages was recorded from a real control plane running on a real '
+    + 'Atlas 800I A2 with eight Ascend 910B3 cards. The recordings were taken through each '
+    + 'persona’s own Keycloak token, so a page shows exactly what that login returns — '
+    + 'including the refusals.'),
+  el('p', { class: 'note' },
+    'The backend serving this demo is a replay of those recordings. The routing, the bearer '
+    + 'authentication, the closed-list scope policy and the status codes are the real logic, '
+    + 'mirrored from the Go control plane. Nothing on these pages is invented: where a field '
+    + 'was never captured it is shown as missing rather than filled in.')));
+
+/* ------------------------------------------------------------ personas */
+
+const personas = (await demo.personas()).body || [];
+const grid = el('div', { class: 'persona-grid' });
+for (const p of personas) {
+  grid.append(el('a', {
+    class: 'persona-card',
+    href: '#',
+    onclick: (e) => {
+      e.preventDefault();
+      setPersona(p.token);
+      location.href = p.operator ? '/console/'
+        : p.username === 'maas-co-admin' ? '/serving/'
+          : p.tenantAdmin ? '/finance/' : '/workspace/';
+    },
+  },
+  el('div', { class: 'role' }, p.role),
+  el('h3', {}, p.username),
+  el('p', {}, p.blurb),
+  el('div', { class: 'row', style: 'margin-top:9px' },
+    p.operator ? pill('operator', 'ok') : null,
+    p.tenantAdmin ? pill('tenant-admin', 'policy') : null,
+    ...(p.reach || []).map((t) => pill(t)))));
+}
+app.append(card('Sign in as', grid));
+
+/* ------------------------------------------------------------ surfaces */
+
+app.append(card('The six surfaces', table(
+  ['Surface', 'Who it is for', 'What it answers'],
+  [
+    ['Fleet console', 'Data-centre operator', 'Is the hardware healthy, and who is on it?'],
+    ['Serving', 'MaaS customer', 'Is my model up, and how many cards is it holding?'],
+    ['Workspace', 'Engineer', 'Did my job run, and if not, why?'],
+    ['Tenancy', 'Tenant administrator', 'What did I buy, and what have I resold?'],
+    ['Finance', 'Whoever pays', 'What do I owe, and what can I bill on?'],
+    ['Audit & support', 'Operator, and the customer’s auditor', 'Who changed what, and can I prove it?'],
+  ],
+  (r) => el('tr', {},
+    el('td', {}, el('strong', {}, r[0])),
+    el('td', { class: 'muted' }, r[1]),
+    el('td', { class: 'wrap' }, r[2])))));
+
+/* -------------------------------------------------------------- proven */
+
+const hw = await demo.hardware('npu-smi-info.txt');
+app.append(card('The hardware these recordings came from',
+  el('div', { class: 'stats' },
+    el('div', { class: 'stat' }, el('div', { class: 'k' }, 'Node'),
+      el('div', { class: 'v' }, '1'), el('div', { class: 'n' }, 'Atlas 800I A2')),
+    el('div', { class: 'stat' }, el('div', { class: 'k' }, 'NPUs'),
+      el('div', { class: 'v' }, '8'), el('div', { class: 'n' }, 'Ascend 910B3')),
+    el('div', { class: 'stat ok' }, el('div', { class: 'k' }, 'Tenants'),
+      el('div', { class: 'v' }, '6'), el('div', { class: 'n' }, 'across 3 levels')),
+    el('div', { class: 'stat' }, el('div', { class: 'k' }, 'KV cache'),
+      el('div', { class: 'v' }, '35.5'), el('div', { class: 'n' }, 'GiB, 3.1M tokens')),
+    el('div', { class: 'stat ok' }, el('div', { class: 'k' }, 'Throughput'),
+      el('div', { class: 'v' }, '1501'), el('div', { class: 'n' }, 'tok/s, 64-way')),
+    el('div', { class: 'stat' }, el('div', { class: 'k' }, 'Requests served'),
+      el('div', { class: 'v' }, '4535'), el('div', { class: 'n' }, 'in the recorded run'))),
+  hw.ok ? el('details', { style: 'margin-top:14px' },
+    el('summary', { class: 'muted' }, 'npu-smi info, as recorded'),
+    el('pre', { class: 'logs', style: 'margin-top:9px' }, hw.body.text))
+    : el('p', { class: 'muted' }, 'npu-smi output was not captured in this session.')));
+</script>
+</body>
+</html>

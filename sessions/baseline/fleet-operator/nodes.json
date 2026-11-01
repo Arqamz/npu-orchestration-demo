@@ -1,0 +1,30 @@
+{
+  "count": 1,
+  "nodes": [
+    {
+      "name": "atlas-800i-a2",
+      "cluster": "site-a",
+      "site": "site-a",
+      "hardwareClass": "atlas-800i-a2",
+      "certifiedStack": "atlas-800i-a2-cann852",
+      "ready": true,
+      "cordoned": false,
+      "remediating": false,
+      "faulted": true,
+      "faults": [
+        "Fault: fault_code\":\"200001002",
+        "Fault: fault_handling\":\"NotHandleFault",
+        "Fault: fault_level\":\"NotHandleFault",
+        "Fault: fault_level\":\"NotHandleFault\"}}}",
+        "Fault: fault_time_and_level_map\":{\"200001002\":{\"fault_time\":1793559530",
+        "Fault: large_model_fault_level\":\"NotHandleFault",
+        "Fault: npu_name\":\"Ascend910-1",
+        "Fault: {\"fault_type\":\"CardUnhealthy"
+      ],
+      "npuTotal": 8,
+      "npuAllocatable": 8,
+      "npuAllocated": 1,
+      "npuUnhealthy": 8
+    }
+  ]
+}

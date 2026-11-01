@@ -1,0 +1,1 @@
+{"container":"train","lines":["Traceback (most recent call last):","  File \"\u003cstring\u003e\", line 4, in \u003cmodule\u003e","NameError: name 'ok' is not defined","[ERROR] 2026-10-31-04:39:14 (PID:84, Device:0, RankID:-1) ERR99999 UNKNOWN applicaiton exception"],"namespace":"tenant-lab-co","pod":"lab-train-wr6f8","previous":false,"tail":400,"tenant":"lab-co"}

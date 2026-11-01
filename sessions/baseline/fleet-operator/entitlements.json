@@ -1,0 +1,151 @@
+{
+  "entitlements": [
+    {
+      "tenant": "acme",
+      "displayName": "Acme Corp",
+      "namespace": "tenant-acme",
+      "phase": "Ready",
+      "queueName": "tenant-acme",
+      "quota": {
+        "cpu": "100",
+        "memory": "400Gi",
+        "npu": "5",
+        "pods": "40"
+      },
+      "held": {},
+      "heldDevices": 0,
+      "vnpuMode": "Static",
+      "vnpuTemplates": [
+        "vir05_1c_16g"
+      ],
+      "mutationStrategy": "Recreate",
+      "networkIsolation": "Strict",
+      "restrictEgress": false,
+      "podSecurity": "restricted",
+      "billingAccountID": "ACC-ACME",
+      "subjects": 0
+    },
+    {
+      "tenant": "acme-research",
+      "displayName": "Acme Research (a customer of Acme)",
+      "namespace": "tenant-acme-research",
+      "phase": "Ready",
+      "queueName": "tenant-acme-research",
+      "quota": {
+        "cpu": "40",
+        "memory": "160Gi",
+        "npu": "2",
+        "pods": "16"
+      },
+      "held": {},
+      "heldDevices": 0,
+      "vnpuMode": "None",
+      "vnpuTemplates": [],
+      "mutationStrategy": "Recreate",
+      "networkIsolation": "Strict",
+      "restrictEgress": false,
+      "podSecurity": "restricted",
+      "billingAccountID": "ACC-ACME-RESEARCH",
+      "subjects": 0
+    },
+    {
+      "tenant": "dc-shanghai",
+      "displayName": "Shanghai Data Centre",
+      "namespace": "tenant-dc-shanghai",
+      "phase": "Ready",
+      "queueName": "tenant-dc-shanghai",
+      "quota": {
+        "cpu": "160",
+        "memory": "640Gi",
+        "npu": "8",
+        "pods": "64"
+      },
+      "held": {},
+      "heldDevices": 0,
+      "vnpuMode": "Static",
+      "vnpuTemplates": [
+        "vir05_1c_16g",
+        "vir10_3c_32g"
+      ],
+      "mutationStrategy": "Recreate",
+      "networkIsolation": "Strict",
+      "restrictEgress": false,
+      "podSecurity": "restricted",
+      "billingAccountID": "ACC-DC-SHANGHAI",
+      "subjects": 0
+    },
+    {
+      "tenant": "globex",
+      "displayName": "Globex Industries",
+      "namespace": "tenant-globex",
+      "phase": "Ready",
+      "queueName": "tenant-globex",
+      "quota": {
+        "cpu": "60",
+        "memory": "240Gi",
+        "npu": "3",
+        "pods": "24"
+      },
+      "held": {},
+      "heldDevices": 0,
+      "vnpuMode": "None",
+      "vnpuTemplates": [],
+      "mutationStrategy": "Recreate",
+      "networkIsolation": "Strict",
+      "restrictEgress": false,
+      "podSecurity": "restricted",
+      "billingAccountID": "ACC-GLOBEX",
+      "subjects": 0
+    },
+    {
+      "tenant": "lab-co",
+      "displayName": "Lab Co (research)",
+      "namespace": "tenant-lab-co",
+      "phase": "Ready",
+      "queueName": "tenant-lab-co",
+      "quota": {
+        "cpu": "60",
+        "memory": "240Gi",
+        "npu": "3",
+        "pods": "24"
+      },
+      "held": {},
+      "heldDevices": 0,
+      "vnpuMode": "None",
+      "vnpuTemplates": [],
+      "mutationStrategy": "Recreate",
+      "networkIsolation": "Strict",
+      "restrictEgress": false,
+      "podSecurity": "baseline",
+      "billingAccountID": "ACC-LAB-CO",
+      "subjects": 0
+    },
+    {
+      "tenant": "maas-co",
+      "displayName": "MaaS Co (token factory)",
+      "namespace": "tenant-maas-co",
+      "phase": "Ready",
+      "queueName": "tenant-maas-co",
+      "quota": {
+        "cpu": "80",
+        "memory": "320Gi",
+        "npu": "4",
+        "pods": "32"
+      },
+      "held": {
+        "huawei.com/Ascend910": 1
+      },
+      "heldDevices": 1,
+      "vnpuMode": "None",
+      "vnpuTemplates": [],
+      "mutationStrategy": "Recreate",
+      "networkIsolation": "Strict",
+      "restrictEgress": false,
+      "podSecurity": "baseline",
+      "billingAccountID": "ACC-MAAS-CO",
+      "subjects": 0
+    }
+  ],
+  "count": 6,
+  "note": "Quota is enforced per extended resource name as the device plugin advertises it, not per template name. A whole card and a vNPU slice of one both count as a single device."
+}

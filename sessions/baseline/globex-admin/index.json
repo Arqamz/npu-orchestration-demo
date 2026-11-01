@@ -1,0 +1,111 @@
+{
+  "api": "ascend-fleet inventory",
+  "authMode": "oidc",
+  "note": "Every route is served under the scope shown. A route absent from this list is refused regardless of credential.",
+  "routes": [
+    {
+      "path": "/fleet",
+      "scope": "public"
+    },
+    {
+      "path": "/fleet/allocations",
+      "scope": "tenant"
+    },
+    {
+      "path": "/fleet/audit",
+      "scope": "tenant-admin"
+    },
+    {
+      "path": "/fleet/audit/checkpoint",
+      "scope": "self"
+    },
+    {
+      "path": "/fleet/audit/consistency",
+      "scope": "self"
+    },
+    {
+      "path": "/fleet/audit/proof",
+      "scope": "self"
+    },
+    {
+      "path": "/fleet/audit/pubkey",
+      "scope": "self"
+    },
+    {
+      "path": "/fleet/audit/verify",
+      "scope": "operator"
+    },
+    {
+      "path": "/fleet/billing-export",
+      "scope": "tenant-admin"
+    },
+    {
+      "path": "/fleet/clusters",
+      "scope": "operator"
+    },
+    {
+      "path": "/fleet/compliance",
+      "scope": "operator"
+    },
+    {
+      "path": "/fleet/drift",
+      "scope": "operator"
+    },
+    {
+      "path": "/fleet/endpoints",
+      "scope": "tenant"
+    },
+    {
+      "path": "/fleet/entitlements",
+      "scope": "tenant-admin"
+    },
+    {
+      "path": "/fleet/events",
+      "scope": "operator"
+    },
+    {
+      "path": "/fleet/invoices",
+      "scope": "tenant-admin"
+    },
+    {
+      "path": "/fleet/jobs",
+      "scope": "tenant"
+    },
+    {
+      "path": "/fleet/logs",
+      "scope": "tenant"
+    },
+    {
+      "path": "/fleet/me",
+      "scope": "self"
+    },
+    {
+      "path": "/fleet/nodes",
+      "scope": "operator"
+    },
+    {
+      "path": "/fleet/openapi",
+      "scope": "public"
+    },
+    {
+      "path": "/fleet/periods",
+      "scope": "tenant-admin"
+    },
+    {
+      "path": "/fleet/ratecard",
+      "scope": "self"
+    },
+    {
+      "path": "/fleet/statements",
+      "scope": "tenant-admin"
+    },
+    {
+      "path": "/fleet/usage",
+      "scope": "tenant"
+    },
+    {
+      "path": "/healthz",
+      "scope": "public"
+    }
+  ]
+}

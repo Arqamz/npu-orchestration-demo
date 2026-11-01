@@ -1,0 +1,29 @@
+{
+  "entitlements": [
+    {
+      "tenant": "lab-co",
+      "displayName": "Lab Co (research)",
+      "namespace": "tenant-lab-co",
+      "phase": "Ready",
+      "queueName": "tenant-lab-co",
+      "quota": {
+        "cpu": "60",
+        "memory": "240Gi",
+        "npu": "3",
+        "pods": "24"
+      },
+      "held": {},
+      "heldDevices": 0,
+      "vnpuMode": "None",
+      "vnpuTemplates": [],
+      "mutationStrategy": "Recreate",
+      "networkIsolation": "Strict",
+      "restrictEgress": false,
+      "podSecurity": "baseline",
+      "billingAccountID": "ACC-LAB-CO",
+      "subjects": 0
+    }
+  ],
+  "count": 1,
+  "note": "Quota is enforced per extended resource name as the device plugin advertises it, not per template name. A whole card and a vNPU slice of one both count as a single device."
+}

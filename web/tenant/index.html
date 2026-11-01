@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tenancy</title>
+<link rel="stylesheet" href="/shared/fleet.css">
+</head>
+<body>
+<main id="app"></main>
+<script type="module">
+import {
+  call, demo, el, card, table, pill, refusal, chrome, pageTitle, val,
+} from '/shared/fleet.js';
+
+const app = document.getElementById('app');
+const me = await chrome('/tenant/');
+const reach = me?.reach || me?.tenants || [];
+
+app.append(pageTitle('Tenancy',
+  'Who you sold capacity to, and who they sold it to. A parent administers its sub-tenants: '
+  + 'it bought the capacity and is liable for what they spend.'));
+
+/* ---------------------------------------------------------------- tree */
+
+const tree = (await demo.tree()).body || {};
+
+function depthOf(name) {
+  let d = 0; let cur = tree[name];
+  while (cur && cur.parent) { d += 1; cur = tree[cur.parent]; }
+  return d;
+}
+
+const treeBox = el('div', { class: 'tree' });
+const order = Object.keys(tree).sort((a, b) => {
+  const pa = [], pb = [];
+  let c = a; while (c) { pa.unshift(c); c = tree[c]?.parent; }
+  c = b; while (c) { pb.unshift(c); c = tree[c]?.parent; }
+  return pa.join('/').localeCompare(pb.join('/'));
+});
+
+for (const name of order) {
+  const d = depthOf(name);
+  const mine = reach.includes(name);
+  treeBox.append(el('div', { class: `node depth-${d} ${mine ? 'you' : ''}` },
+    el('strong', {}, name),
+    tree[name].parent ? pill(`sub-tenant of ${tree[name].parent}`) : pill('direct customer', 'ok'),
+    pill(`billed to ${tree[name].billedTo}`, 'policy'),
+    mine ? pill('you reach this', 'ok') : el('span', { class: 'muted' }, 'not yours')));
+}
+
+app.append(card('The tenant tree', treeBox,
+  el('p', { class: 'note' },
+    'A tenant’s parent is immutable and an unresolvable one is fatal. Reparenting would '
+    + 'change who was liable for usage already metered; a sub-tenant whose parent is missing, '
+    + 'cyclic or deeper than four levels is marked Failed rather than promoted to a root — '
+    + 'promoting it would let it escape its parent’s quota and be invoiced directly, '
+    + 'both silently.')));
+
+/* ----------------------------------------------------- per-tenant detail */
+
+if (!reach.length) {
+  app.append(card('Your tenancies',
+    el('p', { class: 'muted' },
+      'This login is the fleet operator and holds no tenancies of its own. '
+      + 'It can read any of them by name — pick one below.')));
+}
+
+const choices = reach.length ? reach : Object.keys(tree);
+const picker = el('select', {});
+for (const t of choices) picker.append(el('option', { value: t }, t));
+
+const detail = el('div');
+app.append(card('Tenancy detail',
+  el('div', { class: 'row', style: 'margin-bottom:12px' },
+    el('label', {}, 'tenant ', picker),
+    el('button', { onclick: () => load(picker.value) }, 'Load')),
+  detail));
+
+async function load(tenant) {
+  detail.replaceChildren(el('p', { class: 'muted' }, 'loading…'));
+
+  const [ent, alloc, usage, eps, jobs] = await Promise.all([
+    call(`/fleet/entitlements?tenant=${tenant}`),
+    call(`/fleet/allocations?tenant=${tenant}`),
+    call(`/fleet/usage?tenant=${tenant}`),
+    call(`/fleet/endpoints?tenant=${tenant}`),
+    call(`/fleet/jobs?tenant=${tenant}`),
+  ]);
+
+  detail.replaceChildren();
+
+  if (!ent.ok) {
+    detail.append(refusal(ent, `Entitlements for ${tenant}`));
+  } else {
+    const e = ent.body.entitlement || ent.body.entitlements || ent.body;
+    const quota = e.quota || e.hard || {};
+    detail.append(el('div', { class: 'stats' },
+      el('div', { class: 'stat' }, el('div', { class: 'k' }, 'Account'),
+        el('div', { class: 'v', style: 'font-size:15px' }, val(e.accountID ?? e.account)),
+        el('div', { class: 'n' }, 'billing identity')),
+      el('div', { class: 'stat' }, el('div', { class: 'k' }, 'Parent'),
+        el('div', { class: 'v', style: 'font-size:15px' }, val(tree[tenant]?.parent, { missing: 'none' })),
+        el('div', { class: 'n' }, 'who it buys from')),
+      el('div', { class: 'stat' }, el('div', { class: 'k' }, 'Billed to'),
+        el('div', { class: 'v', style: 'font-size:15px' }, val(tree[tenant]?.billedTo)),
+        el('div', { class: 'n' }, 'who pays')),
+      el('div', { class: 'stat' }, el('div', { class: 'k' }, 'NPU quota'),
+        el('div', { class: 'v' }, val(quota.npu ?? quota.NPU ?? e.npu)),
+        el('div', { class: 'n' }, 'cards')),
+    ));
+    detail.append(el('details', { style: 'margin-top:12px' },
+      el('summary', { class: 'muted' }, 'the entitlement, as the API returns it'),
+      el('pre', { class: 'logs', style: 'margin-top:8px' }, JSON.stringify(ent.body, null, 2))));
+  }
+
+  const a = alloc.ok ? (alloc.body.allocations || alloc.body.records || []) : [];
+  detail.append(el('h3', { style: 'margin:18px 0 8px;font-size:13px' }, 'Holding now'));
+  detail.append(table(['Resource', 'Devices', 'Namespace', 'Node'], a, (r) => el('tr', {},
+    el('td', { class: 'mono' }, val(r.resource)),
+    el('td', { class: 'num' }, val(r.devices ?? r.count)),
+    el('td', { class: 'mono' }, val(r.namespace, { missing: '' })),
+    el('td', { class: 'mono muted' }, val(r.node, { missing: '' })))));
+
+  const u = usage.ok ? (usage.body.records || []) : [];
+  detail.append(el('h3', { style: 'margin:18px 0 8px;font-size:13px' }, 'Metered usage'));
+  detail.append(table(['Resource', 'Device-seconds', 'Device-hours', 'Namespace'], u, (r) => el('tr', {},
+    el('td', { class: 'mono' }, val(r.resource)),
+    el('td', { class: 'num' }, (r.deviceSeconds ?? 0).toFixed(1)),
+    el('td', { class: 'num' }, (r.deviceHours ?? 0).toFixed(4)),
+    el('td', { class: 'mono muted' }, val(r.namespace)))));
+
+  const workloads = [
+    ...((eps.ok && eps.body.endpoints) || []).map((e) => ({ kind: 'endpoint', name: e.name, phase: e.phase, devices: e.devicesHeld })),
+    ...((jobs.ok && jobs.body.jobs) || []).map((j) => ({ kind: 'job', name: j.name, phase: j.phase, devices: j.devices })),
+  ];
+  detail.append(el('h3', { style: 'margin:18px 0 8px;font-size:13px' }, 'Workloads'));
+  detail.append(table(['Kind', 'Name', 'Phase', 'Devices'], workloads, (r) => el('tr', {},
+    el('td', {}, pill(r.kind, r.kind === 'endpoint' ? 'policy' : '')),
+    el('td', {}, el('strong', {}, r.name)),
+    el('td', {}, val(r.phase)),
+    el('td', { class: 'num' }, val(r.devices)))));
+}
+
+await load(picker.value);
+
+/* -------------------------------------------------------------- the gaps */
+
+app.append(card('What tenancy cannot do yet',
+  el('ul', { class: 'wrap', style: 'max-width:80ch' },
+    el('li', {}, el('strong', {}, 'No self-service sub-tenant creation. '),
+      'A reseller cannot create its own customer through this API. Sub-tenants are applied '
+      + 'as YAML by the operator, which makes the reseller story a manual process.'),
+    el('li', {}, el('strong', {}, 'No invitations or self-signup. '),
+      'A user exists because someone created them in Keycloak by hand.'),
+    el('li', {}, el('strong', {}, 'No reseller rate cards. '),
+      'A parent is billed at the operator’s prices and bills its children at the same '
+      + 'ones. There is nowhere to set a margin.'),
+    el('li', {}, el('strong', {}, 'No credit limits or suspension. '),
+      'Nothing stops a sub-tenant spending past what its parent will pay for.'),
+    el('li', {}, el('strong', {}, 'No reservations. '),
+      '"Rent 64 NPUs for three months" is unrepresentable: quota is a ceiling, not a '
+      + 'commitment, and nothing holds capacity for a future date.'))));
+</script>
+</body>
+</html>

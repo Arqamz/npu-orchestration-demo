@@ -1,0 +1,12 @@
+{
+  "tenant": "maas-co",
+  "endpoint": "qwen-chat",
+  "model": "Qwen/Qwen2-0.5B-Instruct",
+  "address": "http://qwen-chat.tenant-maas-co.svc.cluster.local:8000",
+  "concurrency": 64,
+  "durationSeconds": 300,
+  "intervalSeconds": 5,
+  "frames": 80,
+  "capturedAt": "2026-11-01T19:12:26Z",
+  "note": "Each frame is a real /fleet/endpoints response, taken while real load ran against the endpoint on real Ascend hardware."
+}

@@ -1,0 +1,16 @@
+{
+  "authenticated": true,
+  "principal": {
+    "subject": "2abb07f0-aae8-417d-b9f6-0b4ab86e0397",
+    "username": "maas-co-admin",
+    "email": "maas-co-admin@demo.invalid",
+    "name": "maas admin",
+    "operator": false,
+    "tenantAdmin": true,
+    "tenants": [
+      "maas-co"
+    ],
+    "issuer": "https://keycloak.ascend-fleet-system.svc.cluster.local:8443/realms/ascend-fleet",
+    "via": "oidc"
+  }
+}

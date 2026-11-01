@@ -1,0 +1,29 @@
+{
+  "count": 1,
+  "currency": "USD",
+  "from": "2026-10-28T13:08:50.27331466Z",
+  "statements": [
+    {
+      "tenant": "maas-co",
+      "accountID": "ACC-MAAS-CO",
+      "currency": "USD",
+      "periodFrom": "2026-10-28T13:08:50.27331466Z",
+      "periodTo": "2026-11-01T19:17:23.467948313Z",
+      "direct": [
+        {
+          "namespace": "tenant-maas-co",
+          "resource": "huawei.com/Ascend910",
+          "deviceHours": 39.92114877967497,
+          "unitPrice": 12,
+          "amount": 479.05
+        }
+      ],
+      "directTotal": 479.05,
+      "resoldTotal": 0,
+      "total": 479.05,
+      "deviceHours": 39.92114877967497
+    }
+  ],
+  "to": "2026-11-01T19:17:23.467948313Z",
+  "total": 479.05
+}

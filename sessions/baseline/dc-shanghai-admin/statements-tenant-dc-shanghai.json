@@ -1,0 +1,105 @@
+{
+  "count": 1,
+  "currency": "USD",
+  "from": "2026-10-28T13:08:50.27331466Z",
+  "statements": [
+    {
+      "tenant": "dc-shanghai",
+      "accountID": "ACC-DC-SHANGHAI",
+      "currency": "USD",
+      "periodFrom": "2026-10-28T13:08:50.27331466Z",
+      "periodTo": "2026-11-01T19:17:22.233650952Z",
+      "direct": null,
+      "resold": [
+        {
+          "tenant": "acme",
+          "path": [
+            "dc-shanghai",
+            "acme"
+          ],
+          "accountID": "ACC-ACME",
+          "lines": [
+            {
+              "namespace": "tenant-acme",
+              "resource": "huawei.com/Ascend910",
+              "deviceHours": 24.83464256523139,
+              "unitPrice": 12,
+              "amount": 298.02
+            },
+            {
+              "namespace": "tenant-acme",
+              "resource": "huawei.com/Ascend910-5c.1.16g",
+              "deviceHours": 0.10607926195000002,
+              "unitPrice": 3.6,
+              "amount": 0.38
+            },
+            {
+              "namespace": "tenant-acme",
+              "resource": "huawei.com/Ascend910-5c.1cpu.16g",
+              "deviceHours": 57.71311813758032,
+              "unitPrice": 3.6,
+              "amount": 207.77
+            }
+          ],
+          "deviceHours": 82.65383996476172,
+          "amount": 506.17
+        },
+        {
+          "tenant": "acme-research",
+          "path": [
+            "dc-shanghai",
+            "acme",
+            "acme-research"
+          ],
+          "accountID": "ACC-ACME-RESEARCH",
+          "lines": [
+            {
+              "namespace": "tenant-acme-research",
+              "resource": "huawei.com/Ascend910",
+              "deviceHours": 0.4631940954000001,
+              "unitPrice": 12,
+              "amount": 5.56
+            }
+          ],
+          "deviceHours": 0.4631940954000001,
+          "amount": 5.56
+        },
+        {
+          "tenant": "globex",
+          "path": [
+            "dc-shanghai",
+            "globex"
+          ],
+          "accountID": "ACC-GLOBEX",
+          "lines": [
+            {
+              "namespace": "tenant-globex",
+              "resource": "huawei.com/Ascend910-5c.1.16g",
+              "deviceHours": 0.15480890499722225,
+              "unitPrice": 3.6,
+              "amount": 0.56
+            },
+            {
+              "namespace": "tenant-globex",
+              "resource": "huawei.com/Ascend910-5c.1cpu.16g",
+              "deviceHours": 57.94578385095476,
+              "unitPrice": 3.6,
+              "amount": 208.6
+            }
+          ],
+          "deviceHours": 58.100592755951986,
+          "amount": 209.16
+        }
+      ],
+      "directTotal": 0,
+      "resoldTotal": 720.89,
+      "total": 720.89,
+      "deviceHours": 141.2176268161137,
+      "warnings": [
+        "720.89 of this total is sub-tenant usage resold by \"dc-shanghai\", priced at the operator rate card"
+      ]
+    }
+  ],
+  "to": "2026-11-01T19:17:22.233650952Z",
+  "total": 720.89
+}

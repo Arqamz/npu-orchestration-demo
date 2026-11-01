@@ -1,0 +1,16 @@
+{
+  "authenticated": true,
+  "principal": {
+    "subject": "53d68a8a-10b9-4f79-86e6-2527979c3c94",
+    "username": "dc-shanghai-admin",
+    "email": "dc-shanghai-admin@demo.invalid",
+    "name": "dc admin",
+    "operator": false,
+    "tenantAdmin": true,
+    "tenants": [
+      "dc-shanghai"
+    ],
+    "issuer": "https://keycloak.ascend-fleet-system.svc.cluster.local:8443/realms/ascend-fleet",
+    "via": "oidc"
+  }
+}

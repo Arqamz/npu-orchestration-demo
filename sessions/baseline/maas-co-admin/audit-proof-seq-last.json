@@ -1,0 +1,15 @@
+{
+  "leaf": "35c033c07f88eda5bf2873d46ecb730aac9b36e7e67b0bd02d712d2451a08ab5",
+  "note": "Verify with `audit-verify inclusion`. The root must match a checkpoint you obtained independently; a root served alongside its own proof proves nothing.",
+  "proof": [
+    "6e54fca3c463ee5acf38c28ad4c0cc44b515f6707b6ab347abc3ae21564e5af7",
+    "fe840a40be71330f172e10873b7e08f6477231fc101f2000c33705ecc1ce51d7",
+    "177093e6298768cda68f5b6c1c10545aae29ac0c13db23dbf978333a62fd16d2",
+    "2ad41e6fffc74f32858d15002de6c1aef108c0c51c1c4851d637762ce27da17c",
+    "e1338c5495b483511f11b81527df6284bf1024730ddf41b9912c2f98738f872d",
+    "2fd5e06fea96b64713d1ad154bb4aea4fd3b7cbb3b24eb2c19b799f26bf97a9d"
+  ],
+  "root": "b068b15401f50392d04b1a64a9645c09a823ae3d1d46e384b561276102ac26d9",
+  "seq": 417,
+  "size": 423
+}

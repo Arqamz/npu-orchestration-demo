@@ -1,0 +1,274 @@
+{
+    "apiVersion": "v1",
+    "items": [
+        {
+            "apiVersion": "platform.ascendfleet.internal/v1alpha1",
+            "kind": "VNPUPolicy",
+            "metadata": {
+                "creationTimestamp": "2026-10-30T20:17:32Z",
+                "generation": 1,
+                "labels": {
+                    "app.kubernetes.io/managed-by": "ascend-fleet",
+                    "platform.ascendfleet.internal/tenant": "acme-research"
+                },
+                "name": "tenant-vnpu",
+                "namespace": "tenant-acme-research",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "platform.ascendfleet.internal/v1alpha1",
+                        "blockOwnerDeletion": true,
+                        "controller": true,
+                        "kind": "Tenant",
+                        "name": "acme-research",
+                        "uid": "775f44e8-47ba-4c56-b11f-c313d57b80f7"
+                    }
+                ],
+                "resourceVersion": "876338",
+                "uid": "aa950f43-6fbd-443f-bc83-34bf35245799"
+            },
+            "spec": {
+                "mode": "None",
+                "mutationStrategy": "Recreate"
+            },
+            "status": {
+                "appliedStrategy": "Recreate",
+                "conditions": [
+                    {
+                        "lastTransitionTime": "2026-10-30T20:17:32Z",
+                        "message": "0 node(s) need a new layout but it cannot be applied: vNPU reconfiguration is not configured: supply a pod template with the npu-smi invocation for this hardware",
+                        "observedGeneration": 1,
+                        "reason": "ReconfigurerUnavailable",
+                        "status": "False",
+                        "type": "LayoutReady"
+                    }
+                ]
+            }
+        },
+        {
+            "apiVersion": "platform.ascendfleet.internal/v1alpha1",
+            "kind": "VNPUPolicy",
+            "metadata": {
+                "creationTimestamp": "2026-10-30T20:17:32Z",
+                "generation": 1,
+                "labels": {
+                    "app.kubernetes.io/managed-by": "ascend-fleet",
+                    "platform.ascendfleet.internal/tenant": "acme"
+                },
+                "name": "tenant-vnpu",
+                "namespace": "tenant-acme",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "platform.ascendfleet.internal/v1alpha1",
+                        "blockOwnerDeletion": true,
+                        "controller": true,
+                        "kind": "Tenant",
+                        "name": "acme",
+                        "uid": "b22c29ce-a6c1-4cbe-a68f-ae47de2d1af9"
+                    }
+                ],
+                "resourceVersion": "876321",
+                "uid": "e0797ca6-8ebe-4e1f-ba37-0122356463c4"
+            },
+            "spec": {
+                "mode": "Static",
+                "mutationStrategy": "Recreate",
+                "templates": [
+                    "vir05_1c_16g"
+                ]
+            },
+            "status": {
+                "appliedStrategy": "Recreate",
+                "conditions": [
+                    {
+                        "lastTransitionTime": "2026-10-30T20:17:32Z",
+                        "message": "0 node(s) need a new layout but it cannot be applied: vNPU reconfiguration is not configured: supply a pod template with the npu-smi invocation for this hardware",
+                        "observedGeneration": 1,
+                        "reason": "ReconfigurerUnavailable",
+                        "status": "False",
+                        "type": "LayoutReady"
+                    }
+                ]
+            }
+        },
+        {
+            "apiVersion": "platform.ascendfleet.internal/v1alpha1",
+            "kind": "VNPUPolicy",
+            "metadata": {
+                "creationTimestamp": "2026-10-30T20:06:00Z",
+                "generation": 1,
+                "labels": {
+                    "app.kubernetes.io/managed-by": "ascend-fleet",
+                    "platform.ascendfleet.internal/tenant": "dc-shanghai"
+                },
+                "name": "tenant-vnpu",
+                "namespace": "tenant-dc-shanghai",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "platform.ascendfleet.internal/v1alpha1",
+                        "blockOwnerDeletion": true,
+                        "controller": true,
+                        "kind": "Tenant",
+                        "name": "dc-shanghai",
+                        "uid": "01c2b9d5-290f-42b2-a893-9593d522c207"
+                    }
+                ],
+                "resourceVersion": "875408",
+                "uid": "5fc6b393-7f92-45c7-bb60-55c58d8bf0ec"
+            },
+            "spec": {
+                "mode": "Static",
+                "mutationStrategy": "Recreate",
+                "templates": [
+                    "vir05_1c_16g",
+                    "vir10_3c_32g"
+                ]
+            },
+            "status": {
+                "appliedStrategy": "Recreate",
+                "conditions": [
+                    {
+                        "lastTransitionTime": "2026-10-30T20:06:00Z",
+                        "message": "0 node(s) need a new layout but it cannot be applied: vNPU reconfiguration is not configured: supply a pod template with the npu-smi invocation for this hardware",
+                        "observedGeneration": 1,
+                        "reason": "ReconfigurerUnavailable",
+                        "status": "False",
+                        "type": "LayoutReady"
+                    }
+                ]
+            }
+        },
+        {
+            "apiVersion": "platform.ascendfleet.internal/v1alpha1",
+            "kind": "VNPUPolicy",
+            "metadata": {
+                "creationTimestamp": "2026-10-30T20:06:05Z",
+                "generation": 1,
+                "labels": {
+                    "app.kubernetes.io/managed-by": "ascend-fleet",
+                    "platform.ascendfleet.internal/tenant": "globex"
+                },
+                "name": "tenant-vnpu",
+                "namespace": "tenant-globex",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "platform.ascendfleet.internal/v1alpha1",
+                        "blockOwnerDeletion": true,
+                        "controller": true,
+                        "kind": "Tenant",
+                        "name": "globex",
+                        "uid": "6765519c-0f7f-4f1e-bc85-bb4b0ddea953"
+                    }
+                ],
+                "resourceVersion": "875479",
+                "uid": "632e290d-3d11-4d41-9e54-794e0d07400f"
+            },
+            "spec": {
+                "mode": "None",
+                "mutationStrategy": "Recreate"
+            },
+            "status": {
+                "appliedStrategy": "Recreate",
+                "conditions": [
+                    {
+                        "lastTransitionTime": "2026-10-30T20:06:05Z",
+                        "message": "0 node(s) need a new layout but it cannot be applied: vNPU reconfiguration is not configured: supply a pod template with the npu-smi invocation for this hardware",
+                        "observedGeneration": 1,
+                        "reason": "ReconfigurerUnavailable",
+                        "status": "False",
+                        "type": "LayoutReady"
+                    }
+                ]
+            }
+        },
+        {
+            "apiVersion": "platform.ascendfleet.internal/v1alpha1",
+            "kind": "VNPUPolicy",
+            "metadata": {
+                "creationTimestamp": "2026-10-31T03:48:52Z",
+                "generation": 1,
+                "labels": {
+                    "app.kubernetes.io/managed-by": "ascend-fleet",
+                    "platform.ascendfleet.internal/tenant": "lab-co"
+                },
+                "name": "tenant-vnpu",
+                "namespace": "tenant-lab-co",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "platform.ascendfleet.internal/v1alpha1",
+                        "blockOwnerDeletion": true,
+                        "controller": true,
+                        "kind": "Tenant",
+                        "name": "lab-co",
+                        "uid": "5196a3f4-d778-4278-90a5-76be31b5dc79"
+                    }
+                ],
+                "resourceVersion": "904336",
+                "uid": "18c322f4-e403-4468-9574-267040c06389"
+            },
+            "spec": {
+                "mode": "None",
+                "mutationStrategy": "Recreate"
+            },
+            "status": {
+                "appliedStrategy": "Recreate",
+                "conditions": [
+                    {
+                        "lastTransitionTime": "2026-10-31T03:48:52Z",
+                        "message": "0 node(s) need a new layout but it cannot be applied: vNPU reconfiguration is not configured: supply a pod template with the npu-smi invocation for this hardware",
+                        "observedGeneration": 1,
+                        "reason": "ReconfigurerUnavailable",
+                        "status": "False",
+                        "type": "LayoutReady"
+                    }
+                ]
+            }
+        },
+        {
+            "apiVersion": "platform.ascendfleet.internal/v1alpha1",
+            "kind": "VNPUPolicy",
+            "metadata": {
+                "creationTimestamp": "2026-10-31T03:48:52Z",
+                "generation": 1,
+                "labels": {
+                    "app.kubernetes.io/managed-by": "ascend-fleet",
+                    "platform.ascendfleet.internal/tenant": "maas-co"
+                },
+                "name": "tenant-vnpu",
+                "namespace": "tenant-maas-co",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "platform.ascendfleet.internal/v1alpha1",
+                        "blockOwnerDeletion": true,
+                        "controller": true,
+                        "kind": "Tenant",
+                        "name": "maas-co",
+                        "uid": "46f82ddd-dcf8-446a-a521-ab0542c8f762"
+                    }
+                ],
+                "resourceVersion": "904322",
+                "uid": "aebae78b-5377-49b8-9c2f-9eefe8173210"
+            },
+            "spec": {
+                "mode": "None",
+                "mutationStrategy": "Recreate"
+            },
+            "status": {
+                "appliedStrategy": "Recreate",
+                "conditions": [
+                    {
+                        "lastTransitionTime": "2026-10-31T03:48:52Z",
+                        "message": "0 node(s) need a new layout but it cannot be applied: vNPU reconfiguration is not configured: supply a pod template with the npu-smi invocation for this hardware",
+                        "observedGeneration": 1,
+                        "reason": "ReconfigurerUnavailable",
+                        "status": "False",
+                        "type": "LayoutReady"
+                    }
+                ]
+            }
+        }
+    ],
+    "kind": "List",
+    "metadata": {
+        "resourceVersion": ""
+    }
+}

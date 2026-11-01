@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Workspace</title>
+<link rel="stylesheet" href="/shared/fleet.css">
+</head>
+<body>
+<main id="app"></main>
+<script type="module">
+import {
+  call, demo, el, card, table, pill, phasePill, refusal, chrome, pageTitle, val, ago, statusPill,
+} from '/shared/fleet.js';
+
+const app = document.getElementById('app');
+const me = await chrome('/workspace/');
+const myTenant = (me?.reach || me?.tenants || [])[0] || null;
+
+app.append(pageTitle('Workspace',
+  'Submit work, watch it schedule, and read why it did not. '
+  + 'An engineer is a member of the tenancy and deliberately not an administrator: '
+  + 'the billing pages below are refused to this login.'));
+
+/* ---------------------------------------------------------------- jobs */
+
+const jobsCard = card('Jobs');
+app.append(jobsCard);
+
+async function renderJobs() {
+  const res = await call(`/fleet/jobs${myTenant ? `?tenant=${myTenant}` : ''}`);
+  jobsCard.replaceChildren(el('h2', {}, 'Jobs'));
+  if (!res.ok) { jobsCard.append(refusal(res, 'Jobs')); return; }
+  const jobs = res.body.jobs || [];
+  jobsCard.append(table(
+    ['Name', 'Tenant', 'Queue', 'Resource', 'Devices', 'Replicas', 'Phase', 'Active', 'Reason', ''],
+    jobs,
+    (j) => el('tr', {},
+      el('td', {}, el('strong', {}, j.name), j.demoCreated ? pill('just created', 'ok') : null),
+      el('td', {}, val(j.tenant)),
+      el('td', { class: 'mono' }, val(j.queue, { missing: '' })),
+      el('td', { class: 'mono' }, val(j.resource, { missing: '' })),
+      el('td', { class: 'num' }, val(j.devices)),
+      el('td', { class: 'num' }, val(j.replicas)),
+      el('td', {}, phasePill(j.phase)),
+      el('td', { class: 'num' }, val(j.active)),
+      el('td', { class: 'wrap muted' }, val(j.reason, { missing: '' })),
+      el('td', {}, el('button', {
+        onclick: async () => {
+          await call(`/fleet/jobs?name=${encodeURIComponent(j.name)}&tenant=${j.tenant}`,
+            { method: 'DELETE' });
+          renderJobs();
+        },
+      }, 'Delete')))));
+
+  if (!jobs.length) {
+    jobsCard.append(el('p', { class: 'note' },
+      'No jobs are running for this tenant in the recording. Submitting one below creates it '
+      + 'in the demo’s own state — the request, the scoping and the response are real; '
+      + 'what it cannot do is actually occupy a card, because the cluster is gone.'));
+  }
+}
+await renderJobs();
+
+/* -------------------------------------------------------------- submit */
+
+const nameIn = el('input', { type: 'text', value: `train-${Math.random().toString(36).slice(2, 6)}` });
+const devIn = el('input', { type: 'number', value: '2', min: '1', max: '8', style: 'width:72px' });
+const repIn = el('input', { type: 'number', value: '1', min: '1', max: '4', style: 'width:72px' });
+const out = el('div');
+
+app.append(card('Submit work',
+  el('p', { class: 'note' },
+    'A whole-card job carries spec.minResources on its PodGroup, because Huawei’s Volcano '
+    + 'NPU plugin decides whether a job is an NPU job by looking for an Ascend resource name '
+    + 'there. Without it the pod is never annotated with a device and admission fails with '
+    + '"not get valid pod" — which presents as broken hardware.'),
+  el('div', { class: 'row' },
+    el('label', {}, 'name ', nameIn),
+    el('label', {}, 'devices ', devIn),
+    el('label', {}, 'replicas ', repIn),
+    el('button', {
+      class: 'primary',
+      onclick: async () => {
+        const res = await call('/fleet/jobs', {
+          method: 'POST',
+          body: {
+            name: nameIn.value, devices: parseInt(devIn.value, 10),
+            replicas: parseInt(repIn.value, 10),
+            image: 'quay.io/ascend/vllm-ascend:v0.18.0',
+          },
+        });
+        out.replaceChildren(el('div', { class: 'row' },
+          statusPill(res.status),
+          el('span', { class: 'mono' },
+            res.ok ? `created ${res.body.name} in ${res.body.namespace}`
+              : (res.body?.reason || 'refused'))));
+        renderJobs();
+      },
+    }, 'Submit')),
+  out));
+
+/* ---------------------------------------------------------------- logs */
+
+const logCard = card('Logs');
+app.append(logCard);
+
+async function renderLogs() {
+  logCard.replaceChildren(el('h2', {}, 'Logs'));
+  if (!myTenant) {
+    logCard.append(el('p', { class: 'muted' }, 'This login holds no tenancy.'));
+    return;
+  }
+  const pods = await demo.cluster('inferenceendpoints');
+  // The pod names come from the recorded pod listing for this namespace.
+  const podsRes = await call(`/fleet/endpoints?tenant=${myTenant}`);
+  const candidates = [];
+  for (const e of (podsRes.body?.endpoints || [])) {
+    for (const r of (e.replicaDetail || [])) candidates.push(r.name);
+  }
+  const jobsRes = await call(`/fleet/jobs?tenant=${myTenant}`);
+  for (const j of (jobsRes.body?.jobs || [])) candidates.push(`${j.name}-pod`);
+
+  const picker = el('select', {});
+  for (const c of candidates) picker.append(el('option', { value: c }, c));
+  const manual = el('input', { type: 'text', placeholder: 'or type a pod name', style: 'min-width:280px' });
+  const pane = el('pre', { class: 'logs' }, 'pick a pod');
+
+  const load = async (pod) => {
+    if (!pod) return;
+    const res = await call(`/fleet/logs?tenant=${myTenant}&pod=${encodeURIComponent(pod)}&tail=400`);
+    pane.replaceChildren();
+    if (!res.ok) {
+      pane.textContent = `${res.status}  ${res.body?.reason || 'refused'}`;
+      return;
+    }
+    pane.textContent = (res.body.lines || []).join('\n') || '(empty)';
+  };
+
+  logCard.append(
+    el('p', { class: 'note' },
+      'Scoped the same way everything else is: the pod is resolved inside this tenant’s '
+      + 'namespace only. A pod name belonging to another tenancy returns 404 — the caller '
+      + 'learns it is not theirs and nothing about whose it is. Try one from the recording '
+      + 'below as a different persona to see that.'),
+    el('div', { class: 'row', style: 'margin-bottom:10px' },
+      picker,
+      el('button', { onclick: () => load(picker.value) }, 'Read'),
+      manual,
+      el('button', { onclick: () => load(manual.value) }, 'Read that one')),
+    pane);
+
+  if (candidates.length) load(candidates[0]);
+}
+await renderLogs();
+
+/* ------------------------------------------------- what an engineer cannot do */
+
+const money = await call('/fleet/invoices');
+app.append(card('What this login is refused',
+  money.ok
+    ? el('p', { class: 'muted' }, 'This persona holds the tenant administration grant, so billing is readable. Switch to acme-engineer to see the refusal.')
+    : refusal(money, 'Invoices'),
+  el('p', { class: 'note' },
+    'An engineer is a member of the tenancy; the billing account identifier is their '
+    + 'employer’s commercial data and not their business. Same tenancy, different grant, '
+    + 'different answer — and both are served by the same handler.')));
+
+/* ------------------------------------------------------------- the gaps */
+
+app.append(card('What this surface cannot do yet',
+  el('ul', { class: 'wrap', style: 'max-width:80ch' },
+    el('li', {}, el('strong', {}, 'No exec, no port-forward, no file transfer. '),
+      'Logs are the only way in. Debugging a wedged training run means asking the operator.'),
+    el('li', {}, el('strong', {}, 'No log streaming. '),
+      'The route returns a bounded tail. There is no follow, so a watch is the UI polling.'),
+    el('li', {}, el('strong', {}, 'No kubeconfig issuance. '),
+      'A tenant cannot be handed scoped cluster credentials, so anything not on this API is '
+      + 'unreachable to them.'),
+    el('li', {}, el('strong', {}, 'No job events. '),
+      'A pod rejected by Pod Security reports "Running 0/2" with the only record on a '
+      + 'FailedCreate event, and /fleet/events is operator-only.'),
+    el('li', {}, el('strong', {}, 'No checkpoint/resume convention. '),
+      'A job running for months across node reboots has nothing to resume from.'))));
+</script>
+</body>
+</html>

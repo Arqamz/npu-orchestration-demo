@@ -1,0 +1,14 @@
+{
+  "authenticated": true,
+  "principal": {
+    "subject": "2ce74cce-dd4f-4f5a-b7e0-df5dcdee9369",
+    "username": "fleet-operator",
+    "email": "operator@example.internal",
+    "name": "Fleet Operator",
+    "operator": true,
+    "tenantAdmin": false,
+    "tenants": [],
+    "issuer": "https://keycloak.ascend-fleet-system.svc.cluster.local:8443/realms/ascend-fleet",
+    "via": "oidc"
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "stacks": [
+    {
+      "name": "atlas-800i-a2-cann852",
+      "hardwareClass": "atlas-800i-a2",
+      "lifecycle": "Active",
+      "enforcement": "NodeStack",
+      "stack": {
+        "hardwareClass": "atlas-800i-a2",
+        "driverVersion": "25.5.1",
+        "firmwareVersion": "7.8.0.6.201",
+        "cannVersion": "8.5.2",
+        "pytorchVersion": "2.12.0",
+        "torchNPUVersion": "2.12.0.post2"
+      },
+      "assignedNodes": 1,
+      "compliantNodes": 1,
+      "driftedNodes": [],
+      "lastProbeTime": "2026-11-01T19:03:56Z"
+    }
+  ],
+  "nodes": [
+    {
+      "name": "atlas-800i-a2",
+      "hardwareClass": "atlas-800i-a2",
+      "certifiedStack": "atlas-800i-a2-cann852",
+      "ready": true,
+      "cordoned": false,
+      "status": "compliant"
+    }
+  ],
+  "totals": {
+    "stacks": 1,
+    "nodes": 1,
+    "pinned": 1,
+    "compliant": 1,
+    "drifted": 0,
+    "unpinned": 0,
+    "openDrift": 0,
+    "remediatingNow": 0,
+    "assignedNodes": 1
+  },
+  "asOf": "2026-11-01T19:04:04.04083618Z"
+}

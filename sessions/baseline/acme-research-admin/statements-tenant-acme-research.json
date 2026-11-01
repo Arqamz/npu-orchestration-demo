@@ -1,0 +1,32 @@
+{
+  "count": 1,
+  "currency": "USD",
+  "from": "2026-10-28T13:08:50.27331466Z",
+  "statements": [
+    {
+      "tenant": "acme-research",
+      "accountID": "ACC-ACME-RESEARCH",
+      "currency": "USD",
+      "periodFrom": "2026-10-28T13:08:50.27331466Z",
+      "periodTo": "2026-11-01T19:17:23.97613981Z",
+      "direct": [
+        {
+          "namespace": "tenant-acme-research",
+          "resource": "huawei.com/Ascend910",
+          "deviceHours": 0.4631940954000001,
+          "unitPrice": 12,
+          "amount": 5.56
+        }
+      ],
+      "directTotal": 5.56,
+      "resoldTotal": 0,
+      "total": 5.56,
+      "deviceHours": 0.4631940954000001,
+      "warnings": [
+        "this usage is invoiced to \"dc-shanghai\", not directly"
+      ]
+    }
+  ],
+  "to": "2026-11-01T19:17:23.97613981Z",
+  "total": 5.56
+}

@@ -1,0 +1,264 @@
+{
+    "apiVersion": "v1",
+    "items": [
+        {
+            "apiVersion": "v1",
+            "kind": "Pod",
+            "metadata": {
+                "annotations": {
+                    "ascend.kubectl.kubernetes.io/ascend-910-configuration": "{\"pod_name\":\"lab-train-wr6f8\",\"server_id\":\"19a74bbf-5ec4-4e46-afe6-7d3a8f7c442b\",\"host_ip\":\"192.168.0.119\",\"super_pod_id\":-1,\"devices\":[{\"device_id\":\"1\",\"device_ip\":\"29.23.142.245\",\"super_device_id\":\"4291035137\"},{\"device_id\":\"2\",\"device_ip\":\"29.23.23.237\",\"super_device_id\":\"4291297282\"}],\"rack_id\":0,\"server_index\":\"1023\",\"server_ip\":\"192.168.0.119\"}",
+                    "distributed-job": "false",
+                    "hccl/rankIndex": "0",
+                    "huawei.com/Ascend910": "Ascend910-1,Ascend910-2",
+                    "huawei.com/AscendReal": "Ascend910-1,Ascend910-2",
+                    "huawei.com/kltDev": "Ascend910-1,Ascend910-6",
+                    "predicate-time": "18446744073709551615",
+                    "scheduling.k8s.io/group-name": "lab-train"
+                },
+                "creationTimestamp": "2026-10-31T04:33:35Z",
+                "generateName": "lab-train-",
+                "generation": 1,
+                "labels": {
+                    "batch.kubernetes.io/controller-uid": "66681b8b-c6c6-4fa7-9c60-48fbaa26d38a",
+                    "batch.kubernetes.io/job-name": "lab-train",
+                    "controller-uid": "66681b8b-c6c6-4fa7-9c60-48fbaa26d38a",
+                    "job-name": "lab-train"
+                },
+                "name": "lab-train-wr6f8",
+                "namespace": "tenant-lab-co",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "batch/v1",
+                        "blockOwnerDeletion": true,
+                        "controller": true,
+                        "kind": "Job",
+                        "name": "lab-train",
+                        "uid": "66681b8b-c6c6-4fa7-9c60-48fbaa26d38a"
+                    }
+                ],
+                "resourceVersion": "908547",
+                "uid": "19a74bbf-5ec4-4e46-afe6-7d3a8f7c442b"
+            },
+            "spec": {
+                "containers": [
+                    {
+                        "args": [
+                            "python3 -c \"import torch,torch_npu,time;torch.npu.set_device(0);a=torch.randn(4096,4096,dtype=torch.float16).npu();t=time.time();n=0;\nwhile time.time()-t\u003c300:\n    torch.matmul(a,a); n+=1\nprint(ok,n)\" || sleep 300"
+                        ],
+                        "command": [
+                            "/bin/bash",
+                            "-lc"
+                        ],
+                        "image": "quay.io/ascend/vllm-ascend:v0.18.0",
+                        "imagePullPolicy": "IfNotPresent",
+                        "name": "train",
+                        "resources": {
+                            "limits": {
+                                "cpu": "16",
+                                "huawei.com/Ascend910": "2",
+                                "memory": "64Gi"
+                            },
+                            "requests": {
+                                "cpu": "16",
+                                "huawei.com/Ascend910": "2",
+                                "memory": "64Gi"
+                            }
+                        },
+                        "terminationMessagePath": "/dev/termination-log",
+                        "terminationMessagePolicy": "File",
+                        "volumeMounts": [
+                            {
+                                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                                "name": "kube-api-access-vb85l",
+                                "readOnly": true
+                            }
+                        ]
+                    }
+                ],
+                "dnsPolicy": "ClusterFirst",
+                "enableServiceLinks": true,
+                "nodeName": "atlas-800i-a2",
+                "preemptionPolicy": "PreemptLowerPriority",
+                "priority": 0,
+                "restartPolicy": "Never",
+                "runtimeClassName": "ascend",
+                "schedulerName": "volcano",
+                "securityContext": {},
+                "serviceAccount": "default",
+                "serviceAccountName": "default",
+                "terminationGracePeriodSeconds": 30,
+                "tolerations": [
+                    {
+                        "effect": "NoExecute",
+                        "key": "node.kubernetes.io/not-ready",
+                        "operator": "Exists",
+                        "tolerationSeconds": 300
+                    },
+                    {
+                        "effect": "NoExecute",
+                        "key": "node.kubernetes.io/unreachable",
+                        "operator": "Exists",
+                        "tolerationSeconds": 300
+                    }
+                ],
+                "volumes": [
+                    {
+                        "name": "kube-api-access-vb85l",
+                        "projected": {
+                            "defaultMode": 420,
+                            "sources": [
+                                {
+                                    "serviceAccountToken": {
+                                        "expirationSeconds": 3607,
+                                        "path": "token"
+                                    }
+                                },
+                                {
+                                    "configMap": {
+                                        "items": [
+                                            {
+                                                "key": "ca.crt",
+                                                "path": "ca.crt"
+                                            }
+                                        ],
+                                        "name": "kube-root-ca.crt"
+                                    }
+                                },
+                                {
+                                    "downwardAPI": {
+                                        "items": [
+                                            {
+                                                "fieldRef": {
+                                                    "apiVersion": "v1",
+                                                    "fieldPath": "metadata.namespace"
+                                                },
+                                                "path": "namespace"
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            },
+            "status": {
+                "conditions": [
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2026-10-31T04:44:20Z",
+                        "observedGeneration": 1,
+                        "status": "False",
+                        "type": "PodReadyToStartContainers"
+                    },
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2026-10-31T04:33:36Z",
+                        "observedGeneration": 1,
+                        "reason": "PodCompleted",
+                        "status": "True",
+                        "type": "Initialized"
+                    },
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2026-10-31T04:44:18Z",
+                        "observedGeneration": 1,
+                        "reason": "PodCompleted",
+                        "status": "False",
+                        "type": "Ready"
+                    },
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2026-10-31T04:44:18Z",
+                        "observedGeneration": 1,
+                        "reason": "PodCompleted",
+                        "status": "False",
+                        "type": "ContainersReady"
+                    },
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2026-10-31T04:33:36Z",
+                        "observedGeneration": 1,
+                        "status": "True",
+                        "type": "PodScheduled"
+                    }
+                ],
+                "containerStatuses": [
+                    {
+                        "allocatedResources": {
+                            "cpu": "16",
+                            "huawei.com/Ascend910": "2",
+                            "memory": "64Gi"
+                        },
+                        "containerID": "containerd://4e79394530920aadb70e66c99b542b3cae07575788e870449371168260de9dae",
+                        "image": "quay.io/ascend/vllm-ascend:v0.18.0",
+                        "imageID": "sha256:35f9e569dbe3dc8db90cb361886d7889489efd8fa065860c8de319e13ab025d0",
+                        "lastState": {},
+                        "name": "train",
+                        "ready": false,
+                        "resources": {
+                            "limits": {
+                                "cpu": "16",
+                                "huawei.com/Ascend910": "2",
+                                "memory": "64Gi"
+                            },
+                            "requests": {
+                                "cpu": "16",
+                                "huawei.com/Ascend910": "2",
+                                "memory": "64Gi"
+                            }
+                        },
+                        "restartCount": 0,
+                        "started": false,
+                        "state": {
+                            "terminated": {
+                                "containerID": "containerd://4e79394530920aadb70e66c99b542b3cae07575788e870449371168260de9dae",
+                                "exitCode": 0,
+                                "finishedAt": "2026-10-31T04:44:18Z",
+                                "reason": "Completed",
+                                "startedAt": "2026-10-31T04:33:37Z"
+                            }
+                        },
+                        "user": {
+                            "linux": {
+                                "gid": 0,
+                                "supplementalGroups": [
+                                    0
+                                ],
+                                "uid": 0
+                            }
+                        },
+                        "volumeMounts": [
+                            {
+                                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                                "name": "kube-api-access-vb85l",
+                                "readOnly": true,
+                                "recursiveReadOnly": "Disabled"
+                            }
+                        ]
+                    }
+                ],
+                "hostIP": "192.168.0.119",
+                "hostIPs": [
+                    {
+                        "ip": "192.168.0.119"
+                    }
+                ],
+                "observedGeneration": 1,
+                "phase": "Succeeded",
+                "podIP": "10.42.0.184",
+                "podIPs": [
+                    {
+                        "ip": "10.42.0.184"
+                    }
+                ],
+                "qosClass": "Guaranteed",
+                "startTime": "2026-10-31T04:33:36Z"
+            }
+        }
+    ],
+    "kind": "List",
+    "metadata": {
+        "resourceVersion": ""
+    }
+}

@@ -1,0 +1,29 @@
+{
+  "count": 1,
+  "currency": "USD",
+  "from": "2026-10-28T13:08:50.27331466Z",
+  "statements": [
+    {
+      "tenant": "lab-co",
+      "accountID": "ACC-LAB-CO",
+      "currency": "USD",
+      "periodFrom": "2026-10-28T13:08:50.27331466Z",
+      "periodTo": "2026-11-01T19:04:12.772831194Z",
+      "direct": [
+        {
+          "namespace": "tenant-lab-co",
+          "resource": "huawei.com/Ascend910",
+          "deviceHours": 0.35693167150944444,
+          "unitPrice": 12,
+          "amount": 4.28
+        }
+      ],
+      "directTotal": 4.28,
+      "resoldTotal": 0,
+      "total": 4.28,
+      "deviceHours": 0.35693167150944444
+    }
+  ],
+  "to": "2026-11-01T19:04:12.772831194Z",
+  "total": 4.28
+}

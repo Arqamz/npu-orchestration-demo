@@ -1,0 +1,13 @@
+{
+  "allocations": [
+    {
+      "tenant": "maas-co",
+      "cluster": "site-a",
+      "namespace": "tenant-maas-co",
+      "resource": "huawei.com/Ascend910",
+      "devices": 1
+    }
+  ],
+  "count": 1,
+  "devices": 1
+}

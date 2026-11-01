@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Audit &amp; support</title>
+<link rel="stylesheet" href="/shared/fleet.css">
+</head>
+<body>
+<main id="app"></main>
+<script type="module">
+import {
+  call, demo, el, card, table, pill, refusal, chrome, pageTitle, val, ago, statusPill,
+} from '/shared/fleet.js';
+
+const app = document.getElementById('app');
+const me = await chrome('/support/');
+const reach = me?.reach || me?.tenants || [];
+
+app.append(pageTitle('Audit & support',
+  'Who did what, and whether the operator can be caught changing the answer afterwards.'));
+
+/* ----------------------------------------------------------- checkpoint */
+
+const ck = await call('/fleet/audit/checkpoint');
+const pub = await call('/fleet/audit/pubkey');
+
+if (ck.ok) {
+  const c = ck.body.checkpoint || ck.body;
+  app.append(card('The signed head of the log',
+    el('div', { class: 'stats' },
+      el('div', { class: 'stat' }, el('div', { class: 'k' }, 'Records'),
+        el('div', { class: 'v' }, String(c.size))),
+      el('div', { class: 'stat' }, el('div', { class: 'k' }, 'Key'),
+        el('div', { class: 'v', style: 'font-size:15px' }, val(c.keyID))),
+      el('div', { class: 'stat ok' }, el('div', { class: 'k' }, 'Signed'),
+        el('div', { class: 'v', style: 'font-size:15px' }, c.signature ? 'yes' : 'no'),
+        el('div', { class: 'n' }, 'Ed25519'))),
+    el('p', { class: 'note' },
+      'A checkpoint is only evidence once somebody else holds it. The operator holds the '
+      + 'trail, the tree and the key and can rewrite all three consistently; what they cannot '
+      + 'do is reconcile a rewrite with a commitment already in a customer’s records. '
+      + 'That is why this is anchored onto every closed billing period, which is append-only '
+      + 'and is sent to the customer.'),
+    el('pre', { class: 'logs' },
+      `origin   ${c.origin}\nsize     ${c.size}\nroot     ${c.root}\ntime     ${c.time}\nkeyID    ${c.keyID}\nsig      ${c.signature}`),
+    pub.ok ? el('details', { style: 'margin-top:12px' },
+      el('summary', { class: 'muted' }, 'the public key, to verify it yourself'),
+      el('pre', { class: 'logs', style: 'margin-top:8px' },
+        typeof pub.body === 'string' ? pub.body : (pub.body.publicKey || JSON.stringify(pub.body, null, 2))))
+      : null,
+    el('p', { class: 'note' },
+      'Verification lives outside the server, in cmd/audit-verify. A proof checked against a '
+      + 'root from the same response proves only that the server can do arithmetic.')));
+}
+
+/* --------------------------------------------------------------- proof */
+
+const proof = await call('/fleet/audit/proof?seq=1');
+if (proof.ok) {
+  app.append(card('An inclusion proof',
+    el('p', { class: 'note' },
+      'RFC 6962, tested against the RFC’s own vectors. Splitting a subtree at the '
+      + 'midpoint rather than at the largest power of two yields a tree that is '
+      + 'self-consistent, passes every round-trip test written against itself, and agrees '
+      + 'with no other implementation — so every proof handed to an auditor verifies nowhere.'),
+    el('pre', { class: 'logs' }, JSON.stringify(proof.body, null, 2))));
+}
+
+/* -------------------------------------------------------------- verify */
+
+const verify = await call('/fleet/audit/verify');
+app.append(card('Chain verification',
+  verify.ok
+    ? el('div', {},
+      el('div', { class: 'row' }, statusPill(verify.status),
+        el('span', { class: 'mono' }, 'the chain verifies end to end')),
+      el('pre', { class: 'logs', style: 'margin-top:10px' }, JSON.stringify(verify.body, null, 2)))
+    : refusal(verify, 'Verification'),
+  el('p', { class: 'note' },
+    'Verification reads the whole trail, including every tenant’s rows, to recompute the '
+    + 'chain — a chain over a subset is not the chain. There is no narrowing that preserves '
+    + 'the answer, so this one is the operator’s.')));
+
+/* ------------------------------------------------------------ the trail */
+
+const auditCard = card('The trail');
+app.append(auditCard);
+
+const tenantPick = el('select', {});
+tenantPick.append(el('option', { value: '' }, reach.length ? reach[0] : 'all tenants'));
+for (const t of reach) if (t !== reach[0]) tenantPick.append(el('option', { value: t }, t));
+
+async function renderTrail() {
+  auditCard.replaceChildren(el('h2', {}, 'The trail'));
+  const t = tenantPick.value || (reach.length ? reach[0] : '');
+  const res = await call(`/fleet/audit${t ? `?tenant=${t}` : ''}`);
+  if (!res.ok) { auditCard.append(refusal(res, 'The audit trail')); return; }
+
+  const records = res.body.records || res.body.audit || [];
+  auditCard.append(
+    el('p', { class: 'note' },
+      'A mutating call writes its intent BEFORE the handler runs and is refused with 503 if '
+      + 'that write fails. One record written afterwards is not enough: between the handler '
+      + 'closing a billing period and the audit write, the process can be killed by a rolling '
+      + 'update, and what remains is a changed period with nothing saying who changed it.'),
+    el('p', { class: 'note' },
+      'Rejected credentials are recorded from the authenticator itself and marked '
+      + 'via=unauthenticated, never anonymous. A stream of them is the only signal that '
+      + 'someone is guessing — two anonymous calls against the pilot produced two 401s and '
+      + 'an empty trail before this existed.'),
+    el('div', { class: 'row', style: 'margin:10px 0' },
+      reach.length > 1 ? el('label', {}, 'tenant ', tenantPick) : null,
+      el('span', { class: 'muted mono' }, `${records.length} records`)),
+    table(['Seq', 'When', 'Caller', 'Via', 'Method', 'Path', 'Outcome', 'Status', 'Tenant', 'Chain'],
+      records.slice(0, 200),
+      (r) => el('tr', {},
+        el('td', { class: 'num mono' }, val(r.seq)),
+        el('td', { class: 'mono muted' }, ago(r.time ?? r.at ?? r.timestamp)),
+        el('td', { class: 'mono' }, val(r.username ?? r.caller ?? r.principal ?? r.subject)),
+        el('td', {}, pill(val(r.via, { missing: '?' }),
+          r.via === 'unauthenticated' ? 'warn' : r.via === 'oidc' ? 'ok' : '')),
+        el('td', { class: 'mono' }, val(r.method)),
+        el('td', { class: 'mono wrap' }, val(r.path)),
+        el('td', {}, pill(val(r.outcome ?? r.decision, { missing: '?' }),
+          (r.outcome === 'refused' || r.decision === 'refused') ? 'policy'
+            : (r.outcome === 'intent' || r.decision === 'intent') ? 'warn' : 'ok')),
+        el('td', {}, r.status ? statusPill(r.status) : el('span', { class: 'muted' }, '\u2014')),
+        el('td', { class: 'mono muted' }, val(r.tenant, { missing: '' })),
+        el('td', { class: 'mono muted', title: `hash ${r.hash || ''}\nprev ${r.prev || ''}` },
+          (r.hash || '').slice(0, 10) || '\u2014'))));
+}
+tenantPick.addEventListener('change', renderTrail);
+await renderTrail();
+
+/* -------------------------------------------------------------- events */
+
+const ev = await call('/fleet/events');
+app.append(card('Support timeline',
+  ev.ok
+    ? table(['When', 'Kind', 'Object', 'Reason', 'Message'],
+      (ev.body.events || ev.body.timeline || []).slice(0, 120),
+      (e) => el('tr', {},
+        el('td', { class: 'mono muted' }, ago(e.at ?? e.time ?? e.lastTimestamp)),
+        el('td', {}, pill(val(e.type ?? e.kind, { missing: '' }),
+          (e.type === 'Warning') ? 'warn' : '')),
+        el('td', { class: 'mono' }, val(e.object ?? e.involvedObject?.name, { missing: '' })),
+        el('td', { class: 'mono' }, val(e.reason, { missing: '' })),
+        el('td', { class: 'wrap muted' }, val(e.message, { missing: '' }))))
+    : refusal(ev, 'The support timeline'),
+  el('p', { class: 'note' },
+    'Operator-only, and deliberately not narrowed. The stream mixes node-level records with '
+    + 'tenant-level ones and cannot be filtered by rewriting one query parameter: an entry '
+    + 'whose tenant could not be determined would either leak to the wrong customer or vanish '
+    + 'from an incident page, and neither is acceptable.')));
+
+/* ------------------------------------------------------- demo own trail */
+
+app.append(card('This demo’s own trail',
+  el('p', { class: 'note' },
+    'Every request you have made on these pages, recorded in the same shape, including the '
+    + 'refusals and the two-phase intent records. Clicking around the other surfaces and '
+    + 'coming back here shows the mechanism working on your own activity.'),
+  el('div', { id: 'demotrail' })));
+
+async function renderDemoTrail() {
+  const res = await demo.audit();
+  const box = document.getElementById('demotrail');
+  box.replaceChildren(table(
+    ['Seq', 'When', 'Caller', 'Via', 'Method', 'Path', 'Decision', 'Status'],
+    (res.body?.records || []).slice(0, 60),
+    (r) => el('tr', {},
+      el('td', { class: 'num mono' }, String(r.seq)),
+      el('td', { class: 'mono muted' }, ago(r.at)),
+      el('td', { class: 'mono' }, r.caller),
+      el('td', {}, pill(r.via, r.via === 'unauthenticated' ? 'warn' : 'ok')),
+      el('td', { class: 'mono' }, r.method),
+      el('td', { class: 'mono wrap' }, r.path),
+      el('td', {}, pill(r.decision,
+        r.decision === 'refused' ? 'policy' : r.decision === 'intent' ? 'warn' : 'ok')),
+      el('td', {}, r.status ? statusPill(r.status) : el('span', { class: 'muted' }, '—')))));
+}
+await renderDemoTrail();
+
+app.append(card('What audit cannot do yet',
+  el('ul', { class: 'wrap', style: 'max-width:80ch' },
+    el('li', {}, el('strong', {}, 'No third-party witness. '),
+      'Checkpoints are signed by the operator alone. A co-signature from someone the customer '
+      + 'also trusts is what would make a rewrite detectable without the customer having kept '
+      + 'their own copy.'),
+    el('li', {}, el('strong', {}, 'No alerting on refusal bursts. '),
+      'A stream of unauthenticated records is the signal that someone is guessing, and '
+      + 'nothing watches for it.'),
+    el('li', {}, el('strong', {}, 'Nothing scrapes the metrics. '),
+      'The manager exposes Prometheus metrics and a ServiceMonitor exists; no Prometheus, '
+      + 'no Grafana, no retention.'),
+    el('li', {}, el('strong', {}, 'No structured faults. '),
+      'npu-smi fault output reaches the node object as raw split strings.'))));
+</script>
+</body>
+</html>

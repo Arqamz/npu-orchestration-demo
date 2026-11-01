@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Serving</title>
+<link rel="stylesheet" href="/shared/fleet.css">
+</head>
+<body>
+<main id="app"></main>
+
+<script type="module">
+import {
+  call, demo, el, card, table, pill, phasePill, refusal,
+  chrome, pageTitle, val, ago,
+} from '/shared/fleet.js';
+
+const app = document.getElementById('app');
+const me = await chrome('/serving/');
+
+app.append(pageTitle(
+  'Serving',
+  'A model running as a long-lived endpoint, scaled by demand and bounded by the tenant’s quota. '
+  + 'The run below is real: 64 concurrent clients against Qwen2-0.5B on one Atlas 800I A2, recorded frame by frame.'));
+
+/* ---------------------------------------------------------- the endpoint */
+
+const listCard = card('Endpoints');
+const replicaCard = card('Replicas — one Ascend 910B3 each');
+app.append(listCard, replicaCard);
+
+/* ------------------------------------------------------------- the run */
+
+const runCard = card('Autoscaling run');
+app.append(runCard);
+
+const playBtn = el('button', { class: 'primary' }, '▶  Replay the load test');
+const stopBtn = el('button', {}, 'Reset');
+const clock = el('span', { class: 'mono muted' }, 'idle');
+
+runCard.append(el('div', { class: 'row', style: 'margin-bottom:14px' },
+  playBtn, stopBtn, clock));
+
+const canvas = el('canvas', { class: 'chart' });
+runCard.append(canvas);
+runCard.append(el('div', { class: 'legend' },
+  el('span', {}, el('i', { style: 'background:#5b9dff' }), 'replicas'),
+  el('span', {}, el('i', { style: 'background:#3fb950' }), 'ready'),
+  el('span', {}, el('i', { style: 'background:#d29922' }), 'running requests'),
+  el('span', {}, el('i', { style: 'background:#f85149' }), 'quota ceiling')));
+
+const conditionsCard = card('What the controller decided');
+app.append(conditionsCard);
+
+/* ---------------------------------------------------------------- data */
+
+const seriesRes = await demo.series();
+const series = seriesRes.body?.series || [];
+const meta = seriesRes.body?.meta || null;
+
+if (meta) {
+  runCard.append(el('p', { class: 'note' },
+    `${meta.concurrency} concurrent clients for ${meta.durationSeconds}s against `
+    + `${meta.model}, sampled every ${meta.intervalSeconds}s. ${meta.frames} frames, `
+    + `captured ${meta.capturedAt}.`));
+}
+
+/* ------------------------------------------------------------ the chart */
+
+function drawChart(upto = Infinity) {
+  const dpr = window.devicePixelRatio || 1;
+  const w = canvas.clientWidth || 800;
+  const h = 230;
+  canvas.width = w * dpr;
+  canvas.height = h * dpr;
+  const ctx = canvas.getContext('2d');
+  ctx.scale(dpr, dpr);
+  ctx.clearRect(0, 0, w, h);
+  if (!series.length) return;
+
+  const css = getComputedStyle(document.body);
+  const line = css.getPropertyValue('--line').trim() || '#262c38';
+  const dim = css.getPropertyValue('--ink-faint').trim() || '#6b7489';
+
+  const padL = 34, padR = 34, padT = 12, padB = 24;
+  const maxOff = series[series.length - 1].offset || 1;
+  const maxRep = Math.max(4, ...series.map((s) => Math.max(s.replicas, s.quotaCeiling)));
+  const maxMet = Math.max(1, ...series.map((s) => s.observedMetric));
+
+  const x = (o) => padL + (o / maxOff) * (w - padL - padR);
+  const yRep = (v) => h - padB - (v / maxRep) * (h - padT - padB);
+  const yMet = (v) => h - padB - (v / maxMet) * (h - padT - padB);
+
+  // gridlines
+  ctx.strokeStyle = line; ctx.lineWidth = 1; ctx.font = '10px ui-monospace, monospace';
+  ctx.fillStyle = dim;
+  for (let r = 0; r <= maxRep; r += 1) {
+    const y = yRep(r);
+    ctx.globalAlpha = 0.35;
+    ctx.beginPath(); ctx.moveTo(padL, y); ctx.lineTo(w - padR, y); ctx.stroke();
+    ctx.globalAlpha = 1;
+    ctx.fillText(String(r), 6, y + 3);
+  }
+  // x labels
+  for (let o = 0; o <= maxOff; o += 60) {
+    ctx.fillText(`${o}s`, x(o) - 8, h - 7);
+  }
+
+  const visible = series.filter((s) => s.offset <= upto);
+  if (!visible.length) return;
+
+  const stroke = (pts, color, width = 2, step = true) => {
+    ctx.strokeStyle = color; ctx.lineWidth = width;
+    ctx.beginPath();
+    pts.forEach(([px, py], i) => {
+      if (i === 0) ctx.moveTo(px, py);
+      else {
+        if (step) ctx.lineTo(px, pts[i - 1][1]);
+        ctx.lineTo(px, py);
+      }
+    });
+    ctx.stroke();
+  };
+
+  // quota ceiling — the line the autoscaler is not allowed to cross
+  ctx.setLineDash([4, 4]);
+  stroke(visible.map((s) => [x(s.offset), yRep(s.quotaCeiling)]), '#f85149', 1.5);
+  ctx.setLineDash([]);
+
+  stroke(visible.map((s) => [x(s.offset), yMet(s.observedMetric)]), '#d29922', 1.5, false);
+  stroke(visible.map((s) => [x(s.offset), yRep(s.replicas)]), '#5b9dff', 2.5);
+  stroke(visible.map((s) => [x(s.offset), yRep(s.readyReplicas)]), '#3fb950', 2);
+
+  // playhead
+  if (upto !== Infinity && upto <= maxOff) {
+    ctx.strokeStyle = dim; ctx.globalAlpha = 0.7; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(x(upto), padT); ctx.lineTo(x(upto), h - padB); ctx.stroke();
+    ctx.globalAlpha = 1;
+  }
+}
+
+/* --------------------------------------------------------- the endpoint */
+
+function renderEndpoint(e, offset) {
+  listCard.replaceChildren(el('h2', {}, 'Endpoints'));
+  listCard.append(table(
+    ['Endpoint', 'Tenant', 'Model', 'Phase', 'Ready', 'Replicas', 'Ceiling', 'Devices', 'Metric', 'Address'],
+    [e],
+    (r) => el('tr', {},
+      el('td', {}, el('strong', {}, r.name)),
+      el('td', {}, r.tenant),
+      el('td', { class: 'mono' }, r.model),
+      el('td', {}, phasePill(r.phase)),
+      el('td', { class: 'num' }, val(r.readyReplicas)),
+      el('td', { class: 'num' }, val(r.replicas)),
+      el('td', { class: 'num' }, r.quotaCeiling === -1
+        ? el('span', { class: 'pill warn', title: 'the controller could not read the quota; this is NOT zero' }, 'unknown')
+        : val(r.quotaCeiling)),
+      el('td', { class: 'num' }, val(r.devicesHeld)),
+      el('td', { class: 'num' }, val(r.observedMetric)),
+      el('td', { class: 'mono muted wrap' }, val(r.address)))));
+
+  // Stat row
+  listCard.append(el('div', { class: 'stats', style: 'margin-top:14px' },
+    el('div', { class: 'stat' },
+      el('div', { class: 'k' }, 'Replicas'),
+      el('div', { class: 'v' }, String(e.replicas ?? 0)),
+      el('div', { class: 'n' }, `floor ${e.minReplicas} · ceiling ${e.maxReplicas}`)),
+    el('div', { class: 'stat ok' },
+      el('div', { class: 'k' }, 'Serving'),
+      el('div', { class: 'v' }, String(e.readyReplicas ?? 0)),
+      el('div', { class: 'n' }, 'replicas answering')),
+    el('div', { class: 'stat warn' },
+      el('div', { class: 'k' }, 'Running requests'),
+      el('div', { class: 'v' }, String(parseFloat(e.observedMetric || '0').toFixed(0))),
+      el('div', { class: 'n' }, `target ${e.target} per replica`)),
+    el('div', { class: 'stat bad' },
+      el('div', { class: 'k' }, 'NPUs held'),
+      el('div', { class: 'v' }, String(e.devicesHeld ?? 0)),
+      el('div', { class: 'n' }, `quota allows ${e.quotaCeiling}`)),
+    el('div', { class: 'stat' },
+      el('div', { class: 'k' }, 'Elapsed'),
+      el('div', { class: 'v' }, offset === null ? '—' : `${Math.round(offset)}s`),
+      el('div', { class: 'n' }, 'into the run'))));
+
+  // conditions, verbatim
+  conditionsCard.replaceChildren(el('h2', {}, 'What the controller decided'));
+  conditionsCard.append(el('p', { class: 'note' },
+    'These sentences come from the controller itself. A UI that recomputed them from the '
+    + 'numbers would get them wrong: "holding 4 (3 of them not yet reporting)" and '
+    + '"capped by maxReplicas" are different states with identical replica counts.'));
+  conditionsCard.append(table(
+    ['Condition', 'Status', 'Reason', 'Message'],
+    e.conditions || [],
+    (c) => el('tr', {},
+      el('td', { class: 'mono' }, c.type),
+      el('td', {}, pill(c.status, c.status === 'True' ? 'ok' : '')),
+      el('td', { class: 'mono muted' }, c.reason),
+      el('td', { class: 'wrap' }, c.message))));
+}
+
+function renderReplicas(e, podFrame) {
+  replicaCard.replaceChildren(el('h2', {}, 'Replicas — one Ascend 910B3 each'));
+
+  const pods = podFrame?.items || [];
+  const detail = e.replicaDetail || [];
+
+  // Prefer the pod objects from the frame when replaying: they carry the
+  // phase transitions the summary flattens away.
+  const rows = pods.length ? pods.map((p) => ({
+    name: p.metadata?.name,
+    phase: p.status?.phase,
+    ready: (p.status?.conditions || []).some((c) => c.type === 'Ready' && c.status === 'True'),
+    node: p.spec?.nodeName,
+    device: p.metadata?.annotations?.['huawei.com/AscendReal'],
+    rank: p.metadata?.annotations?.['hccl/rankIndex'],
+    reason: (p.status?.containerStatuses || [])
+      .map((c) => c.state?.waiting?.reason).filter(Boolean)[0]
+      || (p.status?.conditions || []).filter((c) => c.type === 'PodScheduled' && c.status === 'False')
+        .map((c) => c.reason)[0],
+  })) : detail;
+
+  const grid = el('div', { class: 'replicas' });
+  for (const r of rows) {
+    grid.append(el('div', { class: `replica ${r.ready ? 'ready' : 'pending'}` },
+      el('div', { class: 'card-id' }, r.device || 'card not yet assigned'),
+      el('div', { class: 'row', style: 'margin:5px 0' },
+        phasePill(r.phase),
+        r.ready ? pill('serving', 'ok') : pill('not answering', 'warn'),
+        r.rank ? pill(`rank ${r.rank}`, '') : null),
+      el('div', { class: 'pod' }, r.name || '—'),
+      r.node ? el('div', { class: 'pod' }, r.node) : null,
+      r.reason ? el('div', { class: 'pod', style: 'color:var(--warn);margin-top:4px' }, r.reason) : null));
+  }
+
+  // The empty slots up to the quota ceiling, so the ceiling is visible as
+  // a thing rather than only as a number that stops moving.
+  const ceiling = e.quotaCeiling > 0 ? e.quotaCeiling : e.maxReplicas;
+  for (let i = rows.length; i < ceiling; i += 1) {
+    grid.append(el('div', { class: 'slot' }, 'free — within quota'));
+  }
+  replicaCard.append(grid);
+
+  replicaCard.append(el('div', { class: 'gap' },
+    el('strong', {}, 'Measured on this hardware: '),
+    'a replica takes about four to five minutes from scheduled to serving — the image is 9GB and '
+    + 'vLLM compiles graphs on first start. In the run below the autoscaler reaches four replicas '
+    + 'in 47 seconds and the second one only begins answering at 258s. Scaling is immediate; '
+    + 'capacity is not. A model cache and a warm floor are what close that gap.'));
+}
+
+/* -------------------------------------------------------------- driving */
+
+async function loadStatic() {
+  const res = await call('/fleet/endpoints');
+  if (!res.ok) {
+    listCard.replaceChildren(el('h2', {}, 'Endpoints'),
+      refusal(res, 'This persona cannot read endpoints'));
+    replicaCard.replaceChildren();
+    conditionsCard.replaceChildren();
+    return null;
+  }
+  const eps = res.body.endpoints || [];
+  if (!eps.length) {
+    listCard.replaceChildren(el('h2', {}, 'Endpoints'),
+      el('p', { class: 'muted' },
+        `${me?.username ?? 'this tenant'} runs no inference endpoints. `
+        + 'Switch to maas-co-admin to see one.'));
+    replicaCard.replaceChildren();
+    conditionsCard.replaceChildren();
+    return null;
+  }
+  const e = eps[0];
+  renderEndpoint(e, null);
+  renderReplicas(e, null);
+  drawChart(0);
+  return e;
+}
+
+let timer = null;
+
+async function tick() {
+  const res = await demo.now();
+  const f = res.body;
+  if (!f || !f.body) return;
+  const e = (f.body.endpoints || [])[0];
+  if (!e) return;
+  renderEndpoint(e, f.offset);
+  renderReplicas(e, f.pods);
+  drawChart(f.offset);
+  clock.textContent = f.running
+    ? `t+${Math.round(f.offset)}s  of  ${series[series.length - 1]?.offset ?? 0}s`
+    : 'run complete — settled back to the floor';
+  if (!f.running && f.done) {
+    clearInterval(timer); timer = null;
+    playBtn.disabled = false;
+    playBtn.textContent = '▶  Replay the load test';
+  }
+}
+
+playBtn.addEventListener('click', async () => {
+  await demo.start();
+  playBtn.disabled = true;
+  playBtn.textContent = 'running…';
+  if (timer) clearInterval(timer);
+  timer = setInterval(tick, 700);
+  tick();
+});
+
+stopBtn.addEventListener('click', async () => {
+  await demo.stop();
+  if (timer) { clearInterval(timer); timer = null; }
+  playBtn.disabled = false;
+  playBtn.textContent = '▶  Replay the load test';
+  clock.textContent = 'idle';
+  await loadStatic();
+});
+
+const endpoint = await loadStatic();
+
+if (!endpoint) {
+  runCard.style.display = 'none';
+  conditionsCard.style.display = 'none';
+} else {
+  window.addEventListener('resize', () => drawChart(timer ? undefined : 0));
+}
+
+/* ------------------------------------------------------- what is missing */
+
+app.append(card('What this flow does not do yet',
+  el('p', { class: 'note' },
+    'Listed here rather than hidden, because a design team needs to know which screens '
+    + 'have no data behind them.'),
+  el('ul', { class: 'wrap', style: 'max-width:80ch' },
+    el('li', {}, el('strong', {}, 'No public address. '),
+      'The endpoint is a ClusterIP. There is no ingress, no TLS and no hostname a '
+      + 'customer’s client could reach — the address above resolves only inside the cluster.'),
+    el('li', {}, el('strong', {}, 'No per-caller API keys. '),
+      'Anything inside the cluster can call the endpoint. A MaaS customer reselling to '
+      + 'their own users has nothing to issue them.'),
+    el('li', {}, el('strong', {}, 'Billing is device-seconds, not tokens. '),
+      'vLLM reports tokens and this platform meters cards. For an AI token factory '
+      + 'that is a structural mismatch, not a missing column.'),
+    el('li', {}, el('strong', {}, 'One endpoint, one model. '),
+      'No shared router, so ten models mean ten cards held permanently.'),
+    el('li', {}, el('strong', {}, 'Multi-card replicas are untested. '),
+      'devicesPerReplica > 1 is implemented and has never been run; a 70B model needing '
+      + 'tensor parallelism across four cards is unproven.'))));
+</script>
+</body>
+</html>

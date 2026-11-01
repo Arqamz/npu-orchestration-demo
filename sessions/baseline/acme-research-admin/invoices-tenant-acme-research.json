@@ -1,0 +1,28 @@
+{
+  "count": 1,
+  "currency": "USD",
+  "invoices": [
+    {
+      "tenant": "acme-research",
+      "accountID": "ACC-ACME-RESEARCH",
+      "currency": "USD",
+      "periodFrom": "2026-10-28T13:08:50.27331466Z",
+      "periodTo": "2026-11-01T19:17:23.945855618Z",
+      "lines": [
+        {
+          "namespace": "tenant-acme-research",
+          "resource": "huawei.com/Ascend910",
+          "deviceHours": 0.4631940954000001,
+          "unitPrice": 12,
+          "amount": 5.56
+        }
+      ],
+      "total": 5.56,
+      "usage": {
+        "deviceHours": 0.4631940954000001
+      }
+    }
+  ],
+  "note": "Usage is metered from observed allocations, and carried across restarts by the usage checkpoint. Time during which the control plane was not observing a cluster is excluded and appears under gaps on /fleet/usage.",
+  "total": 5.56
+}

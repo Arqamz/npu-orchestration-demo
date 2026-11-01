@@ -1,0 +1,36 @@
+{
+  "count": 3,
+  "gaps": null,
+  "observedFor": {
+    "site-a": 850.406614782
+  },
+  "records": [
+    {
+      "cluster": "site-a",
+      "tenant": "acme",
+      "namespace": "tenant-acme",
+      "resource": "huawei.com/Ascend910",
+      "deviceSeconds": 89404.713234833,
+      "deviceHours": 24.83464256523139
+    },
+    {
+      "cluster": "site-a",
+      "tenant": "acme",
+      "namespace": "tenant-acme",
+      "resource": "huawei.com/Ascend910-5c.1.16g",
+      "deviceSeconds": 381.88534302000005,
+      "deviceHours": 0.10607926195000002
+    },
+    {
+      "cluster": "site-a",
+      "tenant": "acme",
+      "namespace": "tenant-acme",
+      "resource": "huawei.com/Ascend910-5c.1cpu.16g",
+      "deviceSeconds": 207767.22529528913,
+      "deviceHours": 57.71311813758032
+    }
+  ],
+  "since": "2026-10-28T13:08:50.27331466Z",
+  "totalDeviceHours": 82.6538399647617,
+  "totalDeviceSeconds": 297553.82387314213
+}

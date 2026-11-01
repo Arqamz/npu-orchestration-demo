@@ -1,0 +1,32 @@
+{
+  "entitlements": [
+    {
+      "tenant": "dc-shanghai",
+      "displayName": "Shanghai Data Centre",
+      "namespace": "tenant-dc-shanghai",
+      "phase": "Ready",
+      "queueName": "tenant-dc-shanghai",
+      "quota": {
+        "cpu": "160",
+        "memory": "640Gi",
+        "npu": "8",
+        "pods": "64"
+      },
+      "held": {},
+      "heldDevices": 0,
+      "vnpuMode": "Static",
+      "vnpuTemplates": [
+        "vir05_1c_16g",
+        "vir10_3c_32g"
+      ],
+      "mutationStrategy": "Recreate",
+      "networkIsolation": "Strict",
+      "restrictEgress": false,
+      "podSecurity": "restricted",
+      "billingAccountID": "ACC-DC-SHANGHAI",
+      "subjects": 0
+    }
+  ],
+  "count": 1,
+  "note": "Quota is enforced per extended resource name as the device plugin advertises it, not per template name. A whole card and a vNPU slice of one both count as a single device."
+}

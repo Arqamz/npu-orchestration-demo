@@ -1,0 +1,5 @@
+{
+  "keyID": "6b3d541711a8c391",
+  "note": "Obtain this out of band as well. A public key fetched from the same server that signs with it establishes nothing.",
+  "publicKey": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEAJj5uBBeMz4YbXpqRWm6xqrAIjAeMEdmAuqFPpQcMedo=\n-----END PUBLIC KEY-----\n"
+}

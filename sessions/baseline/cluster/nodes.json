@@ -1,0 +1,413 @@
+{
+    "apiVersion": "v1",
+    "items": [
+        {
+            "apiVersion": "v1",
+            "kind": "Node",
+            "metadata": {
+                "annotations": {
+                    "alpha.kubernetes.io/provided-node-ip": "192.168.0.119",
+                    "baseDeviceInfos": "{\"Ascend910-0\":{\"IP\":\"29.23.116.156\",\"SuperDeviceID\":4290772992},\"Ascend910-1\":{\"IP\":\"29.23.142.245\",\"SuperDeviceID\":4291035137},\"Ascend910-2\":{\"IP\":\"29.23.23.237\",\"SuperDeviceID\":4291297282},\"Ascend910-3\":{\"IP\":\"29.23.168.34\",\"SuperDeviceID\":4291559427},\"Ascend910-4\":{\"IP\":\"29.23.99.134\",\"SuperDeviceID\":4291821572},\"Ascend910-5\":{\"IP\":\"29.23.64.236\",\"SuperDeviceID\":4292083717},\"Ascend910-6\":{\"IP\":\"29.23.114.129\",\"SuperDeviceID\":4292345862},\"Ascend910-7\":{\"IP\":\"29.23.104.192\",\"SuperDeviceID\":4292608007}}",
+                    "flannel.alpha.coreos.com/backend-data": "{\"VNI\":1,\"VtepMAC\":\"be:0d:c2:16:53:d5\"}",
+                    "flannel.alpha.coreos.com/backend-type": "vxlan",
+                    "flannel.alpha.coreos.com/kube-subnet-manager": "true",
+                    "flannel.alpha.coreos.com/public-ip": "192.168.0.119",
+                    "huawei.com/device-plugin.version": "{\"version\":\"v26.2.0\",\"gitCommit\":\"6cb6683c8b73d1c26341bb81a2c1cefe12a855ca\",\"gitBranch\":\"release/v26.2.0\",\"buildOS\":\"linux\",\"buildArch\":\"aarch64\",\"goVersion\":\"go1.26.1\"}",
+                    "huawei.com/npu.base-device-infos": "{\"Ascend910-0\":{\"IP\":\"29.23.116.156\",\"SuperDeviceID\":4290772992},\"Ascend910-1\":{\"IP\":\"29.23.142.245\",\"SuperDeviceID\":4291035137},\"Ascend910-2\":{\"IP\":\"29.23.23.237\",\"SuperDeviceID\":4291297282},\"Ascend910-3\":{\"IP\":\"29.23.168.34\",\"SuperDeviceID\":4291559427},\"Ascend910-4\":{\"IP\":\"29.23.99.134\",\"SuperDeviceID\":4291821572},\"Ascend910-5\":{\"IP\":\"29.23.64.236\",\"SuperDeviceID\":4292083717},\"Ascend910-6\":{\"IP\":\"29.23.114.129\",\"SuperDeviceID\":4292345862},\"Ascend910-7\":{\"IP\":\"29.23.104.192\",\"SuperDeviceID\":4292608007}}",
+                    "huawei.com/npu.chip.serial-number": "{\"0\":\"10265A862994\",\"1\":\"10265A863030\",\"2\":\"10265A862993\",\"3\":\"10265A863029\",\"4\":\"10265A863018\",\"5\":\"10265A863227\",\"6\":\"10265A862939\",\"7\":\"10265A863003\"}",
+                    "huawei.com/npu.chip.vdie-ids": "{\"0\":\"7F43F66C-80C02DDB-57DBB653-808080E0-104301E3\",\"1\":\"C29EF66C-80409947-0FB11253-E0500485-104301E3\",\"2\":\"D29EF664-8080F559-476B8473-E7D00485-104301E3\",\"3\":\"3F43F66C-808095F2-426A1253-E0500485-104301E3\",\"4\":\"CF43F66C-8080738F-4D49D253-E0500485-104301E3\",\"5\":\"D426F66C-816057B1-0B934473-E7D00485-104301E3\",\"6\":\"D426F664-80E0F6B1-3384C473-E7D00485-104301E3\",\"7\":\"6AA92A64-80C03675-190A1253-E0500485-104301E3\"}",
+                    "huawei.com/npu.topology": "[0,1,2,3,4,5,6,7]",
+                    "k3s.io/hostname": "liteserver-dad9",
+                    "k3s.io/internal-ip": "192.168.0.119",
+                    "k3s.io/node-args": "[\"server\",\"--kubelet-arg\",\"image-gc-high-threshold=97\",\"--kubelet-arg\",\"image-gc-low-threshold=90\",\"--node-ip\",\"192.168.0.119\",\"--advertise-address\",\"192.168.0.119\",\"--node-name\",\"atlas-800i-a2\",\"--disable\",\"traefik\",\"--disable\",\"servicelb\",\"--write-kubeconfig-mode\",\"600\"]",
+                    "k3s.io/node-config-hash": "KEOPCBBESLFZAQ72WB2G7KRZ76U3RZUVAFDVNM3XA65JJZHBV7OA====",
+                    "k3s.io/node-env": "{}",
+                    "node.alpha.kubernetes.io/ttl": "0",
+                    "serverIndex": "1023",
+                    "serverType": "",
+                    "stack.platform.ascendfleet.internal/cann-version": "8.5.2",
+                    "stack.platform.ascendfleet.internal/driver-version": "25.5.1",
+                    "stack.platform.ascendfleet.internal/firmware-version": "7.8.0.6.201",
+                    "stack.platform.ascendfleet.internal/reported-at": "2026-10-30T11:20:24Z",
+                    "superPodID": "-1",
+                    "vnpu.platform.ascendfleet.internal/desired-layout": "{}",
+                    "volumes.kubernetes.io/controller-managed-attach-detach": "true"
+                },
+                "creationTimestamp": "2026-10-01T17:54:43Z",
+                "finalizers": [
+                    "wrangler.cattle.io/node"
+                ],
+                "labels": {
+                    "accelerator": "huawei-Ascend910",
+                    "beta.kubernetes.io/arch": "arm64",
+                    "beta.kubernetes.io/instance-type": "k3s",
+                    "beta.kubernetes.io/os": "linux",
+                    "huawei.com/driver.version": "25.5.1",
+                    "huawei.com/npu.chip.boardid": "0x32",
+                    "huawei.com/npu.chip.memory": "64G",
+                    "huawei.com/npu.chip.name": "910B3",
+                    "huawei.com/npu.driver.version": "25.5.1",
+                    "huawei.com/npu.server.type": "Ascend910B-20",
+                    "kubernetes.io/arch": "arm64",
+                    "kubernetes.io/hostname": "atlas-800i-a2",
+                    "kubernetes.io/os": "linux",
+                    "mind-cluster/npu-chip-memory": "64G",
+                    "node-role.kubernetes.io/control-plane": "true",
+                    "node.kubernetes.io/instance-type": "k3s",
+                    "node.kubernetes.io/npu.chip.name": "910B3",
+                    "platform.ascendfleet.internal/certified-stack": "atlas-800i-a2-cann852",
+                    "platform.ascendfleet.internal/hardware-class": "atlas-800i-a2",
+                    "servertype": "Ascend910B-20"
+                },
+                "name": "atlas-800i-a2",
+                "resourceVersion": "1049612",
+                "uid": "37c95880-4329-47f6-b594-4787ec6b73db"
+            },
+            "spec": {
+                "podCIDR": "10.42.0.0/24",
+                "podCIDRs": [
+                    "10.42.0.0/24"
+                ],
+                "providerID": "k3s://atlas-800i-a2"
+            },
+            "status": {
+                "addresses": [
+                    {
+                        "address": "192.168.0.119",
+                        "type": "InternalIP"
+                    },
+                    {
+                        "address": "liteserver-dad9",
+                        "type": "Hostname"
+                    }
+                ],
+                "allocatable": {
+                    "cpu": "192",
+                    "ephemeral-storage": "1026699648629",
+                    "huawei.com/Ascend910": "8",
+                    "huawei.com/Ascend910-10c.3cpu.32g": "0",
+                    "huawei.com/Ascend910-5c.1cpu.16g": "0",
+                    "hugepages-1Gi": "0",
+                    "hugepages-2Mi": "0",
+                    "hugepages-32Mi": "0",
+                    "hugepages-64Ki": "0",
+                    "memory": "1579637340Ki",
+                    "pods": "110"
+                },
+                "capacity": {
+                    "cpu": "192",
+                    "ephemeral-storage": "1055406712Ki",
+                    "huawei.com/Ascend910": "8",
+                    "huawei.com/Ascend910-10c.3cpu.32g": "0",
+                    "huawei.com/Ascend910-5c.1cpu.16g": "0",
+                    "hugepages-1Gi": "0",
+                    "hugepages-2Mi": "0",
+                    "hugepages-32Mi": "0",
+                    "hugepages-64Ki": "0",
+                    "memory": "1579637340Ki",
+                    "pods": "110"
+                },
+                "conditions": [
+                    {
+                        "lastHeartbeatTime": "2026-11-01T19:02:50Z",
+                        "lastTransitionTime": "2026-10-01T17:54:43Z",
+                        "message": "kubelet has sufficient memory available",
+                        "reason": "KubeletHasSufficientMemory",
+                        "status": "False",
+                        "type": "MemoryPressure"
+                    },
+                    {
+                        "lastHeartbeatTime": "2026-11-01T19:02:50Z",
+                        "lastTransitionTime": "2026-10-01T17:54:43Z",
+                        "message": "kubelet has no disk pressure",
+                        "reason": "KubeletHasNoDiskPressure",
+                        "status": "False",
+                        "type": "DiskPressure"
+                    },
+                    {
+                        "lastHeartbeatTime": "2026-11-01T19:02:50Z",
+                        "lastTransitionTime": "2026-10-01T17:54:43Z",
+                        "message": "kubelet has sufficient PID available",
+                        "reason": "KubeletHasSufficientPID",
+                        "status": "False",
+                        "type": "PIDPressure"
+                    },
+                    {
+                        "lastHeartbeatTime": "2026-11-01T19:02:50Z",
+                        "lastTransitionTime": "2026-10-01T17:54:43Z",
+                        "message": "kubelet is posting ready status",
+                        "reason": "KubeletReady",
+                        "status": "True",
+                        "type": "Ready"
+                    }
+                ],
+                "daemonEndpoints": {
+                    "kubeletEndpoint": {
+                        "Port": 10250
+                    }
+                },
+                "features": {
+                    "supplementalGroupsPolicy": true
+                },
+                "images": [
+                    {
+                        "names": [
+                            "quay.io/ascend/vllm-ascend:v0.18.0"
+                        ],
+                        "sizeBytes": 16214918128
+                    },
+                    {
+                        "names": [
+                            "docker.io/ascendai/cann:8.5.2-910b-ubuntu22.04-py3.10"
+                        ],
+                        "sizeBytes": 4021531813
+                    },
+                    {
+                        "names": [
+                            "docker.io/library/vc-scheduler-ascend:v1.9.0-npu26.2.0"
+                        ],
+                        "sizeBytes": 285179097
+                    },
+                    {
+                        "names": [
+                            "quay.io/keycloak/keycloak@sha256:5fdd7cda82e58775ed124294c7e16fabc33166d38dfc4aabebda7d64e7a964bf",
+                            "quay.io/keycloak/keycloak:26.5.0"
+                        ],
+                        "sizeBytes": 253984057
+                    },
+                    {
+                        "names": [
+                            "docker.io/library/ascend-k8sdeviceplugin:v26.2.0"
+                        ],
+                        "sizeBytes": 175851958
+                    },
+                    {
+                        "names": [
+                            "docker.io/library/vc-controller-manager-ascend:v1.9.0"
+                        ],
+                        "sizeBytes": 98769126
+                    },
+                    {
+                        "names": [
+                            "docker.io/library/ascend-fleet-manager:api2"
+                        ],
+                        "sizeBytes": 90586001
+                    },
+                    {
+                        "names": [
+                            "docker.io/library/ascend-fleet-manager:api1"
+                        ],
+                        "sizeBytes": 90584465
+                    },
+                    {
+                        "names": [
+                            "docker.io/library/ascend-fleet-manager:iep4"
+                        ],
+                        "sizeBytes": 78653329
+                    },
+                    {
+                        "names": [
+                            "docker.io/library/ascend-fleet-manager:iep3"
+                        ],
+                        "sizeBytes": 78651281
+                    },
+                    {
+                        "names": [
+                            "docker.io/library/ascend-fleet-manager:iep2"
+                        ],
+                        "sizeBytes": 78650252
+                    },
+                    {
+                        "names": [
+                            "docker.io/library/ascend-fleet-manager:iep1"
+                        ],
+                        "sizeBytes": 78649745
+                    },
+                    {
+                        "names": [
+                            "docker.io/library/ascend-fleet-manager:cp1"
+                        ],
+                        "sizeBytes": 78480785
+                    },
+                    {
+                        "names": [
+                            "docker.io/library/ascend-fleet-manager:audit4"
+                        ],
+                        "sizeBytes": 78462865
+                    },
+                    {
+                        "names": [
+                            "docker.io/library/ascend-fleet-manager:audit2"
+                        ],
+                        "sizeBytes": 78462865
+                    },
+                    {
+                        "names": [
+                            "docker.io/library/ascend-fleet-manager:audit3"
+                        ],
+                        "sizeBytes": 78462865
+                    },
+                    {
+                        "names": [
+                            "docker.io/library/ascend-fleet-manager:audit1"
+                        ],
+                        "sizeBytes": 78461841
+                    },
+                    {
+                        "names": [
+                            "docker.io/library/ascend-fleet-manager:subtenancy3"
+                        ],
+                        "sizeBytes": 78157713
+                    },
+                    {
+                        "names": [
+                            "docker.io/library/ascend-fleet-manager:subtenancy2"
+                        ],
+                        "sizeBytes": 78157713
+                    },
+                    {
+                        "names": [
+                            "docker.io/library/ascend-fleet-manager:subtenancy"
+                        ],
+                        "sizeBytes": 78157201
+                    },
+                    {
+                        "names": [
+                            "docker.io/library/ascend-fleet-manager:rt1"
+                        ],
+                        "sizeBytes": 77974417
+                    },
+                    {
+                        "names": [
+                            "docker.io/volcanosh/vc-webhook-manager@sha256:5f7bb680261e86267035c08c49b45b12518a9d1694a92be61b490e2dd942a4bd",
+                            "docker.io/volcanosh/vc-webhook-manager:v1.12.4"
+                        ],
+                        "sizeBytes": 55890539
+                    },
+                    {
+                        "names": [
+                            "docker.io/library/ascend-fleet-node-agent:topo"
+                        ],
+                        "sizeBytes": 43856794
+                    },
+                    {
+                        "names": [
+                            "quay.io/jetstack/cert-manager-controller@sha256:9f4f96a33c7774cef24466fcd85031997531a03a8d117f151126baa8d1290dcc",
+                            "quay.io/jetstack/cert-manager-controller:v1.21.3"
+                        ],
+                        "sizeBytes": 22414923
+                    },
+                    {
+                        "names": [
+                            "docker.io/rancher/mirrored-coredns-coredns@sha256:7efd3c635b03efd68c4e8398fc45f0d993d0e9ab016f72c1cefb0fd6d01aa286",
+                            "docker.io/rancher/mirrored-coredns-coredns:1.14.7"
+                        ],
+                        "sizeBytes": 21712752
+                    },
+                    {
+                        "names": [
+                            "docker.io/rancher/mirrored-metrics-server@sha256:d9862115e7c7881280d3d75ca26bda8ffc0fc213315979575bf23ce9826205c0",
+                            "docker.io/rancher/mirrored-metrics-server:v0.9.0"
+                        ],
+                        "sizeBytes": 20915021
+                    },
+                    {
+                        "names": [
+                            "quay.io/jetstack/cert-manager-webhook@sha256:055ac8e9de6a0ba6763794838fe38944acc650f68ebe1b01dd8be079e580f458",
+                            "quay.io/jetstack/cert-manager-webhook:v1.21.3"
+                        ],
+                        "sizeBytes": 17844992
+                    },
+                    {
+                        "names": [
+                            "docker.io/rancher/local-path-provisioner@sha256:e757967a5ec338f6a9b371c5a9688bedaa8c3578ea3dd4db329ea0084be0a86f",
+                            "docker.io/rancher/local-path-provisioner:v0.0.37"
+                        ],
+                        "sizeBytes": 13414862
+                    },
+                    {
+                        "names": [
+                            "quay.io/jetstack/cert-manager-cainjector@sha256:083d0e906f8eb44e255fe4ff817ae54e49f9ed82e22f1011bb4e9e4f4b8a641f",
+                            "quay.io/jetstack/cert-manager-cainjector:v1.21.3"
+                        ],
+                        "sizeBytes": 11125311
+                    },
+                    {
+                        "names": [
+                            "docker.io/curlimages/curl@sha256:c1fe1679c34d9784c1b0d1e5f62ac0a79fca01fb6377cdd33e90473c6f9f9a69",
+                            "docker.io/curlimages/curl:8.11.1"
+                        ],
+                        "sizeBytes": 9850389
+                    },
+                    {
+                        "names": [
+                            "docker.io/library/busybox@sha256:a7dbc319b1438115a207e11930dc4bb3e643dcb3ec0bdd694bb36cd8fad289ec",
+                            "docker.io/library/busybox:1.37"
+                        ],
+                        "sizeBytes": 1911395
+                    },
+                    {
+                        "names": [
+                            "docker.io/rancher/mirrored-library-busybox@sha256:101b4afd76732482eff9b95cae5f94bcf295e521fbec4e01b69c5421f3f3f3e5",
+                            "docker.io/rancher/mirrored-library-busybox:1.37.0"
+                        ],
+                        "sizeBytes": 1850819
+                    },
+                    {
+                        "names": [
+                            "docker.io/rancher/mirrored-pause@sha256:f548e0e8e3dc1896ca956272154dde3314e8cc4fde0a57577ee9fa1c63f5baf4",
+                            "docker.io/rancher/mirrored-pause:3.10.2"
+                        ],
+                        "sizeBytes": 268296
+                    }
+                ],
+                "nodeInfo": {
+                    "architecture": "arm64",
+                    "bootID": "a54b8090-c52e-4d06-a8dd-6f53a7f9ad66",
+                    "containerRuntimeVersion": "containerd://2.2.7-k3s1",
+                    "kernelVersion": "5.15.0-91-generic",
+                    "kubeProxyVersion": "",
+                    "kubeletVersion": "v1.34.12+k3s1",
+                    "machineID": "711d533706184ab58c9bd96378b46ece",
+                    "operatingSystem": "linux",
+                    "osImage": "Ubuntu 22.04.4 LTS",
+                    "systemUUID": "991e0130-d04e-b6d6-f111-95540013a5b5"
+                },
+                "runtimeHandlers": [
+                    {
+                        "features": {
+                            "recursiveReadOnlyMounts": true,
+                            "userNamespaces": true
+                        },
+                        "name": ""
+                    },
+                    {
+                        "features": {
+                            "recursiveReadOnlyMounts": true,
+                            "userNamespaces": true
+                        },
+                        "name": "ascend"
+                    },
+                    {
+                        "features": {
+                            "recursiveReadOnlyMounts": true,
+                            "userNamespaces": true
+                        },
+                        "name": "runc"
+                    },
+                    {
+                        "features": {
+                            "recursiveReadOnlyMounts": false,
+                            "userNamespaces": false
+                        },
+                        "name": "runhcs-wcow-process"
+                    }
+                ]
+            }
+        }
+    ],
+    "kind": "List",
+    "metadata": {
+        "resourceVersion": ""
+    }
+}

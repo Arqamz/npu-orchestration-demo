@@ -1,0 +1,13 @@
+{
+  "body": "ascend-fleet-audit/v1\nascend-fleet-audit/ascend-fleet-system\n245\nbf523239ffdd974b1042c936fceb7a710f30f4bb776f7fa7f18e556053e49fd4\n2026-11-01T19:04:14Z\n",
+  "checkpoint": {
+    "origin": "ascend-fleet-audit/ascend-fleet-system",
+    "size": 245,
+    "root": "bf523239ffdd974b1042c936fceb7a710f30f4bb776f7fa7f18e556053e49fd4",
+    "time": "2026-11-01T19:04:14Z",
+    "keyID": "6b3d541711a8c391",
+    "signature": "m1yhM4OSLXARPSFUvuj4VAK+K/WdcdzcY0glb76uD6jHDDzT94Pt4x1gdZxI8jydi68+dA95neTmSBKpjAVnDw=="
+  },
+  "note": "Keep this. Its value comes from you holding a copy the operator cannot withdraw: /fleet/audit/consistency?from=245 must reconcile with it forever.",
+  "signed": true
+}

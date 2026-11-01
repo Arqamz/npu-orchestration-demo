@@ -1,0 +1,4593 @@
+{
+  "entries": [
+    {
+      "time": "2026-11-01T19:03:55Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-29197",
+      "reason": "Started",
+      "message": "Started container kcx-29197",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T19:03:55Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-29197",
+      "reason": "Created",
+      "message": "Created container: kcx-29197",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T19:03:55Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-29197",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T19:03:54.913527Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-29197",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-29197 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T19:03:52Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-25828",
+      "reason": "Started",
+      "message": "Started container kcx-25828",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T19:03:52Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-25828",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T19:03:52Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-25828",
+      "reason": "Created",
+      "message": "Created container: kcx-25828",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T19:03:51.913139Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-25828",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-25828 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T19:03:49Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-22995",
+      "reason": "Started",
+      "message": "Started container kcx-22995",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T19:03:49Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-22995",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T19:03:49Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-22995",
+      "reason": "Created",
+      "message": "Created container: kcx-22995",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T19:03:48.866977Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-22995",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-22995 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T19:03:46Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-18254",
+      "reason": "Created",
+      "message": "Created container: kcx-18254",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T19:03:46Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-18254",
+      "reason": "Started",
+      "message": "Started container kcx-18254",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T19:03:46Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-18254",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T19:03:45.863666Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-18254",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-18254 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T19:03:43Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-10646",
+      "reason": "Started",
+      "message": "Started container kcx-10646",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T19:03:43Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-10646",
+      "reason": "Created",
+      "message": "Created container: kcx-10646",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T19:03:43Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-10646",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T19:03:42.826317Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-10646",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-10646 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T19:03:40Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-16829",
+      "reason": "Started",
+      "message": "Started container kcx-16829",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T19:03:40Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-16829",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T19:03:40Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-16829",
+      "reason": "Created",
+      "message": "Created container: kcx-16829",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T19:03:39.804207Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-16829",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-16829 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T19:03:37Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-2957",
+      "reason": "Started",
+      "message": "Started container kcx-2957",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T19:03:37Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-2957",
+      "reason": "Created",
+      "message": "Created container: kcx-2957",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T19:03:37Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-2957",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T19:03:36.771128Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-2957",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-2957 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T19:03:34Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-4382",
+      "reason": "Started",
+      "message": "Started container kcx-4382",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T19:03:34Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-4382",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T19:03:34Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-4382",
+      "reason": "Created",
+      "message": "Created container: kcx-4382",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T19:03:33.762608Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-4382",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-4382 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T19:03:31Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-1881",
+      "reason": "Created",
+      "message": "Created container: kcx-1881",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T19:03:31Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-1881",
+      "reason": "Started",
+      "message": "Started container kcx-1881",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T19:03:31Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-1881",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T19:03:30.719999Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-1881",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-1881 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T19:03:28Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-2128",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T19:03:28Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-2128",
+      "reason": "Created",
+      "message": "Created container: kcx-2128",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T19:03:28Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-2128",
+      "reason": "Started",
+      "message": "Started container kcx-2128",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T19:03:27.68046Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-2128",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-2128 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T19:03:25Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-19462",
+      "reason": "Started",
+      "message": "Started container kcx-19462",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T19:03:25Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-19462",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T19:03:25Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-19462",
+      "reason": "Created",
+      "message": "Created container: kcx-19462",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T19:03:24.675652Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-19462",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-19462 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T19:03:22Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-18593",
+      "reason": "Started",
+      "message": "Started container kcx-18593",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T19:03:22Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-18593",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T19:03:22Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-18593",
+      "reason": "Created",
+      "message": "Created container: kcx-18593",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T19:03:21.73876Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-18593",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-18593 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T19:03:19Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-23958",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T19:03:19Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-23958",
+      "reason": "Started",
+      "message": "Started container kcx-23958",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T19:03:19Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-23958",
+      "reason": "Created",
+      "message": "Created container: kcx-23958",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T19:03:18.808595Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-23958",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-23958 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T19:02:55Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Lease/f441c6a2.ascendfleet.internal",
+      "reason": "LeaderElection",
+      "message": "ascend-fleet-controller-manager-5c45587f7b-6rddz_e73ce6d5-84c0-4ee3-93f4-2b2734680a6a became leader",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T19:02:39Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Deployment/ascend-fleet-controller-manager",
+      "reason": "ScalingReplicaSet",
+      "message": "Scaled down replica set ascend-fleet-controller-manager-fb4f59f7 from 1 to 0",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T19:02:39Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/ascend-fleet-controller-manager-fb4f59f7-jwnr6",
+      "reason": "Killing",
+      "message": "Stopping container manager",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T19:02:39Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "ReplicaSet/ascend-fleet-controller-manager-fb4f59f7",
+      "reason": "SuccessfulDelete",
+      "message": "Deleted pod: ascend-fleet-controller-manager-fb4f59f7-jwnr6",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T19:02:27.066157Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/ascend-fleet-controller-manager-5c45587f7b-6rddz",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/ascend-fleet-controller-manager-5c45587f7b-6rddz to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T19:02:27Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Deployment/ascend-fleet-controller-manager",
+      "reason": "ScalingReplicaSet",
+      "message": "Scaled up replica set ascend-fleet-controller-manager-5c45587f7b from 0 to 1",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T19:02:27Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/ascend-fleet-controller-manager-5c45587f7b-6rddz",
+      "reason": "Started",
+      "message": "Started container manager",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T19:02:27Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/ascend-fleet-controller-manager-5c45587f7b-6rddz",
+      "reason": "Created",
+      "message": "Created container: manager",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T19:02:27Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/ascend-fleet-controller-manager-5c45587f7b-6rddz",
+      "reason": "Pulled",
+      "message": "Container image \"ascend-fleet-manager:api2\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T19:02:27Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "ReplicaSet/ascend-fleet-controller-manager-5c45587f7b",
+      "reason": "SuccessfulCreate",
+      "message": "Created pod: ascend-fleet-controller-manager-5c45587f7b-6rddz",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T19:01:36Z",
+      "source": "kubernetes",
+      "severity": "warning",
+      "tenant": "lab-co",
+      "namespace": "tenant-lab-co",
+      "object": "PodGroup/hccl-train",
+      "reason": "Unschedulable",
+      "message": "0/0 tasks in gang unschedulable: pod group is not ready, 1 minAvailable",
+      "count": 114572
+    },
+    {
+      "time": "2026-11-01T19:00:30.176022Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-18657",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-18657 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T19:00:30Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-18657",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T19:00:30Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-18657",
+      "reason": "Created",
+      "message": "Created container: kcx-18657",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T19:00:30Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-18657",
+      "reason": "Started",
+      "message": "Started container kcx-18657",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T19:00:27.168192Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-20880",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-20880 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T19:00:27Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-20880",
+      "reason": "Started",
+      "message": "Started container kcx-20880",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T19:00:27Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-20880",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T19:00:27Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-20880",
+      "reason": "Created",
+      "message": "Created container: kcx-20880",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T19:00:24.122424Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-27560",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-27560 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T19:00:24Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-27560",
+      "reason": "Started",
+      "message": "Started container kcx-27560",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T19:00:24Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-27560",
+      "reason": "Created",
+      "message": "Created container: kcx-27560",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T19:00:24Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-27560",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T19:00:21.131428Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-950",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-950 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T19:00:21Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-950",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T19:00:21Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-950",
+      "reason": "Created",
+      "message": "Created container: kcx-950",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T19:00:21Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-950",
+      "reason": "Started",
+      "message": "Started container kcx-950",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T19:00:18.064912Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-15822",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-15822 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T19:00:18Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-15822",
+      "reason": "Created",
+      "message": "Created container: kcx-15822",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T19:00:18Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-15822",
+      "reason": "Started",
+      "message": "Started container kcx-15822",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T19:00:18Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-15822",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T19:00:15.145436Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-18900",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-18900 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T19:00:15Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-18900",
+      "reason": "Started",
+      "message": "Started container kcx-18900",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T19:00:15Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-18900",
+      "reason": "Created",
+      "message": "Created container: kcx-18900",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T19:00:15Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-18900",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T19:00:12.080866Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-20058",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-20058 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T19:00:12Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-20058",
+      "reason": "Created",
+      "message": "Created container: kcx-20058",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T19:00:12Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-20058",
+      "reason": "Started",
+      "message": "Started container kcx-20058",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T19:00:12Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-20058",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T19:00:09.082918Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-30968",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-30968 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T19:00:09Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-30968",
+      "reason": "Created",
+      "message": "Created container: kcx-30968",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T19:00:09Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-30968",
+      "reason": "Started",
+      "message": "Started container kcx-30968",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T19:00:09Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-30968",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T19:00:06.050693Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-14626",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-14626 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T19:00:06Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-14626",
+      "reason": "Created",
+      "message": "Created container: kcx-14626",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T19:00:06Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-14626",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T19:00:06Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-14626",
+      "reason": "Started",
+      "message": "Started container kcx-14626",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:59:50Z",
+      "source": "kubernetes",
+      "severity": "warning",
+      "tenant": "maas-co",
+      "namespace": "tenant-maas-co",
+      "object": "PodGroup/podgroup-cc62d072-b71e-4630-b9aa-f1938b918e4c",
+      "reason": "Unschedulable",
+      "message": "0/0 tasks in gang unschedulable: pod group is not ready, 1 minAvailable",
+      "count": 490
+    },
+    {
+      "time": "2026-11-01T18:59:28Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-19673",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:59:28Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-19673",
+      "reason": "Created",
+      "message": "Created container: kcx-19673",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:59:28Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-19673",
+      "reason": "Started",
+      "message": "Started container kcx-19673",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:59:27.969243Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-19673",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-19673 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T18:59:25Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-28397",
+      "reason": "Created",
+      "message": "Created container: kcx-28397",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:59:25Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-28397",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:59:25Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-28397",
+      "reason": "Started",
+      "message": "Started container kcx-28397",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:59:24.956575Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-28397",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-28397 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T18:59:22Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-25846",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:59:22Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-25846",
+      "reason": "Created",
+      "message": "Created container: kcx-25846",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:59:22Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-25846",
+      "reason": "Started",
+      "message": "Started container kcx-25846",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:59:21.900355Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-25846",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-25846 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T18:59:19Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-12235",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:59:19Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-12235",
+      "reason": "Created",
+      "message": "Created container: kcx-12235",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:59:19Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-12235",
+      "reason": "Started",
+      "message": "Started container kcx-12235",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:59:18.871837Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-12235",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-12235 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T18:59:16Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-22452",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:59:16Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-22452",
+      "reason": "Created",
+      "message": "Created container: kcx-22452",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:59:16Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-22452",
+      "reason": "Started",
+      "message": "Started container kcx-22452",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:59:15.89018Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-22452",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-22452 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T18:59:13Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-18626",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:59:13Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-18626",
+      "reason": "Created",
+      "message": "Created container: kcx-18626",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:59:13Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-18626",
+      "reason": "Started",
+      "message": "Started container kcx-18626",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:59:12.847126Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-18626",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-18626 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T18:59:10Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-25391",
+      "reason": "Created",
+      "message": "Created container: kcx-25391",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:59:10Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-25391",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:59:10Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-25391",
+      "reason": "Started",
+      "message": "Started container kcx-25391",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:59:09.827026Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-25391",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-25391 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T18:59:07Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-13125",
+      "reason": "Created",
+      "message": "Created container: kcx-13125",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:59:07Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-13125",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:59:07Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-13125",
+      "reason": "Started",
+      "message": "Started container kcx-13125",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:59:06.816052Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-13125",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-13125 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T18:59:04Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-15005",
+      "reason": "Started",
+      "message": "Started container kcx-15005",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:59:04Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-15005",
+      "reason": "Created",
+      "message": "Created container: kcx-15005",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:59:04Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-15005",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:59:03.823802Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-15005",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-15005 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T18:59:01Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-19549",
+      "reason": "Created",
+      "message": "Created container: kcx-19549",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:59:01Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-19549",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:59:01Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-19549",
+      "reason": "Started",
+      "message": "Started container kcx-19549",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:59:00.933077Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-19549",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-19549 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T18:58:55.516Z",
+      "source": "kubernetes",
+      "severity": "warning",
+      "namespace": "kube-system",
+      "object": "pod/ascend-device-plugin-daemonset-910-xxqng",
+      "reason": "Occur",
+      "message": "device fault, nodeName:atlas-800i-a2, assertion:Occur, cardID:1, deviceID:0, faultCodes:200001002, faultLevelName:NotHandleFault, alarmRaisedTime:2026-11-02 02:58:55"
+    },
+    {
+      "time": "2026-11-01T18:58:25Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-23095",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:58:25Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-23095",
+      "reason": "Created",
+      "message": "Created container: kcx-23095",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:58:25Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-23095",
+      "reason": "Started",
+      "message": "Started container kcx-23095",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:58:24.677006Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-23095",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-23095 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T18:58:22Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-26272",
+      "reason": "Started",
+      "message": "Started container kcx-26272",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:58:22Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-26272",
+      "reason": "Created",
+      "message": "Created container: kcx-26272",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:58:22Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-26272",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:58:21.647702Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-26272",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-26272 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T18:58:19Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-3013",
+      "reason": "Started",
+      "message": "Started container kcx-3013",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:58:19Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-3013",
+      "reason": "Created",
+      "message": "Created container: kcx-3013",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:58:19Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-3013",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:58:18.641292Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-3013",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-3013 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T18:58:16Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-5480",
+      "reason": "Started",
+      "message": "Started container kcx-5480",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:58:16Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-5480",
+      "reason": "Created",
+      "message": "Created container: kcx-5480",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:58:16Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-5480",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:58:15.665285Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-5480",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-5480 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T18:58:13Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-11731",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:58:13Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-11731",
+      "reason": "Started",
+      "message": "Started container kcx-11731",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:58:13Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-11731",
+      "reason": "Created",
+      "message": "Created container: kcx-11731",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:58:12.621806Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-11731",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-11731 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T18:58:10Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-25546",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:58:10Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-25546",
+      "reason": "Created",
+      "message": "Created container: kcx-25546",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:58:10Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-25546",
+      "reason": "Started",
+      "message": "Started container kcx-25546",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:58:09.599558Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-25546",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-25546 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T18:58:07Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-15747",
+      "reason": "Started",
+      "message": "Started container kcx-15747",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:58:07Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-15747",
+      "reason": "Created",
+      "message": "Created container: kcx-15747",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:58:07Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-15747",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:58:06.511198Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-15747",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-15747 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T18:58:04Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-19327",
+      "reason": "Started",
+      "message": "Started container kcx-19327",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:58:04Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-19327",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:58:04Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-19327",
+      "reason": "Created",
+      "message": "Created container: kcx-19327",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:58:03.545829Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-19327",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-19327 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T18:58:01Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-9506",
+      "reason": "Started",
+      "message": "Started container kcx-9506",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:58:01Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-9506",
+      "reason": "Created",
+      "message": "Created container: kcx-9506",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:58:01Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-9506",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:58:00.598595Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-9506",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-9506 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T18:57:58Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-11536",
+      "reason": "Created",
+      "message": "Created container: kcx-11536",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:57:58Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-11536",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:57:58Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-11536",
+      "reason": "Started",
+      "message": "Started container kcx-11536",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:57:57.478396Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-11536",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-11536 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T18:57:55Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-16601",
+      "reason": "Started",
+      "message": "Started container kcx-16601",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:57:55Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-16601",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:57:55Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-16601",
+      "reason": "Created",
+      "message": "Created container: kcx-16601",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:57:54.473513Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-16601",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-16601 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T18:57:52Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-18351",
+      "reason": "Started",
+      "message": "Started container kcx-18351",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:57:52Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-18351",
+      "reason": "Created",
+      "message": "Created container: kcx-18351",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:57:51.454477Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-18351",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-18351 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T18:57:51Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-18351",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:57:49Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-22183",
+      "reason": "Started",
+      "message": "Started container kcx-22183",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:57:48.41944Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-22183",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-22183 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T18:57:48Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-22183",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:57:48Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-22183",
+      "reason": "Created",
+      "message": "Created container: kcx-22183",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:57:46Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-13013",
+      "reason": "Created",
+      "message": "Created container: kcx-13013",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:57:46Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-13013",
+      "reason": "Started",
+      "message": "Started container kcx-13013",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:57:45.418836Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-13013",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-13013 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T18:57:45Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-13013",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:57:43Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-28763",
+      "reason": "Started",
+      "message": "Started container kcx-28763",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:57:42.394133Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-28763",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-28763 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T18:57:42Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-28763",
+      "reason": "Created",
+      "message": "Created container: kcx-28763",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:57:42Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-28763",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:57:40Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-6160",
+      "reason": "Created",
+      "message": "Created container: kcx-6160",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:57:40Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-6160",
+      "reason": "Started",
+      "message": "Started container kcx-6160",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:57:39.403565Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-6160",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-6160 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T18:57:39Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-6160",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:57:37Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-22607",
+      "reason": "Started",
+      "message": "Started container kcx-22607",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:57:36.365323Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-22607",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-22607 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T18:57:36Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-22607",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:57:36Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-22607",
+      "reason": "Created",
+      "message": "Created container: kcx-22607",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:57:33.292221Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-3567",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-3567 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T18:57:33Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-3567",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:57:33Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-3567",
+      "reason": "Started",
+      "message": "Started container kcx-3567",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:57:33Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-3567",
+      "reason": "Created",
+      "message": "Created container: kcx-3567",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:57:30.336045Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-25057",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-25057 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T18:57:30Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-25057",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:57:30Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-25057",
+      "reason": "Created",
+      "message": "Created container: kcx-25057",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:57:30Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-25057",
+      "reason": "Started",
+      "message": "Started container kcx-25057",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:57:28Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-26983",
+      "reason": "Started",
+      "message": "Started container kcx-26983",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:57:27.324871Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-26983",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-26983 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T18:57:27Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-26983",
+      "reason": "Created",
+      "message": "Created container: kcx-26983",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:57:27Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-26983",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:57:24.317864Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-21196",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-21196 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T18:57:24Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-21196",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:57:24Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-21196",
+      "reason": "Started",
+      "message": "Started container kcx-21196",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:57:24Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-21196",
+      "reason": "Created",
+      "message": "Created container: kcx-21196",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:57:22Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-3558",
+      "reason": "Started",
+      "message": "Started container kcx-3558",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:57:21.315851Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-3558",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-3558 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T18:57:21Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-3558",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:57:21Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-3558",
+      "reason": "Created",
+      "message": "Created container: kcx-3558",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:57:18.268069Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-25574",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-25574 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T18:57:18Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-25574",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:57:18Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-25574",
+      "reason": "Created",
+      "message": "Created container: kcx-25574",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:57:18Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-25574",
+      "reason": "Started",
+      "message": "Started container kcx-25574",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:57:15.278839Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-8544",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-8544 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T18:57:15Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-8544",
+      "reason": "Created",
+      "message": "Created container: kcx-8544",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:57:15Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-8544",
+      "reason": "Started",
+      "message": "Started container kcx-8544",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:57:15Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-8544",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:57:12.262993Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-27581",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-27581 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T18:57:12Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-27581",
+      "reason": "Started",
+      "message": "Started container kcx-27581",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:57:12Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-27581",
+      "reason": "Created",
+      "message": "Created container: kcx-27581",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:57:12Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-27581",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:57:09.219047Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-31231",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-31231 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T18:57:09Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-31231",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:57:09Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-31231",
+      "reason": "Created",
+      "message": "Created container: kcx-31231",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:57:09Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-31231",
+      "reason": "Started",
+      "message": "Started container kcx-31231",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:57:06.19133Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-8037",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-8037 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T18:57:06Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-8037",
+      "reason": "Created",
+      "message": "Created container: kcx-8037",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:57:06Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-8037",
+      "reason": "Started",
+      "message": "Started container kcx-8037",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:57:06Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-8037",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:57:03.174358Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-4371",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-4371 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T18:57:03Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-4371",
+      "reason": "Created",
+      "message": "Created container: kcx-4371",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:57:03Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-4371",
+      "reason": "Started",
+      "message": "Started container kcx-4371",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:57:03Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-4371",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:57:00.164187Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-18433",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-18433 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T18:57:00Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-18433",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:57:00Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-18433",
+      "reason": "Started",
+      "message": "Started container kcx-18433",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:57:00Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-18433",
+      "reason": "Created",
+      "message": "Created container: kcx-18433",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:56:57.120202Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-27042",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-27042 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T18:56:57Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-27042",
+      "reason": "Started",
+      "message": "Started container kcx-27042",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:56:57Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-27042",
+      "reason": "Created",
+      "message": "Created container: kcx-27042",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:56:57Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-27042",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:56:55Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-24541",
+      "reason": "Started",
+      "message": "Started container kcx-24541",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:56:55Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-24541",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:56:55Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-24541",
+      "reason": "Created",
+      "message": "Created container: kcx-24541",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:56:54.689119Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-24541",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-24541 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T18:56:11.048036Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-325",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-325 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T18:56:11Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-325",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:56:11Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-325",
+      "reason": "Created",
+      "message": "Created container: kcx-325",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:56:11Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-325",
+      "reason": "Started",
+      "message": "Started container kcx-325",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:56:08Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-28316",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:56:08Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-28316",
+      "reason": "Created",
+      "message": "Created container: kcx-28316",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:56:08Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-28316",
+      "reason": "Started",
+      "message": "Started container kcx-28316",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:56:07.965461Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-28316",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-28316 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T18:56:05Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-19728",
+      "reason": "Started",
+      "message": "Started container kcx-19728",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:56:05Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-19728",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:56:05Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-19728",
+      "reason": "Created",
+      "message": "Created container: kcx-19728",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:56:04.972182Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-19728",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-19728 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T18:56:02Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-1189",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:56:02Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-1189",
+      "reason": "Created",
+      "message": "Created container: kcx-1189",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:56:02Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-1189",
+      "reason": "Started",
+      "message": "Started container kcx-1189",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:56:01.960063Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-1189",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-1189 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T18:55:59Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-4891",
+      "reason": "Started",
+      "message": "Started container kcx-4891",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:55:59Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-4891",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:55:59Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-4891",
+      "reason": "Created",
+      "message": "Created container: kcx-4891",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:55:58.911651Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-4891",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-4891 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T18:55:56Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-31906",
+      "reason": "Started",
+      "message": "Started container kcx-31906",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:55:56Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-31906",
+      "reason": "Created",
+      "message": "Created container: kcx-31906",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:55:56Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-31906",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:55:55.938627Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-31906",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-31906 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T18:55:53Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-26625",
+      "reason": "Created",
+      "message": "Created container: kcx-26625",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:55:53Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-26625",
+      "reason": "Started",
+      "message": "Started container kcx-26625",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:55:53Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-26625",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:55:52.861727Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-26625",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-26625 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T18:55:50Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-8913",
+      "reason": "Created",
+      "message": "Created container: kcx-8913",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:55:50Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-8913",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:55:50Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-8913",
+      "reason": "Started",
+      "message": "Started container kcx-8913",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:55:49.853855Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-8913",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-8913 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T18:55:47Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-13500",
+      "reason": "Started",
+      "message": "Started container kcx-13500",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:55:47Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-13500",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:55:47Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-13500",
+      "reason": "Created",
+      "message": "Created container: kcx-13500",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:55:46.85036Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-13500",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-13500 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T18:55:44Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-20953",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:55:44Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-20953",
+      "reason": "Created",
+      "message": "Created container: kcx-20953",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:55:44Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-20953",
+      "reason": "Started",
+      "message": "Started container kcx-20953",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:55:43.912219Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-20953",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-20953 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T18:55:41Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-30766",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:55:41Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-30766",
+      "reason": "Started",
+      "message": "Started container kcx-30766",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:55:41Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-30766",
+      "reason": "Created",
+      "message": "Created container: kcx-30766",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:55:40.791727Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-30766",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-30766 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T18:55:38Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-17549",
+      "reason": "Started",
+      "message": "Started container kcx-17549",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:55:38Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-17549",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:55:38Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-17549",
+      "reason": "Created",
+      "message": "Created container: kcx-17549",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:55:37.7135Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-17549",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-17549 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T18:55:35Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-25611",
+      "reason": "Created",
+      "message": "Created container: kcx-25611",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:55:35Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-25611",
+      "reason": "Started",
+      "message": "Started container kcx-25611",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:55:35Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-25611",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:55:34.763865Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-25611",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-25611 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T18:55:32Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-10008",
+      "reason": "Created",
+      "message": "Created container: kcx-10008",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:55:32Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-10008",
+      "reason": "Started",
+      "message": "Started container kcx-10008",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:55:32Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-10008",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:55:31.696352Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-10008",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-10008 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T18:55:29Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-30199",
+      "reason": "Created",
+      "message": "Created container: kcx-30199",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:55:29Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-30199",
+      "reason": "Started",
+      "message": "Started container kcx-30199",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:55:29Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-30199",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:55:28.755719Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-30199",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-30199 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T18:55:26Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-22381",
+      "reason": "Created",
+      "message": "Created container: kcx-22381",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:55:26Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-22381",
+      "reason": "Started",
+      "message": "Started container kcx-22381",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:55:26Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-22381",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:55:25.708498Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-22381",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-22381 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T18:55:23Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-29528",
+      "reason": "Created",
+      "message": "Created container: kcx-29528",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:55:23Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-29528",
+      "reason": "Started",
+      "message": "Started container kcx-29528",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:55:23Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-29528",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:55:22.68589Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-29528",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-29528 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T18:55:20Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-30439",
+      "reason": "Created",
+      "message": "Created container: kcx-30439",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:55:20Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-30439",
+      "reason": "Started",
+      "message": "Started container kcx-30439",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:55:20Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-30439",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:55:19.668494Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-30439",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-30439 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T18:55:17Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-6679",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:55:17Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-6679",
+      "reason": "Started",
+      "message": "Started container kcx-6679",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:55:17Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-6679",
+      "reason": "Created",
+      "message": "Created container: kcx-6679",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:55:16.694863Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-6679",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-6679 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T18:55:14Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-8816",
+      "reason": "Started",
+      "message": "Started container kcx-8816",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:55:14Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-8816",
+      "reason": "Created",
+      "message": "Created container: kcx-8816",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:55:14Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-8816",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:55:13.640352Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-8816",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-8816 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T18:55:11Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-14601",
+      "reason": "Created",
+      "message": "Created container: kcx-14601",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:55:11Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-14601",
+      "reason": "Started",
+      "message": "Started container kcx-14601",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:55:11Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-14601",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:55:10.61693Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-14601",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-14601 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T18:55:08Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-2112",
+      "reason": "Started",
+      "message": "Started container kcx-2112",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:55:08Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-2112",
+      "reason": "Created",
+      "message": "Created container: kcx-2112",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:55:08Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-2112",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:55:07.717946Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-2112",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-2112 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T18:55:05Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-221",
+      "reason": "Started",
+      "message": "Started container kcx-221",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:55:05Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-221",
+      "reason": "Created",
+      "message": "Created container: kcx-221",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:55:05Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-221",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:55:04.608554Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-221",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-221 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T18:55:02Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-20245",
+      "reason": "Started",
+      "message": "Started container kcx-20245",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:55:02Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-20245",
+      "reason": "Created",
+      "message": "Created container: kcx-20245",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:55:02Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-20245",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:55:01.577707Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-20245",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-20245 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T18:54:59Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-2208",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:54:59Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-2208",
+      "reason": "Created",
+      "message": "Created container: kcx-2208",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:54:59Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-2208",
+      "reason": "Started",
+      "message": "Started container kcx-2208",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:54:58.50148Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-2208",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-2208 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T18:54:56Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-24276",
+      "reason": "Started",
+      "message": "Started container kcx-24276",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:54:56Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-24276",
+      "reason": "Created",
+      "message": "Created container: kcx-24276",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:54:56Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-24276",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:54:55.522216Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-24276",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-24276 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T18:54:53Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-28906",
+      "reason": "Started",
+      "message": "Started container kcx-28906",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:54:53Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-28906",
+      "reason": "Created",
+      "message": "Created container: kcx-28906",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:54:53Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-28906",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:54:52.521695Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-28906",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-28906 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T18:54:50Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-5658",
+      "reason": "Created",
+      "message": "Created container: kcx-5658",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:54:50Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-5658",
+      "reason": "Started",
+      "message": "Started container kcx-5658",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:54:50Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-5658",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:54:49.523133Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-5658",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-5658 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T18:54:47Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-4243",
+      "reason": "Started",
+      "message": "Started container kcx-4243",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:54:47Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-4243",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:54:47Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-4243",
+      "reason": "Created",
+      "message": "Created container: kcx-4243",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:54:46.478073Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-4243",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-4243 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T18:54:44Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-16835",
+      "reason": "Started",
+      "message": "Started container kcx-16835",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:54:44Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-16835",
+      "reason": "Created",
+      "message": "Created container: kcx-16835",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:54:44Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-16835",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:54:43.496497Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-16835",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-16835 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T18:54:41Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-8429",
+      "reason": "Created",
+      "message": "Created container: kcx-8429",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:54:41Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-8429",
+      "reason": "Started",
+      "message": "Started container kcx-8429",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:54:41Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-8429",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:54:40.482494Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-8429",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-8429 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T18:54:38Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-21020",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:54:38Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-21020",
+      "reason": "Started",
+      "message": "Started container kcx-21020",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:54:38Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-21020",
+      "reason": "Created",
+      "message": "Created container: kcx-21020",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:54:37.562626Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-21020",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-21020 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T18:53:51.538Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "kube-system",
+      "object": "pod/ascend-device-plugin-daemonset-910-xxqng",
+      "reason": "Recovery",
+      "message": "device fault, nodeName:atlas-800i-a2, assertion:Recovery, cardID:0, deviceID:0, faultCodes:200001002, faultLevelName:NotHandleFault, alarmRaisedTime:2026-11-02 02:53:51"
+    },
+    {
+      "time": "2026-11-01T18:53:50.318369Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-9870",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-9870 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T18:53:50Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-9870",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:53:50Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-9870",
+      "reason": "Created",
+      "message": "Created container: kcx-9870",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:53:50Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-9870",
+      "reason": "Started",
+      "message": "Started container kcx-9870",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:53:47.319944Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-26516",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-26516 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T18:53:47Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-26516",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:53:47Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-26516",
+      "reason": "Created",
+      "message": "Created container: kcx-26516",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:53:47Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-26516",
+      "reason": "Started",
+      "message": "Started container kcx-26516",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:53:44.275971Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-514",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-514 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T18:53:44Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-514",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:53:44Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-514",
+      "reason": "Created",
+      "message": "Created container: kcx-514",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:53:44Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-514",
+      "reason": "Started",
+      "message": "Started container kcx-514",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:53:41.280538Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-23450",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-23450 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T18:53:41Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-23450",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:53:41Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-23450",
+      "reason": "Created",
+      "message": "Created container: kcx-23450",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:53:41Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-23450",
+      "reason": "Started",
+      "message": "Started container kcx-23450",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:53:38.185699Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-32700",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-32700 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T18:53:38Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-32700",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:53:38Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-32700",
+      "reason": "Created",
+      "message": "Created container: kcx-32700",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:53:38Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-32700",
+      "reason": "Started",
+      "message": "Started container kcx-32700",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:53:36Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-4458",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:53:36Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-4458",
+      "reason": "Started",
+      "message": "Started container kcx-4458",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:53:36Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-4458",
+      "reason": "Created",
+      "message": "Created container: kcx-4458",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:53:35.569719Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-4458",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-4458 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T18:53:25Z",
+      "source": "kubernetes",
+      "severity": "error",
+      "tenant": "maas-co",
+      "namespace": "tenant-maas-co",
+      "object": "Pod/qwen-chat-6f7c9fb496-d7lq8",
+      "reason": "Unhealthy",
+      "message": "Readiness probe failed: Get \"http://10.42.0.177:8000/health\": dial tcp 10.42.0.177:8000: connect: connection refused",
+      "count": 2
+    },
+    {
+      "time": "2026-11-01T18:53:20Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "tenant": "maas-co",
+      "namespace": "tenant-maas-co",
+      "object": "Deployment/qwen-chat",
+      "reason": "ScalingReplicaSet",
+      "message": "Scaled down replica set qwen-chat-6f7c9fb496 from 1 to 0",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:53:20Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "tenant": "maas-co",
+      "namespace": "tenant-maas-co",
+      "object": "Pod/qwen-chat-6f7c9fb496-d7lq8",
+      "reason": "Killing",
+      "message": "Stopping container server",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:53:20Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "tenant": "maas-co",
+      "namespace": "tenant-maas-co",
+      "object": "PodGroup/qwen-chat",
+      "reason": "Scheduled",
+      "message": "pod group is ready",
+      "count": 10
+    },
+    {
+      "time": "2026-11-01T18:53:20Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "tenant": "maas-co",
+      "namespace": "tenant-maas-co",
+      "object": "ReplicaSet/qwen-chat-6f7c9fb496",
+      "reason": "SuccessfulDelete",
+      "message": "Deleted pod: qwen-chat-6f7c9fb496-d7lq8",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:53:10Z",
+      "source": "kubernetes",
+      "severity": "error",
+      "tenant": "maas-co",
+      "namespace": "tenant-maas-co",
+      "object": "Pod/qwen-chat-68459c5448-8hlk2",
+      "reason": "Unhealthy",
+      "message": "Startup probe failed: Get \"http://10.42.0.186:8000/health\": dial tcp 10.42.0.186:8000: connect: connection refused",
+      "count": 20
+    },
+    {
+      "time": "2026-11-01T18:53:07.168785Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-2494",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-2494 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T18:53:07Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-2494",
+      "reason": "Created",
+      "message": "Created container: kcx-2494",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:53:07Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-2494",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:53:07Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-2494",
+      "reason": "Started",
+      "message": "Started container kcx-2494",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:53:04.096919Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-16413",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-16413 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T18:53:04Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-16413",
+      "reason": "Created",
+      "message": "Created container: kcx-16413",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:53:04Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-16413",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:53:04Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-16413",
+      "reason": "Started",
+      "message": "Started container kcx-16413",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:53:02Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-28506",
+      "reason": "Created",
+      "message": "Created container: kcx-28506",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:53:02Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-28506",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:53:02Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-28506",
+      "reason": "Started",
+      "message": "Started container kcx-28506",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:53:01.49599Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcx-28506",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcx-28506 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T18:52:24Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kc-probe",
+      "reason": "Created",
+      "message": "Created container: kc-probe",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:52:24Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kc-probe",
+      "reason": "Started",
+      "message": "Started container kc-probe",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:52:24Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kc-probe",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:52:23.661409Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kc-probe",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kc-probe to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T18:52:14Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kc-32628",
+      "reason": "Started",
+      "message": "Started container kc-32628",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:52:14Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kc-32628",
+      "reason": "Created",
+      "message": "Created container: kc-32628",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:52:14Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kc-32628",
+      "reason": "Pulled",
+      "message": "Container image \"curlimages/curl:8.11.1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:52:13.755153Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kc-32628",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kc-32628 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T18:51:58Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcadm-27782",
+      "reason": "Pulled",
+      "message": "Successfully pulled image \"curlimages/curl:8.11.1\" in 4.724s (4.724s including waiting). Image size: 9850389 bytes.",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:51:58Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcadm-27782",
+      "reason": "Created",
+      "message": "Created container: kcadm-27782",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:51:58Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcadm-27782",
+      "reason": "Started",
+      "message": "Started container kcadm-27782",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:51:53Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcadm-27782",
+      "reason": "Pulling",
+      "message": "Pulling image \"curlimages/curl:8.11.1\"",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:51:52.799333Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/kcadm-27782",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/kcadm-27782 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T18:51:09Z",
+      "source": "kubernetes",
+      "severity": "warning",
+      "tenant": "maas-co",
+      "namespace": "tenant-maas-co",
+      "object": "PodGroup/podgroup-90e5b2ae-832a-40e7-a988-f0ece1607d39",
+      "reason": "Unschedulable",
+      "message": "0/0 tasks in gang unschedulable: pod group is not ready, 1 minAvailable",
+      "count": 113839
+    },
+    {
+      "time": "2026-11-01T18:49:51Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "tenant": "maas-co",
+      "namespace": "tenant-maas-co",
+      "object": "Pod/qwen-chat-68459c5448-8hlk2",
+      "reason": "Started",
+      "message": "Started container server",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:49:50Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "tenant": "maas-co",
+      "namespace": "tenant-maas-co",
+      "object": "Pod/qwen-chat-68459c5448-8hlk2",
+      "reason": "Pulled",
+      "message": "Container image \"quay.io/ascend/vllm-ascend:v0.18.0\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:49:50Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "tenant": "maas-co",
+      "namespace": "tenant-maas-co",
+      "object": "Pod/qwen-chat-68459c5448-8hlk2",
+      "reason": "Created",
+      "message": "Created container: server",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:49:49Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "tenant": "maas-co",
+      "namespace": "tenant-maas-co",
+      "object": "Pod/qwen-chat-68459c5448-8hlk2",
+      "reason": "Scheduled",
+      "message": "Successfully assigned tenant-maas-co/qwen-chat-68459c5448-8hlk2 to atlas-800i-a2",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:49:48Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "tenant": "maas-co",
+      "namespace": "tenant-maas-co",
+      "object": "Deployment/qwen-chat",
+      "reason": "ScalingReplicaSet",
+      "message": "Scaled up replica set qwen-chat-68459c5448 from 0 to 1",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:49:48Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Lease/f441c6a2.ascendfleet.internal",
+      "reason": "LeaderElection",
+      "message": "ascend-fleet-controller-manager-fb4f59f7-jwnr6_faf243e8-8140-4f1d-9618-c56e3ba6d16d became leader",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:49:48Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "tenant": "maas-co",
+      "namespace": "tenant-maas-co",
+      "object": "ReplicaSet/qwen-chat-68459c5448",
+      "reason": "SuccessfulCreate",
+      "message": "Created pod: qwen-chat-68459c5448-8hlk2",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:49:30Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Deployment/ascend-fleet-controller-manager",
+      "reason": "ScalingReplicaSet",
+      "message": "Scaled down replica set ascend-fleet-controller-manager-7d74b76bbd from 1 to 0",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:49:30Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/ascend-fleet-controller-manager-7d74b76bbd-9jg4r",
+      "reason": "Killing",
+      "message": "Stopping container manager",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:49:30Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "ReplicaSet/ascend-fleet-controller-manager-7d74b76bbd",
+      "reason": "SuccessfulDelete",
+      "message": "Deleted pod: ascend-fleet-controller-manager-7d74b76bbd-9jg4r",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:49:19Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/ascend-fleet-controller-manager-fb4f59f7-jwnr6",
+      "reason": "Pulled",
+      "message": "Container image \"ascend-fleet-manager:api1\" already present on machine",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:49:19Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/ascend-fleet-controller-manager-fb4f59f7-jwnr6",
+      "reason": "Created",
+      "message": "Created container: manager",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:49:19Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/ascend-fleet-controller-manager-fb4f59f7-jwnr6",
+      "reason": "Started",
+      "message": "Started container manager",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:49:18.518659Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Pod/ascend-fleet-controller-manager-fb4f59f7-jwnr6",
+      "reason": "Scheduled",
+      "message": "Successfully assigned ascend-fleet-system/ascend-fleet-controller-manager-fb4f59f7-jwnr6 to atlas-800i-a2"
+    },
+    {
+      "time": "2026-11-01T18:49:18Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "Deployment/ascend-fleet-controller-manager",
+      "reason": "ScalingReplicaSet",
+      "message": "Scaled up replica set ascend-fleet-controller-manager-fb4f59f7 from 0 to 1",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:49:18Z",
+      "source": "kubernetes",
+      "severity": "info",
+      "namespace": "ascend-fleet-system",
+      "object": "ReplicaSet/ascend-fleet-controller-manager-fb4f59f7",
+      "reason": "SuccessfulCreate",
+      "message": "Created pod: ascend-fleet-controller-manager-fb4f59f7-jwnr6",
+      "count": 1
+    },
+    {
+      "time": "2026-11-01T18:03:55.517Z",
+      "source": "kubernetes",
+      "severity": "warning",
+      "namespace": "kube-system",
+      "object": "pod/ascend-device-plugin-daemonset-910-xxqng",
+      "reason": "Occur",
+      "message": "device fault, nodeName:atlas-800i-a2, assertion:Occur, cardID:0, deviceID:0, faultCodes:200001002, faultLevelName:NotHandleFault, alarmRaisedTime:2026-11-02 02:03:55"
+    }
+  ],
+  "totals": {
+    "entries": 467,
+    "errors": 2,
+    "warnings": 5,
+    "nodes": 0,
+    "tenants": 2,
+    "dropped": 0
+  },
+  "horizon": {
+    "earliestTrustworthy": "2026-11-01T18:04:04.192383559Z",
+    "eventTTLSeconds": 3600,
+    "truncated": true,
+    "note": "Kubernetes events older than 1h0m0s are deleted by the API server, so this timeline is complete only back to 2026-11-01T18:04:04Z. Drift records outlive them and are shown for the whole window. Before the horizon, an empty timeline means the records are gone, not that nothing happened."
+  },
+  "since": "2026-10-31T19:04:04.192383389Z",
+  "asOf": "2026-11-01T19:04:04.192383559Z"
+}

@@ -1,0 +1,9 @@
+{
+  "session": "baseline",
+  "capturedAt": "2026-11-01T19:04:30Z",
+  "api": "10.42.0.36:8082",
+  "auth": "oidc",
+  "personas": ["fleet-operator","acme-admin","acme-engineer","globex-admin","dc-shanghai-admin","maas-co-admin","lab-co-admin","acme-research-admin"],
+  "routes": ["/fleet","/fleet/me","/fleet/clusters","/fleet/nodes","/fleet/compliance","/fleet/drift","/fleet/drift?all=true","/fleet/events","/fleet/allocations","/fleet/usage","/fleet/jobs","/fleet/endpoints","/fleet/invoices","/fleet/entitlements","/fleet/ratecard","/fleet/periods","/fleet/statements","/fleet/billing-export","/fleet/audit","/fleet/audit/verify","/fleet/audit/checkpoint","/fleet/audit/pubkey","/healthz"],
+  "note": "Every route asked of every persona through that persona's own real Keycloak token. Status codes and server latency are recorded beside each body, refusals included."
+}

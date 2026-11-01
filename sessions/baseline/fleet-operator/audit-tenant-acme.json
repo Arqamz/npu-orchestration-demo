@@ -1,0 +1,15 @@
+{
+  "count": 0,
+  "durable": {
+    "chainHead": "c9faaea03a1a3f718df7599f21152adb910673d2edb36c1661b27bb6b777da4d",
+    "path": "/var/lib/ascend-fleet/audit/trail.jsonl",
+    "records": 336
+  },
+  "records": [],
+  "window": {
+    "capacity": 2000,
+    "full": false,
+    "held": 272,
+    "note": "This is an in-memory window onto the durable trail, not the trail itself. It is emptied by a restart. The complete record is the file behind /fleet/audit/verify."
+  }
+}

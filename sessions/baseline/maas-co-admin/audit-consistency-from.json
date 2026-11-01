@@ -1,0 +1,18 @@
+{
+  "from": 209,
+  "note": "Verify with `audit-verify consistency` against the checkpoint you were issued. A failure here means records you were already shown have been altered or removed.",
+  "proof": [
+    "26e0cd6fafd7193662de9c0593843b1a2a0c0eb1b860973fb9726cd514e560b7",
+    "81e5d615d27f20d0b937ae867c62efda5f06affa0348861d647e92b7ebc64ffe",
+    "958dc40bf390c2e3c9ec74a3ca9232f27302042429d2081131147a6b0a70b442",
+    "c51451d674445664dffbca13595994127d25b1a3dffe0a88225ba3e22f8956d9",
+    "d91d77d1511ae22a90f336916b3e104aae32eae074ea177555fcb2a7f343e5fb",
+    "c92b20fbd9a59899dc3277fe49882f84ae4ff5bb019494e2f75410ec089a6b7d",
+    "67f6e20624d3edea18ffa0841de99da4893a062c45d7ac4d826c3e6367713199",
+    "07812faf183885bc9635fbfbd144d8a681670b9b9a9dbd4c53c1b9261924d439",
+    "dbd14fd58d7e4ed958e80304762687d17f2cf0abfb4c8e512fc2220e6206eefd",
+    "0de782a27fcdc7f90b78683a47ec27d5e7d1d8577271d287a1c7bf8edfb8334f"
+  ],
+  "root": "98632f6baf5560bce1c079c5f0b55fb877265e541418bc6b7598810025de3ccc",
+  "size": 424
+}

@@ -1,0 +1,29 @@
+{
+  "entitlements": [
+    {
+      "tenant": "acme-research",
+      "displayName": "Acme Research (a customer of Acme)",
+      "namespace": "tenant-acme-research",
+      "phase": "Ready",
+      "queueName": "tenant-acme-research",
+      "quota": {
+        "cpu": "40",
+        "memory": "160Gi",
+        "npu": "2",
+        "pods": "16"
+      },
+      "held": {},
+      "heldDevices": 0,
+      "vnpuMode": "None",
+      "vnpuTemplates": [],
+      "mutationStrategy": "Recreate",
+      "networkIsolation": "Strict",
+      "restrictEgress": false,
+      "podSecurity": "restricted",
+      "billingAccountID": "ACC-ACME-RESEARCH",
+      "subjects": 0
+    }
+  ],
+  "count": 1,
+  "note": "Quota is enforced per extended resource name as the device plugin advertises it, not per template name. A whole card and a vNPU slice of one both count as a single device."
+}

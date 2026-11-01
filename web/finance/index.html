@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Finance</title>
+<link rel="stylesheet" href="/shared/fleet.css">
+</head>
+<body>
+<main id="app"></main>
+<script type="module">
+import {
+  call, demo, el, card, table, pill, refusal, chrome, pageTitle, val, money, ago,
+} from '/shared/fleet.js';
+
+const app = document.getElementById('app');
+const me = await chrome('/finance/');
+const tree = (await demo.tree()).body || {};
+const reach = me?.reach || me?.tenants || [];
+const choices = reach.length ? reach : Object.keys(tree);
+
+app.append(pageTitle('Finance',
+  'Device-seconds in, invoices out — and for a reseller, the same usage rolled up to '
+  + 'whoever actually pays for it.'));
+
+const picker = el('select', {});
+for (const t of choices) picker.append(el('option', { value: t }, t));
+app.append(el('div', { class: 'row', style: 'margin-bottom:16px' },
+  el('label', {}, 'tenant ', picker),
+  el('button', { onclick: () => load(picker.value) }, 'Load')));
+
+const body = el('div');
+app.append(body);
+
+app.append(card('How a figure on this page is produced',
+  el('p', { class: 'note' },
+    'Device-seconds come from observations the control plane actually made, never from a '
+    + 'PromQL integral. rate() extrapolates, interpolates across scrape gaps and expires at '
+    + 'retention — three different ways to bill a customer for time nobody measured.'),
+  el('p', { class: 'note' },
+    'Price is per extended resource name, never per device: a whole 910B and a vir05_1c_16g '
+    + 'slice of one both report as a single device. On this hardware the slice publishes as '
+    + 'huawei.com/Ascend910-5c.1cpu.16g — note the "cpu" — and a rate card keyed on anything '
+    + 'else bills zero, with only a warning.'),
+  el('p', { class: 'note' },
+    'A closed period is append-only, and closing reads the meter rather than resetting it. '
+    + 'A period’s usage is the difference between two cumulative readings, so periods '
+    + 'always sum to the lifetime total and a lost checkpoint cannot make the past '
+    + 'unreconstructible.')));
+
+async function load(tenant) {
+  body.replaceChildren(el('p', { class: 'muted' }, 'loading…'));
+
+  const [inv, periods, statements, rate, usage] = await Promise.all([
+    call(`/fleet/invoices?tenant=${tenant}`),
+    call(`/fleet/periods?tenant=${tenant}`),
+    call(`/fleet/statements?tenant=${tenant}`),
+    call('/fleet/ratecard'),
+    call(`/fleet/usage?tenant=${tenant}`),
+  ]);
+
+  body.replaceChildren();
+
+  /* -------------------------------------------------------- invoices */
+
+  if (!inv.ok) {
+    body.append(card('Invoices', refusal(inv, `Invoices for ${tenant}`),
+      el('p', { class: 'note' },
+        'Invoices carry the billing account identifier, which is the tenant’s commercial '
+        + 'data and not their engineers’ business. This is the tenant-admin grant doing '
+        + 'its job.')));
+  } else {
+    const d = inv.body;
+    const lines = d.lines || (d.invoice && d.invoice.lines) || [];
+    const total = d.total ?? d.amount ?? (d.invoice && d.invoice.total);
+    body.append(card('Current invoice — usage since the last close',
+      el('div', { class: 'stats' },
+        el('div', { class: 'stat' }, el('div', { class: 'k' }, 'Account'),
+          el('div', { class: 'v', style: 'font-size:15px' }, val(d.accountID ?? d.account))),
+        el('div', { class: 'stat ok' }, el('div', { class: 'k' }, 'Amount'),
+          el('div', { class: 'v' }, money(total, d.currency || 'USD')),
+          el('div', { class: 'n' }, 'not yet billable')),
+        el('div', { class: 'stat' }, el('div', { class: 'k' }, 'Lines'),
+          el('div', { class: 'v' }, String(lines.length)))),
+      table(['Resource', 'Namespace', 'Device-hours', 'Unit price', 'Amount'], lines,
+        (l) => el('tr', {},
+          el('td', { class: 'mono' }, val(l.resource)),
+          el('td', { class: 'mono muted' }, val(l.namespace, { missing: '' })),
+          el('td', { class: 'num' }, (l.deviceHours ?? 0).toFixed(4)),
+          el('td', { class: 'num' }, money(l.unitPrice, d.currency || 'USD')),
+          el('td', { class: 'num' }, money(l.amount, d.currency || 'USD'))))));
+  }
+
+  /* ------------------------------------------------- resold / statement */
+
+  if (statements.ok) {
+    const sts = statements.body.statements || [];
+    for (const s of sts) {
+      const resold = s.resold || [];
+      const direct = s.direct || [];
+      const resoldTotal = resold.reduce((a, r) =>
+        a + (r.lines || []).reduce((b, l) => b + (l.amount || 0), 0), 0);
+      const directTotal = (direct || []).reduce((b, l) => b + (l.amount || 0), 0);
+
+      body.append(card(`Statement — ${s.tenant}`,
+        el('p', { class: 'note' },
+          'A statement is the period rolled up to whoever pays for it. Rolling a '
+          + 'sub-tenant’s usage up to its payer may move it; it must never duplicate or '
+          + 'drop it. A rollup that counted a grandchild under both its parent and its '
+          + 'grandparent would look like a healthy business and be fraud.'),
+        el('div', { class: 'stats' },
+          el('div', { class: 'stat' }, el('div', { class: 'k' }, 'Own usage'),
+            el('div', { class: 'v' }, money(directTotal, s.currency))),
+          el('div', { class: 'stat warn' }, el('div', { class: 'k' }, 'Resold to customers'),
+            el('div', { class: 'v' }, money(resoldTotal, s.currency)),
+            el('div', { class: 'n' }, `${resold.length} sub-tenant(s)`)),
+          el('div', { class: 'stat ok' }, el('div', { class: 'k' }, 'Statement total'),
+            el('div', { class: 'v' }, money(directTotal + resoldTotal, s.currency)))),
+
+        resold.length ? el('div', {},
+          el('h3', { style: 'margin:18px 0 8px;font-size:13px' }, 'Charged on behalf of'),
+          table(['Sub-tenant', 'Path', 'Account', 'Device-hours', 'Amount'],
+            resold.flatMap((r) => (r.lines || []).map((l) => ({ r, l }))),
+            ({ r, l }) => el('tr', {},
+              el('td', {}, el('strong', {}, r.tenant)),
+              el('td', { class: 'mono muted' }, (r.path || []).join(' → ')),
+              el('td', { class: 'mono' }, val(r.accountID)),
+              el('td', { class: 'num' }, (l.deviceHours ?? 0).toFixed(4)),
+              el('td', { class: 'num' }, money(l.amount, s.currency)))))
+          : el('p', { class: 'muted' }, 'This tenant has resold nothing: it has no sub-tenants.')));
+    }
+  }
+
+  /* --------------------------------------------------------- periods */
+
+  if (periods.ok) {
+    const ps = periods.body.periods || [];
+    body.append(card('Closed periods',
+      el('p', { class: 'note' },
+        'A closed period is final — the store refuses to overwrite one, because that is the '
+        + 'one way to change an invoice that has already been sent. Each carries a signed '
+        + 'checkpoint of the audit trail, which is what turns a log the operator holds into '
+        + 'evidence against the operator.'),
+      table(['Period', 'From', 'To', 'Closed', 'Readings', 'Audit anchor'], ps,
+        (p) => el('tr', {},
+          el('td', {}, el('strong', {}, p.id)),
+          el('td', { class: 'mono muted' }, (p.from || '').slice(0, 19)),
+          el('td', { class: 'mono muted' }, (p.to || '').slice(0, 19)),
+          el('td', { class: 'mono muted' }, ago(p.closedAt)),
+          el('td', { class: 'num' }, String((p.readings || []).length)),
+          el('td', {}, p.auditCheckpoint
+            ? pill(`anchored at size ${p.auditCheckpoint.size}`, 'ok')
+            : pill('no anchor', 'warn'))))));
+  }
+
+  /* -------------------------------------------------------- rate card */
+
+  if (rate.ok) {
+    const prices = rate.body.prices || rate.body.rates || rate.body.rateCard || [];
+    const rows = Array.isArray(prices) ? prices
+      : Object.entries(prices).map(([resource, unitPrice]) => ({ resource, unitPrice }));
+    body.append(card('Rate card', table(['Resource', 'Unit price per device-hour'], rows,
+      (r) => el('tr', {},
+        el('td', { class: 'mono' }, val(r.resource)),
+        el('td', { class: 'num' }, money(r.unitPrice ?? r.price, rate.body.currency || 'USD'))))));
+  }
+
+  /* --------------------------------------------------- unattributed */
+
+  if (usage.ok && usage.body.records) {
+    const un = usage.body.records.filter((r) => r.tenant === '_unattributed');
+    if (un.length) {
+      body.append(card('Unattributed usage',
+        el('p', { class: 'note' },
+          'Reported, never dropped. Per-tenant figures have to reconcile against the fleet '
+          + 'total, so cards held by something with no tenancy are shown as their own line '
+          + 'rather than quietly discarded.'),
+        table(['Resource', 'Device-seconds', 'Device-hours'], un, (r) => el('tr', {},
+          el('td', { class: 'mono' }, val(r.resource)),
+          el('td', { class: 'num' }, (r.deviceSeconds ?? 0).toFixed(1)),
+          el('td', { class: 'num' }, (r.deviceHours ?? 0).toFixed(4))))));
+    }
+  }
+}
+
+await load(picker.value);
+
+app.append(card('What finance cannot do yet',
+  el('ul', { class: 'wrap', style: 'max-width:80ch' },
+    el('li', {}, el('strong', {}, 'No token-based billing. '),
+      'Everything here is device-seconds. vLLM reports prompt and completion tokens and '
+      + 'nothing meters them, so an AI token factory cannot bill the way its customers expect.'),
+    el('li', {}, el('strong', {}, 'No margin for a reseller. '),
+      'One rate card, applied to everyone. A reseller bills its customers at the price it '
+      + 'pays, which is not a business.'),
+    el('li', {}, el('strong', {}, 'No payment, dunning or suspension. '),
+      'Invoices are produced and nothing collects them.'),
+    el('li', {}, el('strong', {}, 'No commitments or prepaid credit. '),
+      'Only pay-as-you-go against a quota ceiling.'),
+    el('li', {}, el('strong', {}, 'No currency beyond the rate card’s. '),
+      'No FX, no tax, no per-region pricing.'))));
+</script>
+</body>
+</html>

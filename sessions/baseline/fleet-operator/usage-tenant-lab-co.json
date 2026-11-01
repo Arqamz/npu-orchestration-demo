@@ -1,0 +1,20 @@
+{
+  "count": 1,
+  "gaps": null,
+  "observedFor": {
+    "site-a": 574.246544395
+  },
+  "records": [
+    {
+      "cluster": "site-a",
+      "tenant": "lab-co",
+      "namespace": "tenant-lab-co",
+      "resource": "huawei.com/Ascend910",
+      "deviceSeconds": 1284.954017434,
+      "deviceHours": 0.35693167150944444
+    }
+  ],
+  "since": "2026-10-28T13:08:50.27331466Z",
+  "totalDeviceHours": 0.35693167150944444,
+  "totalDeviceSeconds": 1284.954017434
+}

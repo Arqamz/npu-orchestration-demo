@@ -1,0 +1,16 @@
+{
+  "authenticated": true,
+  "principal": {
+    "subject": "aba2b14e-75e0-4292-a6f7-0099e94f47bd",
+    "username": "lab-co-admin",
+    "email": "lab-co-admin@demo.invalid",
+    "name": "lab admin",
+    "operator": false,
+    "tenantAdmin": true,
+    "tenants": [
+      "lab-co"
+    ],
+    "issuer": "https://keycloak.ascend-fleet-system.svc.cluster.local:8443/realms/ascend-fleet",
+    "via": "oidc"
+  }
+}

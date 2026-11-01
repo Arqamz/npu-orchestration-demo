@@ -1,0 +1,74 @@
+{
+    "apiVersion": "v1",
+    "items": [
+        {
+            "apiVersion": "platform.ascendfleet.internal/v1alpha1",
+            "kind": "FleetCluster",
+            "metadata": {
+                "annotations": {
+                    "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"platform.ascendfleet.internal/v1alpha1\",\"kind\":\"FleetCluster\",\"metadata\":{\"annotations\":{},\"labels\":{\"app.kubernetes.io/name\":\"ascend-fleet\"},\"name\":\"site-a\"},\"spec\":{\"hardwareClasses\":[\"atlas-800t-a2\"],\"local\":true,\"schedulable\":true,\"site\":\"site-a\"}}\n"
+                },
+                "creationTimestamp": "2026-10-28T13:15:33Z",
+                "generation": 1,
+                "labels": {
+                    "app.kubernetes.io/name": "ascend-fleet"
+                },
+                "name": "site-a",
+                "resourceVersion": "1049817",
+                "uid": "2cd25b39-fda4-423b-ab21-62d447f417b6"
+            },
+            "spec": {
+                "hardwareClasses": [
+                    "atlas-800t-a2"
+                ],
+                "local": true,
+                "schedulable": true,
+                "site": "site-a"
+            },
+            "status": {
+                "conditions": [
+                    {
+                        "lastTransitionTime": "2026-10-28T13:15:33Z",
+                        "message": "",
+                        "observedGeneration": 1,
+                        "reason": "InventoryCollected",
+                        "status": "True",
+                        "type": "Reachable"
+                    },
+                    {
+                        "lastTransitionTime": "2026-11-01T18:59:05Z",
+                        "message": "0 not ready, 1 faulted of 1 nodes",
+                        "observedGeneration": 1,
+                        "reason": "NodesUnhealthy",
+                        "status": "False",
+                        "type": "Healthy"
+                    }
+                ],
+                "lastInventoryTime": "2026-11-01T19:03:56Z",
+                "nodes": {
+                    "cordoned": 0,
+                    "faulted": 1,
+                    "notReady": 0,
+                    "ready": 1,
+                    "remediating": 0,
+                    "total": 1
+                },
+                "npu": {
+                    "allocatable": 0,
+                    "allocated": 1,
+                    "total": 8,
+                    "unhealthy": 8
+                },
+                "observedGeneration": 1,
+                "observedHardwareClasses": [
+                    "atlas-800i-a2"
+                ],
+                "phase": "Degraded"
+            }
+        }
+    ],
+    "kind": "List",
+    "metadata": {
+        "resourceVersion": ""
+    }
+}

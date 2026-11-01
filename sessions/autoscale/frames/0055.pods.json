@@ -1,0 +1,1139 @@
+{
+    "apiVersion": "v1",
+    "items": [
+        {
+            "apiVersion": "v1",
+            "kind": "Pod",
+            "metadata": {
+                "annotations": {
+                    "ascend.kubectl.kubernetes.io/ascend-910-configuration": "{\"pod_name\":\"qwen-chat-68459c5448-7pxg6\",\"server_id\":\"3cc3f428-d5bf-4405-a101-325cfe76590b\",\"host_ip\":\"192.168.0.119\",\"super_pod_id\":-1,\"devices\":[{\"device_id\":\"0\",\"device_ip\":\"29.23.116.156\",\"super_device_id\":\"4290772992\"}],\"rack_id\":0,\"server_index\":\"1023\",\"server_ip\":\"192.168.0.119\"}",
+                    "distributed-job": "true",
+                    "hccl/rankIndex": "3",
+                    "huawei.com/Ascend910": "Ascend910-0",
+                    "huawei.com/AscendReal": "Ascend910-0",
+                    "huawei.com/kltDev": "Ascend910-4",
+                    "predicate-time": "18446744073709551615",
+                    "scheduling.k8s.io/group-name": "qwen-chat"
+                },
+                "creationTimestamp": "2026-11-01T19:06:16Z",
+                "deletionGracePeriodSeconds": 120,
+                "deletionTimestamp": "2026-11-01T19:11:56Z",
+                "generateName": "qwen-chat-68459c5448-",
+                "generation": 2,
+                "labels": {
+                    "platform.ascendfleet.internal/endpoint": "qwen-chat",
+                    "platform.ascendfleet.internal/tenant": "maas-co",
+                    "pod-template-hash": "68459c5448"
+                },
+                "name": "qwen-chat-68459c5448-7pxg6",
+                "namespace": "tenant-maas-co",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "apps/v1",
+                        "blockOwnerDeletion": true,
+                        "controller": true,
+                        "kind": "ReplicaSet",
+                        "name": "qwen-chat-68459c5448",
+                        "uid": "cc62d072-b71e-4630-b9aa-f1938b918e4c"
+                    }
+                ],
+                "resourceVersion": "1050393",
+                "uid": "3cc3f428-d5bf-4405-a101-325cfe76590b"
+            },
+            "spec": {
+                "containers": [
+                    {
+                        "args": [
+                            "vllm serve Qwen/Qwen2-0.5B-Instruct \\\n  --max-model-len 4096 --port 8000 --host 0.0.0.0 \\\n  --gpu-memory-utilization 0.45\n"
+                        ],
+                        "command": [
+                            "/bin/bash",
+                            "-lc"
+                        ],
+                        "env": [
+                            {
+                                "name": "HF_HOME",
+                                "value": "/hf"
+                            },
+                            {
+                                "name": "HF_HUB_OFFLINE",
+                                "value": "1"
+                            }
+                        ],
+                        "image": "quay.io/ascend/vllm-ascend:v0.18.0",
+                        "imagePullPolicy": "IfNotPresent",
+                        "lifecycle": {
+                            "preStop": {
+                                "sleep": {
+                                    "seconds": 15
+                                }
+                            }
+                        },
+                        "livenessProbe": {
+                            "failureThreshold": 3,
+                            "httpGet": {
+                                "path": "/health",
+                                "port": 8000,
+                                "scheme": "HTTP"
+                            },
+                            "periodSeconds": 20,
+                            "successThreshold": 1,
+                            "timeoutSeconds": 1
+                        },
+                        "name": "server",
+                        "ports": [
+                            {
+                                "containerPort": 8000,
+                                "name": "http",
+                                "protocol": "TCP"
+                            }
+                        ],
+                        "readinessProbe": {
+                            "failureThreshold": 3,
+                            "httpGet": {
+                                "path": "/health",
+                                "port": 8000,
+                                "scheme": "HTTP"
+                            },
+                            "periodSeconds": 5,
+                            "successThreshold": 1,
+                            "timeoutSeconds": 1
+                        },
+                        "resources": {
+                            "limits": {
+                                "cpu": "16",
+                                "huawei.com/Ascend910": "1",
+                                "memory": "64Gi"
+                            },
+                            "requests": {
+                                "cpu": "16",
+                                "huawei.com/Ascend910": "1",
+                                "memory": "64Gi"
+                            }
+                        },
+                        "startupProbe": {
+                            "failureThreshold": 90,
+                            "httpGet": {
+                                "path": "/health",
+                                "port": 8000,
+                                "scheme": "HTTP"
+                            },
+                            "periodSeconds": 10,
+                            "successThreshold": 1,
+                            "timeoutSeconds": 1
+                        },
+                        "terminationMessagePath": "/dev/termination-log",
+                        "terminationMessagePolicy": "File",
+                        "volumeMounts": [
+                            {
+                                "mountPath": "/dev/shm",
+                                "name": "dshm"
+                            },
+                            {
+                                "mountPath": "/hf",
+                                "name": "models",
+                                "readOnly": true
+                            },
+                            {
+                                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                                "name": "kube-api-access-h6flv",
+                                "readOnly": true
+                            }
+                        ]
+                    }
+                ],
+                "dnsPolicy": "ClusterFirst",
+                "enableServiceLinks": true,
+                "nodeName": "atlas-800i-a2",
+                "preemptionPolicy": "PreemptLowerPriority",
+                "priority": 0,
+                "restartPolicy": "Always",
+                "runtimeClassName": "ascend",
+                "schedulerName": "volcano",
+                "securityContext": {},
+                "serviceAccount": "default",
+                "serviceAccountName": "default",
+                "terminationGracePeriodSeconds": 120,
+                "tolerations": [
+                    {
+                        "effect": "NoExecute",
+                        "key": "node.kubernetes.io/not-ready",
+                        "operator": "Exists",
+                        "tolerationSeconds": 300
+                    },
+                    {
+                        "effect": "NoExecute",
+                        "key": "node.kubernetes.io/unreachable",
+                        "operator": "Exists",
+                        "tolerationSeconds": 300
+                    }
+                ],
+                "volumes": [
+                    {
+                        "emptyDir": {
+                            "medium": "Memory",
+                            "sizeLimit": "8Gi"
+                        },
+                        "name": "dshm"
+                    },
+                    {
+                        "name": "models",
+                        "persistentVolumeClaim": {
+                            "claimName": "models-qwen",
+                            "readOnly": true
+                        }
+                    },
+                    {
+                        "name": "kube-api-access-h6flv",
+                        "projected": {
+                            "defaultMode": 420,
+                            "sources": [
+                                {
+                                    "serviceAccountToken": {
+                                        "expirationSeconds": 3607,
+                                        "path": "token"
+                                    }
+                                },
+                                {
+                                    "configMap": {
+                                        "items": [
+                                            {
+                                                "key": "ca.crt",
+                                                "path": "ca.crt"
+                                            }
+                                        ],
+                                        "name": "kube-root-ca.crt"
+                                    }
+                                },
+                                {
+                                    "downwardAPI": {
+                                        "items": [
+                                            {
+                                                "fieldRef": {
+                                                    "apiVersion": "v1",
+                                                    "fieldPath": "metadata.namespace"
+                                                },
+                                                "path": "namespace"
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            },
+            "status": {
+                "conditions": [
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2026-11-01T19:06:18Z",
+                        "observedGeneration": 2,
+                        "status": "True",
+                        "type": "PodReadyToStartContainers"
+                    },
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2026-11-01T19:06:16Z",
+                        "observedGeneration": 2,
+                        "status": "True",
+                        "type": "Initialized"
+                    },
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2026-11-01T19:09:56Z",
+                        "observedGeneration": 2,
+                        "status": "True",
+                        "type": "Ready"
+                    },
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2026-11-01T19:09:56Z",
+                        "observedGeneration": 2,
+                        "status": "True",
+                        "type": "ContainersReady"
+                    },
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2026-11-01T19:06:16Z",
+                        "observedGeneration": 2,
+                        "status": "True",
+                        "type": "PodScheduled"
+                    }
+                ],
+                "containerStatuses": [
+                    {
+                        "allocatedResources": {
+                            "cpu": "16",
+                            "huawei.com/Ascend910": "1",
+                            "memory": "64Gi"
+                        },
+                        "containerID": "containerd://5786d4ea1e9399e05266458e92886729dbfe8e81a9943efbcb397674886b7adb",
+                        "image": "quay.io/ascend/vllm-ascend:v0.18.0",
+                        "imageID": "sha256:35f9e569dbe3dc8db90cb361886d7889489efd8fa065860c8de319e13ab025d0",
+                        "lastState": {},
+                        "name": "server",
+                        "ready": true,
+                        "resources": {
+                            "limits": {
+                                "cpu": "16",
+                                "huawei.com/Ascend910": "1",
+                                "memory": "64Gi"
+                            },
+                            "requests": {
+                                "cpu": "16",
+                                "huawei.com/Ascend910": "1",
+                                "memory": "64Gi"
+                            }
+                        },
+                        "restartCount": 0,
+                        "started": true,
+                        "state": {
+                            "running": {
+                                "startedAt": "2026-11-01T19:06:18Z"
+                            }
+                        },
+                        "user": {
+                            "linux": {
+                                "gid": 0,
+                                "supplementalGroups": [
+                                    0
+                                ],
+                                "uid": 0
+                            }
+                        },
+                        "volumeMounts": [
+                            {
+                                "mountPath": "/dev/shm",
+                                "name": "dshm"
+                            },
+                            {
+                                "mountPath": "/hf",
+                                "name": "models",
+                                "readOnly": true,
+                                "recursiveReadOnly": "Disabled"
+                            },
+                            {
+                                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                                "name": "kube-api-access-h6flv",
+                                "readOnly": true,
+                                "recursiveReadOnly": "Disabled"
+                            }
+                        ]
+                    }
+                ],
+                "hostIP": "192.168.0.119",
+                "hostIPs": [
+                    {
+                        "ip": "192.168.0.119"
+                    }
+                ],
+                "observedGeneration": 2,
+                "phase": "Running",
+                "podIP": "10.42.0.51",
+                "podIPs": [
+                    {
+                        "ip": "10.42.0.51"
+                    }
+                ],
+                "qosClass": "Guaranteed",
+                "startTime": "2026-11-01T19:06:16Z"
+            }
+        },
+        {
+            "apiVersion": "v1",
+            "kind": "Pod",
+            "metadata": {
+                "annotations": {
+                    "ascend.kubectl.kubernetes.io/ascend-910-configuration": "{\"pod_name\":\"qwen-chat-68459c5448-8hlk2\",\"server_id\":\"22be88f7-d25f-4229-ab2b-ffcbb5a8d77b\",\"host_ip\":\"192.168.0.119\",\"super_pod_id\":-1,\"devices\":[{\"device_id\":\"1\",\"device_ip\":\"29.23.142.245\",\"super_device_id\":\"4291035137\"}],\"rack_id\":0,\"server_index\":\"1023\",\"server_ip\":\"192.168.0.119\"}",
+                    "distributed-job": "true",
+                    "hccl/rankIndex": "1",
+                    "huawei.com/Ascend910": "Ascend910-1",
+                    "huawei.com/AscendReal": "Ascend910-1",
+                    "huawei.com/kltDev": "Ascend910-0",
+                    "predicate-time": "18446744073709551615",
+                    "scheduling.k8s.io/group-name": "qwen-chat"
+                },
+                "creationTimestamp": "2026-11-01T18:49:48Z",
+                "generateName": "qwen-chat-68459c5448-",
+                "generation": 1,
+                "labels": {
+                    "platform.ascendfleet.internal/endpoint": "qwen-chat",
+                    "platform.ascendfleet.internal/tenant": "maas-co",
+                    "pod-template-hash": "68459c5448"
+                },
+                "name": "qwen-chat-68459c5448-8hlk2",
+                "namespace": "tenant-maas-co",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "apps/v1",
+                        "blockOwnerDeletion": true,
+                        "controller": true,
+                        "kind": "ReplicaSet",
+                        "name": "qwen-chat-68459c5448",
+                        "uid": "cc62d072-b71e-4630-b9aa-f1938b918e4c"
+                    }
+                ],
+                "resourceVersion": "1047989",
+                "uid": "22be88f7-d25f-4229-ab2b-ffcbb5a8d77b"
+            },
+            "spec": {
+                "containers": [
+                    {
+                        "args": [
+                            "vllm serve Qwen/Qwen2-0.5B-Instruct \\\n  --max-model-len 4096 --port 8000 --host 0.0.0.0 \\\n  --gpu-memory-utilization 0.45\n"
+                        ],
+                        "command": [
+                            "/bin/bash",
+                            "-lc"
+                        ],
+                        "env": [
+                            {
+                                "name": "HF_HOME",
+                                "value": "/hf"
+                            },
+                            {
+                                "name": "HF_HUB_OFFLINE",
+                                "value": "1"
+                            }
+                        ],
+                        "image": "quay.io/ascend/vllm-ascend:v0.18.0",
+                        "imagePullPolicy": "IfNotPresent",
+                        "lifecycle": {
+                            "preStop": {
+                                "sleep": {
+                                    "seconds": 15
+                                }
+                            }
+                        },
+                        "livenessProbe": {
+                            "failureThreshold": 3,
+                            "httpGet": {
+                                "path": "/health",
+                                "port": 8000,
+                                "scheme": "HTTP"
+                            },
+                            "periodSeconds": 20,
+                            "successThreshold": 1,
+                            "timeoutSeconds": 1
+                        },
+                        "name": "server",
+                        "ports": [
+                            {
+                                "containerPort": 8000,
+                                "name": "http",
+                                "protocol": "TCP"
+                            }
+                        ],
+                        "readinessProbe": {
+                            "failureThreshold": 3,
+                            "httpGet": {
+                                "path": "/health",
+                                "port": 8000,
+                                "scheme": "HTTP"
+                            },
+                            "periodSeconds": 5,
+                            "successThreshold": 1,
+                            "timeoutSeconds": 1
+                        },
+                        "resources": {
+                            "limits": {
+                                "cpu": "16",
+                                "huawei.com/Ascend910": "1",
+                                "memory": "64Gi"
+                            },
+                            "requests": {
+                                "cpu": "16",
+                                "huawei.com/Ascend910": "1",
+                                "memory": "64Gi"
+                            }
+                        },
+                        "startupProbe": {
+                            "failureThreshold": 90,
+                            "httpGet": {
+                                "path": "/health",
+                                "port": 8000,
+                                "scheme": "HTTP"
+                            },
+                            "periodSeconds": 10,
+                            "successThreshold": 1,
+                            "timeoutSeconds": 1
+                        },
+                        "terminationMessagePath": "/dev/termination-log",
+                        "terminationMessagePolicy": "File",
+                        "volumeMounts": [
+                            {
+                                "mountPath": "/dev/shm",
+                                "name": "dshm"
+                            },
+                            {
+                                "mountPath": "/hf",
+                                "name": "models",
+                                "readOnly": true
+                            },
+                            {
+                                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                                "name": "kube-api-access-6hzh6",
+                                "readOnly": true
+                            }
+                        ]
+                    }
+                ],
+                "dnsPolicy": "ClusterFirst",
+                "enableServiceLinks": true,
+                "nodeName": "atlas-800i-a2",
+                "preemptionPolicy": "PreemptLowerPriority",
+                "priority": 0,
+                "restartPolicy": "Always",
+                "runtimeClassName": "ascend",
+                "schedulerName": "volcano",
+                "securityContext": {},
+                "serviceAccount": "default",
+                "serviceAccountName": "default",
+                "terminationGracePeriodSeconds": 120,
+                "tolerations": [
+                    {
+                        "effect": "NoExecute",
+                        "key": "node.kubernetes.io/not-ready",
+                        "operator": "Exists",
+                        "tolerationSeconds": 300
+                    },
+                    {
+                        "effect": "NoExecute",
+                        "key": "node.kubernetes.io/unreachable",
+                        "operator": "Exists",
+                        "tolerationSeconds": 300
+                    }
+                ],
+                "volumes": [
+                    {
+                        "emptyDir": {
+                            "medium": "Memory",
+                            "sizeLimit": "8Gi"
+                        },
+                        "name": "dshm"
+                    },
+                    {
+                        "name": "models",
+                        "persistentVolumeClaim": {
+                            "claimName": "models-qwen",
+                            "readOnly": true
+                        }
+                    },
+                    {
+                        "name": "kube-api-access-6hzh6",
+                        "projected": {
+                            "defaultMode": 420,
+                            "sources": [
+                                {
+                                    "serviceAccountToken": {
+                                        "expirationSeconds": 3607,
+                                        "path": "token"
+                                    }
+                                },
+                                {
+                                    "configMap": {
+                                        "items": [
+                                            {
+                                                "key": "ca.crt",
+                                                "path": "ca.crt"
+                                            }
+                                        ],
+                                        "name": "kube-root-ca.crt"
+                                    }
+                                },
+                                {
+                                    "downwardAPI": {
+                                        "items": [
+                                            {
+                                                "fieldRef": {
+                                                    "apiVersion": "v1",
+                                                    "fieldPath": "metadata.namespace"
+                                                },
+                                                "path": "namespace"
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            },
+            "status": {
+                "conditions": [
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2026-11-01T18:49:52Z",
+                        "observedGeneration": 1,
+                        "status": "True",
+                        "type": "PodReadyToStartContainers"
+                    },
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2026-11-01T18:49:49Z",
+                        "observedGeneration": 1,
+                        "status": "True",
+                        "type": "Initialized"
+                    },
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2026-11-01T18:53:20Z",
+                        "observedGeneration": 1,
+                        "status": "True",
+                        "type": "Ready"
+                    },
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2026-11-01T18:53:20Z",
+                        "observedGeneration": 1,
+                        "status": "True",
+                        "type": "ContainersReady"
+                    },
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2026-11-01T18:49:49Z",
+                        "observedGeneration": 1,
+                        "status": "True",
+                        "type": "PodScheduled"
+                    }
+                ],
+                "containerStatuses": [
+                    {
+                        "allocatedResources": {
+                            "cpu": "16",
+                            "huawei.com/Ascend910": "1",
+                            "memory": "64Gi"
+                        },
+                        "containerID": "containerd://4353590de4f95e712a58e047be7cb4550a410bf8a28c2354aa15f3f594fb8d87",
+                        "image": "quay.io/ascend/vllm-ascend:v0.18.0",
+                        "imageID": "sha256:35f9e569dbe3dc8db90cb361886d7889489efd8fa065860c8de319e13ab025d0",
+                        "lastState": {},
+                        "name": "server",
+                        "ready": true,
+                        "resources": {
+                            "limits": {
+                                "cpu": "16",
+                                "huawei.com/Ascend910": "1",
+                                "memory": "64Gi"
+                            },
+                            "requests": {
+                                "cpu": "16",
+                                "huawei.com/Ascend910": "1",
+                                "memory": "64Gi"
+                            }
+                        },
+                        "restartCount": 0,
+                        "started": true,
+                        "state": {
+                            "running": {
+                                "startedAt": "2026-11-01T18:49:51Z"
+                            }
+                        },
+                        "user": {
+                            "linux": {
+                                "gid": 0,
+                                "supplementalGroups": [
+                                    0
+                                ],
+                                "uid": 0
+                            }
+                        },
+                        "volumeMounts": [
+                            {
+                                "mountPath": "/dev/shm",
+                                "name": "dshm"
+                            },
+                            {
+                                "mountPath": "/hf",
+                                "name": "models",
+                                "readOnly": true,
+                                "recursiveReadOnly": "Disabled"
+                            },
+                            {
+                                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                                "name": "kube-api-access-6hzh6",
+                                "readOnly": true,
+                                "recursiveReadOnly": "Disabled"
+                            }
+                        ]
+                    }
+                ],
+                "hostIP": "192.168.0.119",
+                "hostIPs": [
+                    {
+                        "ip": "192.168.0.119"
+                    }
+                ],
+                "observedGeneration": 1,
+                "phase": "Running",
+                "podIP": "10.42.0.186",
+                "podIPs": [
+                    {
+                        "ip": "10.42.0.186"
+                    }
+                ],
+                "qosClass": "Guaranteed",
+                "startTime": "2026-11-01T18:49:49Z"
+            }
+        },
+        {
+            "apiVersion": "v1",
+            "kind": "Pod",
+            "metadata": {
+                "annotations": {
+                    "scheduling.k8s.io/group-name": "qwen-chat"
+                },
+                "creationTimestamp": "2026-11-01T19:10:19Z",
+                "generateName": "qwen-chat-68459c5448-",
+                "generation": 1,
+                "labels": {
+                    "platform.ascendfleet.internal/endpoint": "qwen-chat",
+                    "platform.ascendfleet.internal/tenant": "maas-co",
+                    "pod-template-hash": "68459c5448"
+                },
+                "name": "qwen-chat-68459c5448-ktqgn",
+                "namespace": "tenant-maas-co",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "apps/v1",
+                        "blockOwnerDeletion": true,
+                        "controller": true,
+                        "kind": "ReplicaSet",
+                        "name": "qwen-chat-68459c5448",
+                        "uid": "cc62d072-b71e-4630-b9aa-f1938b918e4c"
+                    }
+                ],
+                "resourceVersion": "1050473",
+                "uid": "4575f22d-6c11-4630-a618-7f46ff9c14ad"
+            },
+            "spec": {
+                "containers": [
+                    {
+                        "args": [
+                            "vllm serve Qwen/Qwen2-0.5B-Instruct \\\n  --max-model-len 4096 --port 8000 --host 0.0.0.0 \\\n  --gpu-memory-utilization 0.45\n"
+                        ],
+                        "command": [
+                            "/bin/bash",
+                            "-lc"
+                        ],
+                        "env": [
+                            {
+                                "name": "HF_HOME",
+                                "value": "/hf"
+                            },
+                            {
+                                "name": "HF_HUB_OFFLINE",
+                                "value": "1"
+                            }
+                        ],
+                        "image": "quay.io/ascend/vllm-ascend:v0.18.0",
+                        "imagePullPolicy": "IfNotPresent",
+                        "lifecycle": {
+                            "preStop": {
+                                "sleep": {
+                                    "seconds": 15
+                                }
+                            }
+                        },
+                        "livenessProbe": {
+                            "failureThreshold": 3,
+                            "httpGet": {
+                                "path": "/health",
+                                "port": 8000,
+                                "scheme": "HTTP"
+                            },
+                            "periodSeconds": 20,
+                            "successThreshold": 1,
+                            "timeoutSeconds": 1
+                        },
+                        "name": "server",
+                        "ports": [
+                            {
+                                "containerPort": 8000,
+                                "name": "http",
+                                "protocol": "TCP"
+                            }
+                        ],
+                        "readinessProbe": {
+                            "failureThreshold": 3,
+                            "httpGet": {
+                                "path": "/health",
+                                "port": 8000,
+                                "scheme": "HTTP"
+                            },
+                            "periodSeconds": 5,
+                            "successThreshold": 1,
+                            "timeoutSeconds": 1
+                        },
+                        "resources": {
+                            "limits": {
+                                "cpu": "16",
+                                "huawei.com/Ascend910": "1",
+                                "memory": "64Gi"
+                            },
+                            "requests": {
+                                "cpu": "16",
+                                "huawei.com/Ascend910": "1",
+                                "memory": "64Gi"
+                            }
+                        },
+                        "startupProbe": {
+                            "failureThreshold": 90,
+                            "httpGet": {
+                                "path": "/health",
+                                "port": 8000,
+                                "scheme": "HTTP"
+                            },
+                            "periodSeconds": 10,
+                            "successThreshold": 1,
+                            "timeoutSeconds": 1
+                        },
+                        "terminationMessagePath": "/dev/termination-log",
+                        "terminationMessagePolicy": "File",
+                        "volumeMounts": [
+                            {
+                                "mountPath": "/dev/shm",
+                                "name": "dshm"
+                            },
+                            {
+                                "mountPath": "/hf",
+                                "name": "models",
+                                "readOnly": true
+                            },
+                            {
+                                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                                "name": "kube-api-access-c8wx9",
+                                "readOnly": true
+                            }
+                        ]
+                    }
+                ],
+                "dnsPolicy": "ClusterFirst",
+                "enableServiceLinks": true,
+                "preemptionPolicy": "PreemptLowerPriority",
+                "priority": 0,
+                "restartPolicy": "Always",
+                "runtimeClassName": "ascend",
+                "schedulerName": "volcano",
+                "securityContext": {},
+                "serviceAccount": "default",
+                "serviceAccountName": "default",
+                "terminationGracePeriodSeconds": 120,
+                "tolerations": [
+                    {
+                        "effect": "NoExecute",
+                        "key": "node.kubernetes.io/not-ready",
+                        "operator": "Exists",
+                        "tolerationSeconds": 300
+                    },
+                    {
+                        "effect": "NoExecute",
+                        "key": "node.kubernetes.io/unreachable",
+                        "operator": "Exists",
+                        "tolerationSeconds": 300
+                    }
+                ],
+                "volumes": [
+                    {
+                        "emptyDir": {
+                            "medium": "Memory",
+                            "sizeLimit": "8Gi"
+                        },
+                        "name": "dshm"
+                    },
+                    {
+                        "name": "models",
+                        "persistentVolumeClaim": {
+                            "claimName": "models-qwen",
+                            "readOnly": true
+                        }
+                    },
+                    {
+                        "name": "kube-api-access-c8wx9",
+                        "projected": {
+                            "defaultMode": 420,
+                            "sources": [
+                                {
+                                    "serviceAccountToken": {
+                                        "expirationSeconds": 3607,
+                                        "path": "token"
+                                    }
+                                },
+                                {
+                                    "configMap": {
+                                        "items": [
+                                            {
+                                                "key": "ca.crt",
+                                                "path": "ca.crt"
+                                            }
+                                        ],
+                                        "name": "kube-root-ca.crt"
+                                    }
+                                },
+                                {
+                                    "downwardAPI": {
+                                        "items": [
+                                            {
+                                                "fieldRef": {
+                                                    "apiVersion": "v1",
+                                                    "fieldPath": "metadata.namespace"
+                                                },
+                                                "path": "namespace"
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            },
+            "status": {
+                "conditions": [
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2026-11-01T19:10:20Z",
+                        "message": "all nodes are unavailable",
+                        "reason": "Unschedulable",
+                        "status": "False",
+                        "type": "PodScheduled"
+                    }
+                ],
+                "phase": "Pending",
+                "qosClass": "Guaranteed"
+            }
+        },
+        {
+            "apiVersion": "v1",
+            "kind": "Pod",
+            "metadata": {
+                "annotations": {
+                    "scheduling.k8s.io/group-name": "qwen-chat"
+                },
+                "creationTimestamp": "2026-11-01T19:10:19Z",
+                "generateName": "qwen-chat-68459c5448-",
+                "generation": 1,
+                "labels": {
+                    "platform.ascendfleet.internal/endpoint": "qwen-chat",
+                    "platform.ascendfleet.internal/tenant": "maas-co",
+                    "pod-template-hash": "68459c5448"
+                },
+                "name": "qwen-chat-68459c5448-tdm4d",
+                "namespace": "tenant-maas-co",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "apps/v1",
+                        "blockOwnerDeletion": true,
+                        "controller": true,
+                        "kind": "ReplicaSet",
+                        "name": "qwen-chat-68459c5448",
+                        "uid": "cc62d072-b71e-4630-b9aa-f1938b918e4c"
+                    }
+                ],
+                "resourceVersion": "1050471",
+                "uid": "7d59be31-8c6d-4a4b-a4a9-e7a2d46fb260"
+            },
+            "spec": {
+                "containers": [
+                    {
+                        "args": [
+                            "vllm serve Qwen/Qwen2-0.5B-Instruct \\\n  --max-model-len 4096 --port 8000 --host 0.0.0.0 \\\n  --gpu-memory-utilization 0.45\n"
+                        ],
+                        "command": [
+                            "/bin/bash",
+                            "-lc"
+                        ],
+                        "env": [
+                            {
+                                "name": "HF_HOME",
+                                "value": "/hf"
+                            },
+                            {
+                                "name": "HF_HUB_OFFLINE",
+                                "value": "1"
+                            }
+                        ],
+                        "image": "quay.io/ascend/vllm-ascend:v0.18.0",
+                        "imagePullPolicy": "IfNotPresent",
+                        "lifecycle": {
+                            "preStop": {
+                                "sleep": {
+                                    "seconds": 15
+                                }
+                            }
+                        },
+                        "livenessProbe": {
+                            "failureThreshold": 3,
+                            "httpGet": {
+                                "path": "/health",
+                                "port": 8000,
+                                "scheme": "HTTP"
+                            },
+                            "periodSeconds": 20,
+                            "successThreshold": 1,
+                            "timeoutSeconds": 1
+                        },
+                        "name": "server",
+                        "ports": [
+                            {
+                                "containerPort": 8000,
+                                "name": "http",
+                                "protocol": "TCP"
+                            }
+                        ],
+                        "readinessProbe": {
+                            "failureThreshold": 3,
+                            "httpGet": {
+                                "path": "/health",
+                                "port": 8000,
+                                "scheme": "HTTP"
+                            },
+                            "periodSeconds": 5,
+                            "successThreshold": 1,
+                            "timeoutSeconds": 1
+                        },
+                        "resources": {
+                            "limits": {
+                                "cpu": "16",
+                                "huawei.com/Ascend910": "1",
+                                "memory": "64Gi"
+                            },
+                            "requests": {
+                                "cpu": "16",
+                                "huawei.com/Ascend910": "1",
+                                "memory": "64Gi"
+                            }
+                        },
+                        "startupProbe": {
+                            "failureThreshold": 90,
+                            "httpGet": {
+                                "path": "/health",
+                                "port": 8000,
+                                "scheme": "HTTP"
+                            },
+                            "periodSeconds": 10,
+                            "successThreshold": 1,
+                            "timeoutSeconds": 1
+                        },
+                        "terminationMessagePath": "/dev/termination-log",
+                        "terminationMessagePolicy": "File",
+                        "volumeMounts": [
+                            {
+                                "mountPath": "/dev/shm",
+                                "name": "dshm"
+                            },
+                            {
+                                "mountPath": "/hf",
+                                "name": "models",
+                                "readOnly": true
+                            },
+                            {
+                                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                                "name": "kube-api-access-wlhh7",
+                                "readOnly": true
+                            }
+                        ]
+                    }
+                ],
+                "dnsPolicy": "ClusterFirst",
+                "enableServiceLinks": true,
+                "preemptionPolicy": "PreemptLowerPriority",
+                "priority": 0,
+                "restartPolicy": "Always",
+                "runtimeClassName": "ascend",
+                "schedulerName": "volcano",
+                "securityContext": {},
+                "serviceAccount": "default",
+                "serviceAccountName": "default",
+                "terminationGracePeriodSeconds": 120,
+                "tolerations": [
+                    {
+                        "effect": "NoExecute",
+                        "key": "node.kubernetes.io/not-ready",
+                        "operator": "Exists",
+                        "tolerationSeconds": 300
+                    },
+                    {
+                        "effect": "NoExecute",
+                        "key": "node.kubernetes.io/unreachable",
+                        "operator": "Exists",
+                        "tolerationSeconds": 300
+                    }
+                ],
+                "volumes": [
+                    {
+                        "emptyDir": {
+                            "medium": "Memory",
+                            "sizeLimit": "8Gi"
+                        },
+                        "name": "dshm"
+                    },
+                    {
+                        "name": "models",
+                        "persistentVolumeClaim": {
+                            "claimName": "models-qwen",
+                            "readOnly": true
+                        }
+                    },
+                    {
+                        "name": "kube-api-access-wlhh7",
+                        "projected": {
+                            "defaultMode": 420,
+                            "sources": [
+                                {
+                                    "serviceAccountToken": {
+                                        "expirationSeconds": 3607,
+                                        "path": "token"
+                                    }
+                                },
+                                {
+                                    "configMap": {
+                                        "items": [
+                                            {
+                                                "key": "ca.crt",
+                                                "path": "ca.crt"
+                                            }
+                                        ],
+                                        "name": "kube-root-ca.crt"
+                                    }
+                                },
+                                {
+                                    "downwardAPI": {
+                                        "items": [
+                                            {
+                                                "fieldRef": {
+                                                    "apiVersion": "v1",
+                                                    "fieldPath": "metadata.namespace"
+                                                },
+                                                "path": "namespace"
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            },
+            "status": {
+                "conditions": [
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2026-11-01T19:10:20Z",
+                        "message": "all nodes are unavailable",
+                        "reason": "Unschedulable",
+                        "status": "False",
+                        "type": "PodScheduled"
+                    }
+                ],
+                "phase": "Pending",
+                "qosClass": "Guaranteed"
+            }
+        }
+    ],
+    "kind": "List",
+    "metadata": {
+        "resourceVersion": ""
+    }
+}

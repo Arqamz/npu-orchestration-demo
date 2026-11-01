@@ -1,0 +1,851 @@
+{
+    "apiVersion": "v1",
+    "items": [
+        {
+            "apiVersion": "platform.ascendfleet.internal/v1alpha1",
+            "kind": "Tenant",
+            "metadata": {
+                "annotations": {
+                    "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"platform.ascendfleet.internal/v1alpha1\",\"kind\":\"Tenant\",\"metadata\":{\"annotations\":{},\"name\":\"acme\"},\"spec\":{\"billing\":{\"accountID\":\"ACC-ACME\",\"liability\":\"Parent\"},\"displayName\":\"Acme Corp\",\"parent\":\"dc-shanghai\",\"quota\":{\"cpu\":\"100\",\"memory\":\"400Gi\",\"npu\":\"5\",\"pods\":\"40\"},\"security\":{\"podSecurityStandard\":\"restricted\"},\"subtenancy\":{\"oversubscription\":\"Forbid\"},\"vnpu\":{\"mode\":\"Static\",\"templates\":[\"vir05_1c_16g\"]}}}\n"
+                },
+                "creationTimestamp": "2026-10-30T20:17:32Z",
+                "finalizers": [
+                    "platform.ascendfleet.internal/tenant-cleanup"
+                ],
+                "generation": 1,
+                "name": "acme",
+                "resourceVersion": "876326",
+                "uid": "b22c29ce-a6c1-4cbe-a68f-ae47de2d1af9"
+            },
+            "spec": {
+                "access": {},
+                "billing": {
+                    "accountID": "ACC-ACME",
+                    "liability": "Parent"
+                },
+                "displayName": "Acme Corp",
+                "namespace": "tenant-acme",
+                "network": {
+                    "isolation": "Strict",
+                    "restrictEgress": false
+                },
+                "parent": "dc-shanghai",
+                "queue": {
+                    "reclaimable": true,
+                    "weight": 1
+                },
+                "quota": {
+                    "cpu": "100",
+                    "memory": "400Gi",
+                    "npu": "5",
+                    "pods": "40"
+                },
+                "security": {
+                    "podSecurityStandard": "restricted"
+                },
+                "subtenancy": {
+                    "oversubscription": "Forbid"
+                },
+                "vnpu": {
+                    "mode": "Static",
+                    "mutationStrategy": "Recreate",
+                    "templates": [
+                        "vir05_1c_16g"
+                    ]
+                }
+            },
+            "status": {
+                "billedTo": "dc-shanghai",
+                "children": [
+                    "acme-research"
+                ],
+                "committedQuota": {
+                    "huawei.com/Ascend910": "2/5",
+                    "pods": "16/40",
+                    "requests.cpu": "40/100",
+                    "requests.memory": "160Gi/400Gi"
+                },
+                "conditions": [
+                    {
+                        "lastTransitionTime": "2026-10-30T20:17:32Z",
+                        "message": "",
+                        "observedGeneration": 1,
+                        "reason": "Reconciled",
+                        "status": "True",
+                        "type": "NamespaceReady"
+                    },
+                    {
+                        "lastTransitionTime": "2026-10-30T20:17:32Z",
+                        "message": "",
+                        "observedGeneration": 1,
+                        "reason": "Reconciled",
+                        "status": "True",
+                        "type": "QuotaReady"
+                    },
+                    {
+                        "lastTransitionTime": "2026-10-30T20:17:32Z",
+                        "message": "",
+                        "observedGeneration": 1,
+                        "reason": "Reconciled",
+                        "status": "True",
+                        "type": "QueueReady"
+                    },
+                    {
+                        "lastTransitionTime": "2026-10-30T20:17:32Z",
+                        "message": "",
+                        "observedGeneration": 1,
+                        "reason": "Reconciled",
+                        "status": "True",
+                        "type": "VNPUPolicyReady"
+                    },
+                    {
+                        "lastTransitionTime": "2026-10-30T20:17:32Z",
+                        "message": "",
+                        "observedGeneration": 1,
+                        "reason": "Reconciled",
+                        "status": "True",
+                        "type": "NetworkPolicyReady"
+                    },
+                    {
+                        "lastTransitionTime": "2026-10-30T20:17:32Z",
+                        "message": "",
+                        "observedGeneration": 1,
+                        "reason": "Reconciled",
+                        "status": "True",
+                        "type": "LimitRangeReady"
+                    },
+                    {
+                        "lastTransitionTime": "2026-10-30T20:17:32Z",
+                        "message": "",
+                        "observedGeneration": 1,
+                        "reason": "Reconciled",
+                        "status": "True",
+                        "type": "RBACReady"
+                    },
+                    {
+                        "lastTransitionTime": "2026-10-30T20:17:32Z",
+                        "message": "sub-tenant of dc-shanghai, billed to dc-shanghai",
+                        "observedGeneration": 1,
+                        "reason": "SubTenant",
+                        "status": "True",
+                        "type": "ParentReady"
+                    },
+                    {
+                        "lastTransitionTime": "2026-10-30T20:17:32Z",
+                        "message": "",
+                        "observedGeneration": 1,
+                        "reason": "AllObjectsReady",
+                        "status": "True",
+                        "type": "Ready"
+                    }
+                ],
+                "depth": 1,
+                "namespace": "tenant-acme",
+                "observedGeneration": 1,
+                "path": [
+                    "dc-shanghai",
+                    "acme"
+                ],
+                "phase": "Ready",
+                "queueName": "tenant-acme"
+            }
+        },
+        {
+            "apiVersion": "platform.ascendfleet.internal/v1alpha1",
+            "kind": "Tenant",
+            "metadata": {
+                "annotations": {
+                    "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"platform.ascendfleet.internal/v1alpha1\",\"kind\":\"Tenant\",\"metadata\":{\"annotations\":{},\"name\":\"acme-research\"},\"spec\":{\"billing\":{\"accountID\":\"ACC-ACME-RESEARCH\",\"liability\":\"Parent\"},\"displayName\":\"Acme Research (a customer of Acme)\",\"parent\":\"acme\",\"quota\":{\"cpu\":\"40\",\"memory\":\"160Gi\",\"npu\":\"2\",\"pods\":\"16\"},\"security\":{\"podSecurityStandard\":\"restricted\"}}}\n"
+                },
+                "creationTimestamp": "2026-10-30T20:17:32Z",
+                "finalizers": [
+                    "platform.ascendfleet.internal/tenant-cleanup"
+                ],
+                "generation": 1,
+                "name": "acme-research",
+                "resourceVersion": "876341",
+                "uid": "775f44e8-47ba-4c56-b11f-c313d57b80f7"
+            },
+            "spec": {
+                "access": {},
+                "billing": {
+                    "accountID": "ACC-ACME-RESEARCH",
+                    "liability": "Parent"
+                },
+                "displayName": "Acme Research (a customer of Acme)",
+                "namespace": "tenant-acme-research",
+                "network": {
+                    "isolation": "Strict",
+                    "restrictEgress": false
+                },
+                "parent": "acme",
+                "queue": {
+                    "reclaimable": true,
+                    "weight": 1
+                },
+                "quota": {
+                    "cpu": "40",
+                    "memory": "160Gi",
+                    "npu": "2",
+                    "pods": "16"
+                },
+                "security": {
+                    "podSecurityStandard": "restricted"
+                },
+                "subtenancy": {
+                    "oversubscription": "Forbid"
+                },
+                "vnpu": {
+                    "mode": "None",
+                    "mutationStrategy": "Recreate"
+                }
+            },
+            "status": {
+                "billedTo": "dc-shanghai",
+                "conditions": [
+                    {
+                        "lastTransitionTime": "2026-10-30T20:17:32Z",
+                        "message": "",
+                        "observedGeneration": 1,
+                        "reason": "Reconciled",
+                        "status": "True",
+                        "type": "NamespaceReady"
+                    },
+                    {
+                        "lastTransitionTime": "2026-10-30T20:17:32Z",
+                        "message": "",
+                        "observedGeneration": 1,
+                        "reason": "Reconciled",
+                        "status": "True",
+                        "type": "QuotaReady"
+                    },
+                    {
+                        "lastTransitionTime": "2026-10-30T20:17:32Z",
+                        "message": "",
+                        "observedGeneration": 1,
+                        "reason": "Reconciled",
+                        "status": "True",
+                        "type": "QueueReady"
+                    },
+                    {
+                        "lastTransitionTime": "2026-10-30T20:17:32Z",
+                        "message": "",
+                        "observedGeneration": 1,
+                        "reason": "Reconciled",
+                        "status": "True",
+                        "type": "VNPUPolicyReady"
+                    },
+                    {
+                        "lastTransitionTime": "2026-10-30T20:17:32Z",
+                        "message": "",
+                        "observedGeneration": 1,
+                        "reason": "Reconciled",
+                        "status": "True",
+                        "type": "NetworkPolicyReady"
+                    },
+                    {
+                        "lastTransitionTime": "2026-10-30T20:17:32Z",
+                        "message": "",
+                        "observedGeneration": 1,
+                        "reason": "Reconciled",
+                        "status": "True",
+                        "type": "LimitRangeReady"
+                    },
+                    {
+                        "lastTransitionTime": "2026-10-30T20:17:32Z",
+                        "message": "",
+                        "observedGeneration": 1,
+                        "reason": "Reconciled",
+                        "status": "True",
+                        "type": "RBACReady"
+                    },
+                    {
+                        "lastTransitionTime": "2026-10-30T20:17:32Z",
+                        "message": "sub-tenant of acme, billed to dc-shanghai",
+                        "observedGeneration": 1,
+                        "reason": "SubTenant",
+                        "status": "True",
+                        "type": "ParentReady"
+                    },
+                    {
+                        "lastTransitionTime": "2026-10-30T20:17:32Z",
+                        "message": "",
+                        "observedGeneration": 1,
+                        "reason": "AllObjectsReady",
+                        "status": "True",
+                        "type": "Ready"
+                    }
+                ],
+                "depth": 2,
+                "namespace": "tenant-acme-research",
+                "observedGeneration": 1,
+                "path": [
+                    "dc-shanghai",
+                    "acme",
+                    "acme-research"
+                ],
+                "phase": "Ready",
+                "queueName": "tenant-acme-research"
+            }
+        },
+        {
+            "apiVersion": "platform.ascendfleet.internal/v1alpha1",
+            "kind": "Tenant",
+            "metadata": {
+                "annotations": {
+                    "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"platform.ascendfleet.internal/v1alpha1\",\"kind\":\"Tenant\",\"metadata\":{\"annotations\":{},\"name\":\"dc-shanghai\"},\"spec\":{\"billing\":{\"accountID\":\"ACC-DC-SHANGHAI\"},\"displayName\":\"Shanghai Data Centre\",\"quota\":{\"cpu\":\"160\",\"memory\":\"640Gi\",\"npu\":\"8\",\"pods\":\"64\"},\"security\":{\"podSecurityStandard\":\"restricted\"},\"subtenancy\":{\"maxChildren\":8,\"oversubscription\":\"Forbid\"},\"vnpu\":{\"mode\":\"Static\",\"templates\":[\"vir05_1c_16g\",\"vir10_3c_32g\"]}}}\n"
+                },
+                "creationTimestamp": "2026-10-30T20:06:00Z",
+                "finalizers": [
+                    "platform.ascendfleet.internal/tenant-cleanup"
+                ],
+                "generation": 5,
+                "name": "dc-shanghai",
+                "resourceVersion": "876778",
+                "uid": "01c2b9d5-290f-42b2-a893-9593d522c207"
+            },
+            "spec": {
+                "access": {},
+                "billing": {
+                    "accountID": "ACC-DC-SHANGHAI",
+                    "liability": "Parent"
+                },
+                "displayName": "Shanghai Data Centre",
+                "namespace": "tenant-dc-shanghai",
+                "network": {
+                    "isolation": "Strict",
+                    "restrictEgress": false
+                },
+                "queue": {
+                    "reclaimable": true,
+                    "weight": 1
+                },
+                "quota": {
+                    "cpu": "160",
+                    "memory": "640Gi",
+                    "npu": "8",
+                    "pods": "64"
+                },
+                "security": {
+                    "podSecurityStandard": "restricted"
+                },
+                "subtenancy": {
+                    "maxChildren": 8,
+                    "oversubscription": "Forbid"
+                },
+                "vnpu": {
+                    "mode": "Static",
+                    "mutationStrategy": "Recreate",
+                    "templates": [
+                        "vir05_1c_16g",
+                        "vir10_3c_32g"
+                    ]
+                }
+            },
+            "status": {
+                "billedTo": "dc-shanghai",
+                "children": [
+                    "acme",
+                    "globex"
+                ],
+                "committedQuota": {
+                    "huawei.com/Ascend910": "8/8",
+                    "pods": "64/64",
+                    "requests.cpu": "160/160",
+                    "requests.memory": "640Gi/640Gi"
+                },
+                "conditions": [
+                    {
+                        "lastTransitionTime": "2026-10-30T20:06:00Z",
+                        "message": "",
+                        "observedGeneration": 5,
+                        "reason": "Reconciled",
+                        "status": "True",
+                        "type": "NamespaceReady"
+                    },
+                    {
+                        "lastTransitionTime": "2026-10-30T20:06:00Z",
+                        "message": "",
+                        "observedGeneration": 5,
+                        "reason": "Reconciled",
+                        "status": "True",
+                        "type": "QuotaReady"
+                    },
+                    {
+                        "lastTransitionTime": "2026-10-30T20:06:00Z",
+                        "message": "",
+                        "observedGeneration": 5,
+                        "reason": "Reconciled",
+                        "status": "True",
+                        "type": "QueueReady"
+                    },
+                    {
+                        "lastTransitionTime": "2026-10-30T20:06:00Z",
+                        "message": "",
+                        "observedGeneration": 5,
+                        "reason": "Reconciled",
+                        "status": "True",
+                        "type": "VNPUPolicyReady"
+                    },
+                    {
+                        "lastTransitionTime": "2026-10-30T20:06:00Z",
+                        "message": "",
+                        "observedGeneration": 5,
+                        "reason": "Reconciled",
+                        "status": "True",
+                        "type": "NetworkPolicyReady"
+                    },
+                    {
+                        "lastTransitionTime": "2026-10-30T20:06:00Z",
+                        "message": "",
+                        "observedGeneration": 5,
+                        "reason": "Reconciled",
+                        "status": "True",
+                        "type": "LimitRangeReady"
+                    },
+                    {
+                        "lastTransitionTime": "2026-10-30T20:06:00Z",
+                        "message": "",
+                        "observedGeneration": 5,
+                        "reason": "Reconciled",
+                        "status": "True",
+                        "type": "RBACReady"
+                    },
+                    {
+                        "lastTransitionTime": "2026-10-30T20:06:00Z",
+                        "message": "this tenant holds capacity directly from the operator",
+                        "observedGeneration": 5,
+                        "reason": "Root",
+                        "status": "True",
+                        "type": "ParentReady"
+                    },
+                    {
+                        "lastTransitionTime": "2026-10-30T20:06:00Z",
+                        "message": "",
+                        "observedGeneration": 5,
+                        "reason": "AllObjectsReady",
+                        "status": "True",
+                        "type": "Ready"
+                    }
+                ],
+                "namespace": "tenant-dc-shanghai",
+                "observedGeneration": 5,
+                "path": [
+                    "dc-shanghai"
+                ],
+                "phase": "Ready",
+                "queueName": "tenant-dc-shanghai"
+            }
+        },
+        {
+            "apiVersion": "platform.ascendfleet.internal/v1alpha1",
+            "kind": "Tenant",
+            "metadata": {
+                "annotations": {
+                    "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"platform.ascendfleet.internal/v1alpha1\",\"kind\":\"Tenant\",\"metadata\":{\"annotations\":{},\"name\":\"globex\"},\"spec\":{\"billing\":{\"accountID\":\"ACC-GLOBEX\",\"liability\":\"Parent\"},\"displayName\":\"Globex Industries\",\"parent\":\"dc-shanghai\",\"quota\":{\"cpu\":\"60\",\"memory\":\"240Gi\",\"npu\":\"3\",\"pods\":\"24\"},\"security\":{\"podSecurityStandard\":\"restricted\"}}}\n"
+                },
+                "creationTimestamp": "2026-10-30T20:06:00Z",
+                "finalizers": [
+                    "platform.ascendfleet.internal/tenant-cleanup"
+                ],
+                "generation": 3,
+                "name": "globex",
+                "resourceVersion": "876763",
+                "uid": "6765519c-0f7f-4f1e-bc85-bb4b0ddea953"
+            },
+            "spec": {
+                "access": {},
+                "billing": {
+                    "accountID": "ACC-GLOBEX",
+                    "liability": "Parent"
+                },
+                "displayName": "Globex Industries",
+                "namespace": "tenant-globex",
+                "network": {
+                    "isolation": "Strict",
+                    "restrictEgress": false
+                },
+                "parent": "dc-shanghai",
+                "queue": {
+                    "reclaimable": true,
+                    "weight": 1
+                },
+                "quota": {
+                    "cpu": "60",
+                    "memory": "240Gi",
+                    "npu": "3",
+                    "pods": "24"
+                },
+                "security": {
+                    "podSecurityStandard": "restricted"
+                },
+                "subtenancy": {
+                    "oversubscription": "Forbid"
+                },
+                "vnpu": {
+                    "mode": "None",
+                    "mutationStrategy": "Recreate"
+                }
+            },
+            "status": {
+                "billedTo": "dc-shanghai",
+                "conditions": [
+                    {
+                        "lastTransitionTime": "2026-10-30T20:06:00Z",
+                        "message": "",
+                        "observedGeneration": 3,
+                        "reason": "Reconciled",
+                        "status": "True",
+                        "type": "NamespaceReady"
+                    },
+                    {
+                        "lastTransitionTime": "2026-10-30T20:06:05Z",
+                        "message": "",
+                        "observedGeneration": 3,
+                        "reason": "Reconciled",
+                        "status": "True",
+                        "type": "QuotaReady"
+                    },
+                    {
+                        "lastTransitionTime": "2026-10-30T20:06:00Z",
+                        "message": "",
+                        "observedGeneration": 3,
+                        "reason": "Reconciled",
+                        "status": "True",
+                        "type": "QueueReady"
+                    },
+                    {
+                        "lastTransitionTime": "2026-10-30T20:06:05Z",
+                        "message": "",
+                        "observedGeneration": 3,
+                        "reason": "Reconciled",
+                        "status": "True",
+                        "type": "VNPUPolicyReady"
+                    },
+                    {
+                        "lastTransitionTime": "2026-10-30T20:06:05Z",
+                        "message": "",
+                        "observedGeneration": 3,
+                        "reason": "Reconciled",
+                        "status": "True",
+                        "type": "NetworkPolicyReady"
+                    },
+                    {
+                        "lastTransitionTime": "2026-10-30T20:06:05Z",
+                        "message": "",
+                        "observedGeneration": 3,
+                        "reason": "Reconciled",
+                        "status": "True",
+                        "type": "LimitRangeReady"
+                    },
+                    {
+                        "lastTransitionTime": "2026-10-30T20:06:05Z",
+                        "message": "",
+                        "observedGeneration": 3,
+                        "reason": "Reconciled",
+                        "status": "True",
+                        "type": "RBACReady"
+                    },
+                    {
+                        "lastTransitionTime": "2026-10-30T20:06:00Z",
+                        "message": "sub-tenant of dc-shanghai, billed to dc-shanghai",
+                        "observedGeneration": 3,
+                        "reason": "SubTenant",
+                        "status": "True",
+                        "type": "ParentReady"
+                    },
+                    {
+                        "lastTransitionTime": "2026-10-30T20:06:05Z",
+                        "message": "",
+                        "observedGeneration": 3,
+                        "reason": "AllObjectsReady",
+                        "status": "True",
+                        "type": "Ready"
+                    }
+                ],
+                "depth": 1,
+                "namespace": "tenant-globex",
+                "observedGeneration": 3,
+                "path": [
+                    "dc-shanghai",
+                    "globex"
+                ],
+                "phase": "Ready",
+                "queueName": "tenant-globex"
+            }
+        },
+        {
+            "apiVersion": "platform.ascendfleet.internal/v1alpha1",
+            "kind": "Tenant",
+            "metadata": {
+                "annotations": {
+                    "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"platform.ascendfleet.internal/v1alpha1\",\"kind\":\"Tenant\",\"metadata\":{\"annotations\":{},\"name\":\"lab-co\"},\"spec\":{\"billing\":{\"accountID\":\"ACC-LAB-CO\"},\"displayName\":\"Lab Co (research)\",\"network\":{\"isolation\":\"Strict\"},\"quota\":{\"cpu\":\"60\",\"memory\":\"240Gi\",\"npu\":\"3\",\"pods\":\"24\"},\"security\":{\"podSecurityStandard\":\"baseline\"}}}\n"
+                },
+                "creationTimestamp": "2026-10-31T03:48:52Z",
+                "finalizers": [
+                    "platform.ascendfleet.internal/tenant-cleanup"
+                ],
+                "generation": 1,
+                "name": "lab-co",
+                "resourceVersion": "904339",
+                "uid": "5196a3f4-d778-4278-90a5-76be31b5dc79"
+            },
+            "spec": {
+                "access": {},
+                "billing": {
+                    "accountID": "ACC-LAB-CO",
+                    "liability": "Parent"
+                },
+                "displayName": "Lab Co (research)",
+                "namespace": "tenant-lab-co",
+                "network": {
+                    "isolation": "Strict",
+                    "restrictEgress": false
+                },
+                "queue": {
+                    "reclaimable": true,
+                    "weight": 1
+                },
+                "quota": {
+                    "cpu": "60",
+                    "memory": "240Gi",
+                    "npu": "3",
+                    "pods": "24"
+                },
+                "security": {
+                    "podSecurityStandard": "baseline"
+                },
+                "subtenancy": {
+                    "oversubscription": "Forbid"
+                },
+                "vnpu": {
+                    "mode": "None",
+                    "mutationStrategy": "Recreate"
+                }
+            },
+            "status": {
+                "billedTo": "lab-co",
+                "conditions": [
+                    {
+                        "lastTransitionTime": "2026-10-31T03:48:52Z",
+                        "message": "",
+                        "observedGeneration": 1,
+                        "reason": "Reconciled",
+                        "status": "True",
+                        "type": "NamespaceReady"
+                    },
+                    {
+                        "lastTransitionTime": "2026-10-31T03:48:52Z",
+                        "message": "",
+                        "observedGeneration": 1,
+                        "reason": "Reconciled",
+                        "status": "True",
+                        "type": "QuotaReady"
+                    },
+                    {
+                        "lastTransitionTime": "2026-10-31T03:48:52Z",
+                        "message": "",
+                        "observedGeneration": 1,
+                        "reason": "Reconciled",
+                        "status": "True",
+                        "type": "QueueReady"
+                    },
+                    {
+                        "lastTransitionTime": "2026-10-31T03:48:52Z",
+                        "message": "",
+                        "observedGeneration": 1,
+                        "reason": "Reconciled",
+                        "status": "True",
+                        "type": "VNPUPolicyReady"
+                    },
+                    {
+                        "lastTransitionTime": "2026-10-31T03:48:52Z",
+                        "message": "",
+                        "observedGeneration": 1,
+                        "reason": "Reconciled",
+                        "status": "True",
+                        "type": "NetworkPolicyReady"
+                    },
+                    {
+                        "lastTransitionTime": "2026-10-31T03:48:52Z",
+                        "message": "",
+                        "observedGeneration": 1,
+                        "reason": "Reconciled",
+                        "status": "True",
+                        "type": "LimitRangeReady"
+                    },
+                    {
+                        "lastTransitionTime": "2026-10-31T03:48:52Z",
+                        "message": "",
+                        "observedGeneration": 1,
+                        "reason": "Reconciled",
+                        "status": "True",
+                        "type": "RBACReady"
+                    },
+                    {
+                        "lastTransitionTime": "2026-10-31T03:48:52Z",
+                        "message": "this tenant holds capacity directly from the operator",
+                        "observedGeneration": 1,
+                        "reason": "Root",
+                        "status": "True",
+                        "type": "ParentReady"
+                    },
+                    {
+                        "lastTransitionTime": "2026-10-31T03:48:52Z",
+                        "message": "",
+                        "observedGeneration": 1,
+                        "reason": "AllObjectsReady",
+                        "status": "True",
+                        "type": "Ready"
+                    }
+                ],
+                "namespace": "tenant-lab-co",
+                "observedGeneration": 1,
+                "path": [
+                    "lab-co"
+                ],
+                "phase": "Ready",
+                "queueName": "tenant-lab-co"
+            }
+        },
+        {
+            "apiVersion": "platform.ascendfleet.internal/v1alpha1",
+            "kind": "Tenant",
+            "metadata": {
+                "annotations": {
+                    "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"platform.ascendfleet.internal/v1alpha1\",\"kind\":\"Tenant\",\"metadata\":{\"annotations\":{},\"name\":\"maas-co\"},\"spec\":{\"billing\":{\"accountID\":\"ACC-MAAS-CO\"},\"displayName\":\"MaaS Co (token factory)\",\"network\":{\"isolation\":\"Strict\"},\"quota\":{\"cpu\":\"80\",\"memory\":\"320Gi\",\"npu\":\"4\",\"pods\":\"32\"},\"security\":{\"podSecurityStandard\":\"baseline\"}}}\n",
+                    "reconcile": "1793419551"
+                },
+                "creationTimestamp": "2026-10-31T03:48:52Z",
+                "finalizers": [
+                    "platform.ascendfleet.internal/tenant-cleanup"
+                ],
+                "generation": 1,
+                "name": "maas-co",
+                "resourceVersion": "905696",
+                "uid": "46f82ddd-dcf8-446a-a521-ab0542c8f762"
+            },
+            "spec": {
+                "access": {},
+                "billing": {
+                    "accountID": "ACC-MAAS-CO",
+                    "liability": "Parent"
+                },
+                "displayName": "MaaS Co (token factory)",
+                "namespace": "tenant-maas-co",
+                "network": {
+                    "isolation": "Strict",
+                    "restrictEgress": false
+                },
+                "queue": {
+                    "reclaimable": true,
+                    "weight": 1
+                },
+                "quota": {
+                    "cpu": "80",
+                    "memory": "320Gi",
+                    "npu": "4",
+                    "pods": "32"
+                },
+                "security": {
+                    "podSecurityStandard": "baseline"
+                },
+                "subtenancy": {
+                    "oversubscription": "Forbid"
+                },
+                "vnpu": {
+                    "mode": "None",
+                    "mutationStrategy": "Recreate"
+                }
+            },
+            "status": {
+                "billedTo": "maas-co",
+                "conditions": [
+                    {
+                        "lastTransitionTime": "2026-10-31T03:48:52Z",
+                        "message": "",
+                        "observedGeneration": 1,
+                        "reason": "Reconciled",
+                        "status": "True",
+                        "type": "NamespaceReady"
+                    },
+                    {
+                        "lastTransitionTime": "2026-10-31T03:48:52Z",
+                        "message": "",
+                        "observedGeneration": 1,
+                        "reason": "Reconciled",
+                        "status": "True",
+                        "type": "QuotaReady"
+                    },
+                    {
+                        "lastTransitionTime": "2026-10-31T03:48:52Z",
+                        "message": "",
+                        "observedGeneration": 1,
+                        "reason": "Reconciled",
+                        "status": "True",
+                        "type": "QueueReady"
+                    },
+                    {
+                        "lastTransitionTime": "2026-10-31T03:48:52Z",
+                        "message": "",
+                        "observedGeneration": 1,
+                        "reason": "Reconciled",
+                        "status": "True",
+                        "type": "VNPUPolicyReady"
+                    },
+                    {
+                        "lastTransitionTime": "2026-10-31T03:48:52Z",
+                        "message": "",
+                        "observedGeneration": 1,
+                        "reason": "Reconciled",
+                        "status": "True",
+                        "type": "NetworkPolicyReady"
+                    },
+                    {
+                        "lastTransitionTime": "2026-10-31T03:48:52Z",
+                        "message": "",
+                        "observedGeneration": 1,
+                        "reason": "Reconciled",
+                        "status": "True",
+                        "type": "LimitRangeReady"
+                    },
+                    {
+                        "lastTransitionTime": "2026-10-31T03:48:52Z",
+                        "message": "",
+                        "observedGeneration": 1,
+                        "reason": "Reconciled",
+                        "status": "True",
+                        "type": "RBACReady"
+                    },
+                    {
+                        "lastTransitionTime": "2026-10-31T03:48:52Z",
+                        "message": "this tenant holds capacity directly from the operator",
+                        "observedGeneration": 1,
+                        "reason": "Root",
+                        "status": "True",
+                        "type": "ParentReady"
+                    },
+                    {
+                        "lastTransitionTime": "2026-10-31T03:48:52Z",
+                        "message": "",
+                        "observedGeneration": 1,
+                        "reason": "AllObjectsReady",
+                        "status": "True",
+                        "type": "Ready"
+                    }
+                ],
+                "namespace": "tenant-maas-co",
+                "observedGeneration": 1,
+                "path": [
+                    "maas-co"
+                ],
+                "phase": "Ready",
+                "queueName": "tenant-maas-co"
+            }
+        }
+    ],
+    "kind": "List",
+    "metadata": {
+        "resourceVersion": ""
+    }
+}

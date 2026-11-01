@@ -1,0 +1,20 @@
+{
+  "count": 1,
+  "gaps": null,
+  "observedFor": {
+    "site-a": 60.321414092
+  },
+  "records": [
+    {
+      "cluster": "site-a",
+      "tenant": "acme-research",
+      "namespace": "tenant-acme-research",
+      "resource": "huawei.com/Ascend910",
+      "deviceSeconds": 1667.4987434400005,
+      "deviceHours": 0.4631940954000001
+    }
+  ],
+  "since": "2026-10-28T13:08:50.27331466Z",
+  "totalDeviceHours": 0.4631940954000001,
+  "totalDeviceSeconds": 1667.4987434400005
+}

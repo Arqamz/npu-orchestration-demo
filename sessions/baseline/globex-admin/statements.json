@@ -1,0 +1,39 @@
+{
+  "count": 1,
+  "currency": "USD",
+  "from": "2026-10-28T13:08:50.27331466Z",
+  "statements": [
+    {
+      "tenant": "globex",
+      "accountID": "ACC-GLOBEX",
+      "currency": "USD",
+      "periodFrom": "2026-10-28T13:08:50.27331466Z",
+      "periodTo": "2026-11-01T19:04:09.120152006Z",
+      "direct": [
+        {
+          "namespace": "tenant-globex",
+          "resource": "huawei.com/Ascend910-5c.1.16g",
+          "deviceHours": 0.15480890499722225,
+          "unitPrice": 3.6,
+          "amount": 0.56
+        },
+        {
+          "namespace": "tenant-globex",
+          "resource": "huawei.com/Ascend910-5c.1cpu.16g",
+          "deviceHours": 57.94578385095476,
+          "unitPrice": 3.6,
+          "amount": 208.6
+        }
+      ],
+      "directTotal": 209.16,
+      "resoldTotal": 0,
+      "total": 209.16,
+      "deviceHours": 58.100592755951986,
+      "warnings": [
+        "this usage is invoiced to \"dc-shanghai\", not directly"
+      ]
+    }
+  ],
+  "to": "2026-11-01T19:04:09.120152006Z",
+  "total": 209.16
+}

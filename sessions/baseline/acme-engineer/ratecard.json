@@ -1,0 +1,14 @@
+{
+  "currency": "USD",
+  "minorUnits": 2,
+  "perDeviceHour": {
+    "huawei.com/Ascend910": 12,
+    "huawei.com/Ascend910-10c.3.32g": 6.75,
+    "huawei.com/Ascend910-10c.3cpu.32g": 6.75,
+    "huawei.com/Ascend910-5c.1.16g": 3.6,
+    "huawei.com/Ascend910-5c.1cpu.16g": 3.6,
+    "huawei.com/Ascend910B2": 12,
+    "huawei.com/Ascend910B3": 12
+  },
+  "default": 0
+}

@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fleet console</title>
+<link rel="stylesheet" href="/shared/fleet.css">
+</head>
+<body>
+<main id="app"></main>
+<script type="module">
+import {
+  call, demo, el, card, table, pill, phasePill, refusal, chrome, pageTitle, val, ago,
+} from '/shared/fleet.js';
+
+const app = document.getElementById('app');
+const me = await chrome('/console/');
+
+app.append(pageTitle('Fleet console',
+  'Every node, what it is certified to run, and whether it has drifted from that. '
+  + 'Operator-only: a customer has no business knowing how many nodes exist.'));
+
+/* --------------------------------------------------------------- nodes */
+
+const nodesRes = await call('/fleet/nodes');
+if (!nodesRes.ok) {
+  app.append(card('Nodes', refusal(nodesRes, 'The fleet inventory is operator-only'),
+    el('p', { class: 'note' },
+      'This is the correct answer, not a failure. The node list is fleet-wide, and a '
+      + 'tenant reading it would learn how much hardware exists and what else runs on it. '
+      + 'Switch to fleet-operator to see it.')));
+} else {
+  const nodes = nodesRes.body.nodes || [];
+  const ready = nodes.filter((n) => n.ready).length;
+  const faulted = nodes.filter((n) => n.faulted).length;
+  const cordoned = nodes.filter((n) => n.cordoned).length;
+
+  app.append(card('Fleet', el('div', { class: 'stats' },
+    el('div', { class: 'stat' }, el('div', { class: 'k' }, 'Nodes'),
+      el('div', { class: 'v' }, String(nodes.length))),
+    el('div', { class: 'stat ok' }, el('div', { class: 'k' }, 'Ready'),
+      el('div', { class: 'v' }, String(ready))),
+    el('div', { class: `stat ${faulted ? 'warn' : ''}` }, el('div', { class: 'k' }, 'Faulted'),
+      el('div', { class: 'v' }, String(faulted)),
+      el('div', { class: 'n' }, 'reported by npu-smi')),
+    el('div', { class: `stat ${cordoned ? 'warn' : ''}` }, el('div', { class: 'k' }, 'Cordoned'),
+      el('div', { class: 'v' }, String(cordoned))))));
+
+  app.append(card('Nodes', table(
+    ['Node', 'Cluster', 'Hardware class', 'Certified stack', 'State', 'Faults'],
+    nodes,
+    (n) => el('tr', {},
+      el('td', {}, el('strong', {}, n.name)),
+      el('td', { class: 'mono' }, val(n.cluster)),
+      el('td', { class: 'mono' }, val(n.hardwareClass)),
+      el('td', { class: 'mono' }, val(n.certifiedStack)),
+      el('td', {}, el('div', { class: 'row' },
+        n.ready ? pill('ready', 'ok') : pill('not ready', 'bad'),
+        n.cordoned ? pill('cordoned', 'warn') : null,
+        n.remediating ? pill('remediating', 'warn') : null,
+        n.faulted ? pill('faulted', 'warn') : null)),
+      el('td', { class: 'wrap' }, (n.faults || []).length
+        ? el('details', {}, el('summary', { class: 'muted' }, `${n.faults.length} lines`),
+          el('pre', { class: 'logs', style: 'max-height:200px;margin-top:6px' }, (n.faults || []).join('\n')))
+        : el('span', { class: 'muted' }, 'none'))))));
+
+  app.append(card('A real finding, left visible',
+    el('p', { class: 'note' },
+      'The fault list above is the raw npu-smi output split on commas, which is why it reads '
+      + 'as fragments of JSON rather than as a fault. The node agent collects it correctly and '
+      + 'nothing parses it into a structured fault with a code, a severity and an action. '
+      + 'A console cannot show "card 3 has a recoverable ECC fault" from this, and that is a '
+      + 'gap in the control plane, not in the page.')));
+}
+
+/* ------------------------------------------------------------ compliance */
+
+const compRes = await call('/fleet/compliance');
+if (compRes.ok) {
+  const c = compRes.body;
+  const rows = c.nodes || c.results || [];
+  app.append(card('Certified stack compliance',
+    el('p', { class: 'note' },
+      'A node is compliant when the driver, firmware and CANN versions it reports match the '
+      + 'CertifiedStack it is assigned. An unreadable version is treated as an error, never as '
+      + 'an absent one — empty reads as drift and would drain a healthy node.'),
+    table(['Node', 'Stack', 'Compliant', 'Detail'], rows, (r) => el('tr', {},
+      el('td', { class: 'mono' }, val(r.node ?? r.name)),
+      el('td', { class: 'mono' }, val(r.certifiedStack ?? r.stack)),
+      el('td', {}, r.compliant ? pill('yes', 'ok') : pill('no', 'warn')),
+      el('td', { class: 'wrap muted' }, val(r.reason ?? r.message ?? r.detail, { missing: '' }))))));
+}
+
+/* ---------------------------------------------------------------- drift */
+
+const driftRes = await call('/fleet/drift?all=true');
+if (driftRes.ok) {
+  const items = driftRes.body.drifts || driftRes.body.items || driftRes.body.nodes || [];
+  app.append(card('Drift and remediation', table(
+    ['Node', 'Phase', 'Observed', 'Expected', 'Action'],
+    items,
+    (d) => el('tr', {},
+      el('td', { class: 'mono' }, val(d.node ?? d.name)),
+      el('td', {}, phasePill(d.phase)),
+      el('td', { class: 'mono wrap' }, val(d.observed ?? d.observedVersion, { missing: '' })),
+      el('td', { class: 'mono wrap' }, val(d.expected ?? d.expectedVersion, { missing: '' })),
+      el('td', { class: 'wrap muted' }, val(d.action ?? d.reason, { missing: '' }))))));
+}
+
+/* ------------------------------------------------------------ who is on */
+
+const allocRes = await call('/fleet/allocations');
+if (allocRes.ok) {
+  const a = allocRes.body.allocations || allocRes.body.records || [];
+  app.append(card('Who is holding cards right now', table(
+    ['Tenant', 'Namespace', 'Resource', 'Devices', 'Node'],
+    a,
+    (r) => el('tr', {},
+      el('td', {}, el('strong', {}, val(r.tenant))),
+      el('td', { class: 'mono' }, val(r.namespace)),
+      el('td', { class: 'mono' }, val(r.resource)),
+      el('td', { class: 'num' }, val(r.devices ?? r.count)),
+      el('td', { class: 'mono muted' }, val(r.node, { missing: '' }))))));
+}
+
+/* ------------------------------------------------------------ the cards */
+
+const hw = await demo.hardware('npu-smi-info.txt');
+if (hw.ok) {
+  app.append(card('npu-smi, as recorded on the node',
+    el('p', { class: 'note' },
+      'No API returns this. It is here because once the node is gone this is the only '
+      + 'evidence the cards were real.'),
+    el('pre', { class: 'logs' }, hw.body.text)));
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,70 @@
+{
+  "clusters": [
+    {
+      "cluster": "site-a",
+      "site": "site-a",
+      "nodes": [
+        {
+          "name": "atlas-800i-a2",
+          "cluster": "site-a",
+          "site": "site-a",
+          "hardwareClass": "atlas-800i-a2",
+          "certifiedStack": "atlas-800i-a2-cann852",
+          "ready": true,
+          "cordoned": false,
+          "remediating": false,
+          "faulted": true,
+          "faults": [
+            "Fault: fault_code\":\"200001002",
+            "Fault: fault_handling\":\"NotHandleFault",
+            "Fault: fault_level\":\"NotHandleFault",
+            "Fault: fault_level\":\"NotHandleFault\"}}}",
+            "Fault: fault_time_and_level_map\":{\"200001002\":{\"fault_time\":1793559530",
+            "Fault: large_model_fault_level\":\"NotHandleFault",
+            "Fault: npu_name\":\"Ascend910-1",
+            "Fault: {\"fault_type\":\"CardUnhealthy"
+          ],
+          "npuTotal": 8,
+          "npuAllocatable": 8,
+          "npuAllocated": 1,
+          "npuUnhealthy": 8
+        }
+      ],
+      "nodeSummary": {
+        "total": 1,
+        "ready": 1,
+        "notReady": 0,
+        "cordoned": 0,
+        "faulted": 1,
+        "remediating": 0
+      },
+      "npu": {
+        "total": 8,
+        "allocatable": 0,
+        "allocated": 1,
+        "unhealthy": 8
+      },
+      "hardwareClasses": [
+        "atlas-800i-a2"
+      ],
+      "allocations": [
+        {
+          "tenant": "maas-co",
+          "namespace": "tenant-maas-co",
+          "resource": "huawei.com/Ascend910",
+          "devices": 1
+        }
+      ]
+    }
+  ],
+  "totals": {
+    "clusters": 1,
+    "nodes": 1,
+    "nodesReady": 1,
+    "nodesFaulted": 1,
+    "npuTotal": 8,
+    "npuAllocatable": 0,
+    "npuAllocated": 1,
+    "npuUnhealthy": 8
+  }
+}

@@ -1,0 +1,92 @@
+{
+  "count": 10,
+  "gaps": null,
+  "observedFor": {
+    "site-a": 60.321414092
+  },
+  "records": [
+    {
+      "cluster": "site-a",
+      "tenant": "_unattributed",
+      "namespace": "default",
+      "resource": "huawei.com/Ascend910",
+      "deviceSeconds": 2590.317637495,
+      "deviceHours": 0.7195326770819445
+    },
+    {
+      "cluster": "site-a",
+      "tenant": "_unattributed",
+      "namespace": "default",
+      "resource": "huawei.com/Ascend910-5c.1cpu.16g",
+      "deviceSeconds": 99.758417971,
+      "deviceHours": 0.027710671658611113
+    },
+    {
+      "cluster": "site-a",
+      "tenant": "acme",
+      "namespace": "tenant-acme",
+      "resource": "huawei.com/Ascend910",
+      "deviceSeconds": 89404.713234833,
+      "deviceHours": 24.83464256523139
+    },
+    {
+      "cluster": "site-a",
+      "tenant": "acme",
+      "namespace": "tenant-acme",
+      "resource": "huawei.com/Ascend910-5c.1.16g",
+      "deviceSeconds": 381.88534302000005,
+      "deviceHours": 0.10607926195000002
+    },
+    {
+      "cluster": "site-a",
+      "tenant": "acme",
+      "namespace": "tenant-acme",
+      "resource": "huawei.com/Ascend910-5c.1cpu.16g",
+      "deviceSeconds": 207767.22529528913,
+      "deviceHours": 57.71311813758032
+    },
+    {
+      "cluster": "site-a",
+      "tenant": "acme-research",
+      "namespace": "tenant-acme-research",
+      "resource": "huawei.com/Ascend910",
+      "deviceSeconds": 1667.4987434400005,
+      "deviceHours": 0.4631940954000001
+    },
+    {
+      "cluster": "site-a",
+      "tenant": "globex",
+      "namespace": "tenant-globex",
+      "resource": "huawei.com/Ascend910-5c.1.16g",
+      "deviceSeconds": 557.3120579900001,
+      "deviceHours": 0.15480890499722225
+    },
+    {
+      "cluster": "site-a",
+      "tenant": "globex",
+      "namespace": "tenant-globex",
+      "resource": "huawei.com/Ascend910-5c.1cpu.16g",
+      "deviceSeconds": 208604.82186343713,
+      "deviceHours": 57.94578385095476
+    },
+    {
+      "cluster": "site-a",
+      "tenant": "lab-co",
+      "namespace": "tenant-lab-co",
+      "resource": "huawei.com/Ascend910",
+      "deviceSeconds": 1284.954017434,
+      "deviceHours": 0.35693167150944444
+    },
+    {
+      "cluster": "site-a",
+      "tenant": "maas-co",
+      "namespace": "tenant-maas-co",
+      "resource": "huawei.com/Ascend910",
+      "deviceSeconds": 141739.4832818249,
+      "deviceHours": 39.372078689395806
+    }
+  ],
+  "since": "2026-10-28T13:08:50.27331466Z",
+  "totalDeviceHours": 181.6938805257595,
+  "totalDeviceSeconds": 654097.9698927342
+}
