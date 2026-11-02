@@ -33,6 +33,8 @@ node verify.mjs                       # 173 checks against the stub, offline
 node smoke-deployed.mjs <url>         # 37 checks against a deployed copy
 node describe-api.mjs > docs/API-SURFACE.md   # regenerate the API contract
 node build.mjs                        # -> dist/, deployable to Pages
+node deploy.mjs                       # deploy dist/ to all 7 Pages projects
+node deploy.mjs npu-serving           # ... or just one
 ```
 
 ## Opening a link is enough
@@ -66,10 +68,19 @@ Start there rather than with the link list.
 | [npu-support.pages.dev](https://npu-support.pages.dev) | Audit — the trail, proofs, signed checkpoints | security and compliance |
 
 Each subdomain is its own Pages project carrying the whole app and its own
-backend, so every link in the nav works from any of them. A `*.pages.dev`
-subdomain *is* a project — there is no way to put `serving.npu-orchestration.pages.dev`
-under one. Real per-surface subdomains of a domain you own need a custom domain
-on each project, which is a dashboard step.
+backend, so every link in the nav works from any of them, and each one's root
+redirects (302) to its own surface — `npu-console.pages.dev` lands on the
+console, not on the overview.
+
+That redirect is per project and is written by `deploy.mjs` immediately before
+each deploy, because the seven projects are otherwise handed an identical
+`dist/`. Deploying by hand with `wrangler pages deploy dist` skips it and every
+root then serves the pitch page, which is exactly what had happened.
+
+A `*.pages.dev` subdomain *is* a project — there is no way to put
+`serving.npu-orchestration.pages.dev` under one. Real per-surface subdomains of
+a domain you own need a custom domain on each project, which is a dashboard
+step.
 
 ## The one to show first
 
