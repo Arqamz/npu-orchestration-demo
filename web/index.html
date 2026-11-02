@@ -6,56 +6,100 @@
 <title>Ascend Fleet</title>
 <link rel="stylesheet" href="/shared/fleet.css">
 <style>
-/* Page-specific: the pitch layout. Everything reusable lives in fleet.css. */
-.hero { padding: 48px 0 34px; border-bottom: 1px solid var(--line); margin-bottom: 30px; }
+/* Page-specific: the pitch layout. Everything reusable is in fleet.css, and
+ * these now take their type, space and depth from the same tokens rather
+ * than hard-coding a second, slightly different scale. */
+
+.hero { padding: var(--s8) 0 var(--s6); margin-bottom: var(--s6); position: relative; }
+/* A quiet wash behind the hero rather than a rule under it. A 1px line
+ * across the top of a pitch page reads as a form; a gradient reads as a
+ * surface the content sits on. */
+.hero::before {
+  content: ''; position: absolute; inset: calc(-1 * var(--s6)) -50vw 0;
+  background: radial-gradient(70ch 40ch at 20% 0%, var(--brand-wash), transparent 70%);
+  pointer-events: none; z-index: -1;
+}
 .hero .kicker {
-  font: 600 11px var(--mono); letter-spacing: 0.12em; text-transform: uppercase;
-  color: var(--accent); margin-bottom: 14px;
+  display: inline-flex; align-items: center; gap: var(--s2);
+  font-size: var(--t-micro); font-weight: 600; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--brand-ink);
+  padding: 4px 10px; border: 1px solid var(--brand); border-radius: var(--radius-pill);
+  background: var(--brand-wash); margin-bottom: var(--s4);
 }
 .hero h1 {
-  margin: 0 0 16px; font-size: clamp(30px, 5vw, 46px); line-height: 1.08;
-  letter-spacing: -0.03em; max-width: 19ch;
+  margin: 0 0 var(--s4); font-size: clamp(2rem, 5vw, 3.25rem); line-height: 1.05;
+  letter-spacing: -0.035em; max-width: 19ch; font-weight: 700;
 }
-.hero .lede { font-size: clamp(16px, 2vw, 19px); line-height: 1.55; color: var(--ink-dim); max-width: 64ch; margin: 0 0 22px; }
+.hero .lede {
+  font-size: clamp(1rem, 2vw, 1.1875rem); line-height: 1.6;
+  color: var(--ink-dim); max-width: 64ch; margin: 0 0 var(--s5);
+}
 .hero .lede strong { color: var(--ink); font-weight: 600; }
 
-.chain { width: 100%; height: auto; display: block; margin: 8px 0 4px; }
+.chain { width: 100%; height: auto; display: block; margin: var(--s2) 0; }
 .chain text { font-family: var(--mono); }
 
-.layer { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); }
+/* Capability and roadmap tiles. A left accent rule carries the grouping so
+ * the tiles themselves can stay flat -- nine outlined boxes in a grid is
+ * the thing that made the old page read as a form. */
+.layer { display: grid; gap: var(--s3); grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
 .layer .box {
-  border: 1px solid var(--line); border-radius: 10px; padding: 15px 16px; background: var(--panel-2);
+  border: 1px solid var(--line); border-left: 3px solid var(--brand);
+  border-radius: var(--radius-sm); padding: var(--s4); background: var(--surface);
+  min-width: 0;
 }
-.layer .box h4 { margin: 0 0 6px; font-size: 13.5px; }
-.layer .box p { margin: 0; font-size: 12.5px; color: var(--ink-dim); line-height: 1.55; }
-.layer .box .who { font: 600 10px var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin-bottom: 7px; }
+.layer .box h4 { margin: 0 0 var(--s1); font-size: var(--t-h3); font-weight: 600; letter-spacing: -0.01em; }
+.layer .box p { margin: 0; font-size: var(--t-small); color: var(--ink-dim); line-height: 1.6; }
+.layer .box .who {
+  font-size: var(--t-micro); font-weight: 700; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--brand-ink); margin-bottom: var(--s2);
+}
+/* The horizon reads off the accent, so "Later" is visibly further away
+ * than "Near" without anyone reading the label. */
+.layer .box.near { border-left-color: var(--ok); }
+.layer .box.near .who { color: var(--ok); }
+.layer .box.next { border-left-color: var(--brand); }
+.layer .box.later { border-left-color: var(--ink-faint); }
+.layer .box.later .who { color: var(--ink-faint); }
 
-.aud { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); }
+.aud { display: grid; gap: var(--s3); grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
 .aud a {
   display: block; text-decoration: none; color: inherit;
-  border: 1px solid var(--line); border-radius: 11px; padding: 17px 18px; background: var(--panel-2);
+  border: 1px solid var(--line); border-radius: var(--radius);
+  padding: var(--s4) var(--s5); background: var(--surface);
+  transition: border-color .15s ease, transform .15s ease, box-shadow .15s ease;
+  min-width: 0;
 }
-.aud a:hover { border-color: var(--accent); }
-.aud h4 { margin: 0 0 3px; font-size: 15px; }
-.aud .role { font: 600 10px var(--mono); letter-spacing: 0.07em; text-transform: uppercase; color: var(--accent); }
-.aud .ask { margin: 9px 0 0; font-size: 13px; color: var(--ink); font-style: italic; }
-.aud .ans { margin: 7px 0 0; font-size: 12.5px; color: var(--ink-dim); line-height: 1.55; }
-.aud .go { margin-top: 11px; font: 11px var(--mono); color: var(--accent); }
-
-ul.ticks { list-style: none; padding: 0; margin: 0; }
-ul.ticks li { padding: 7px 0 7px 24px; position: relative; font-size: 13.5px; line-height: 1.55; border-bottom: 1px solid color-mix(in srgb, var(--line) 55%, transparent); }
-ul.ticks li:last-child { border-bottom: 0; }
-ul.ticks li::before { content: ""; position: absolute; left: 4px; top: 14px; width: 7px; height: 7px; border-radius: 50%; background: var(--ok); }
-ul.ticks li.no::before { background: var(--ink-faint); }
-ul.ticks li.part::before { background: var(--warn); }
-ul.ticks li strong { font-weight: 600; }
-ul.ticks li span { color: var(--ink-dim); }
+.aud a:hover {
+  border-color: var(--brand); transform: translateY(-2px);
+  box-shadow: var(--shadow-2); text-decoration: none;
+}
+.aud h4 { margin: var(--s1) 0 0; font-size: 1rem; font-weight: 650; letter-spacing: -0.015em; }
+.aud .role {
+  font-size: var(--t-micro); font-weight: 700; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--brand-ink);
+}
+/* The question in the customer's own words, set apart so it reads as a
+ * quotation rather than as more body copy. */
+.aud .ask {
+  margin: var(--s3) 0 0; font-size: var(--t-body); color: var(--ink);
+  padding-left: var(--s3); border-left: 2px solid var(--line);
+}
+.aud .ans { margin: var(--s2) 0 0; font-size: var(--t-small); color: var(--ink-dim); line-height: 1.6; }
+.aud .go {
+  margin-top: var(--s3); font-size: var(--t-small); font-weight: 600; color: var(--brand-ink);
+  display: flex; align-items: center; gap: 5px;
+}
+.aud a:hover .go::after { transform: translateX(3px); }
+.aud .go::after { content: '→'; transition: transform .15s ease; }
 </style>
 </head>
 <body>
 <main id="app"></main>
 <script type="module">
-import { demo, el, card, table, pill, chrome, setPersona } from '/shared/fleet.js';
+import {
+  demo, el, card, table, pill, chrome, setPersona, readiness, callout,
+} from '/shared/fleet.js';
 
 const app = document.getElementById('app');
 await chrome('/');
@@ -283,7 +327,9 @@ for (const a of AUD) {
   el('h4', {}, a.name),
   el('p', { class: 'ask' }, a.ask),
   el('p', { class: 'ans' }, a.ans),
-  el('div', { class: 'go' }, `${a.go}  →`)));
+  // The arrow is the stylesheet's, not the string's: .go::after draws it
+  // and animates it on hover. Keeping one in the text too printed two.
+  el('div', { class: 'go' }, a.go)));
 }
 app.append(card('Who it is for — and what to show them',
   el('p', { class: 'note' },
@@ -319,76 +365,180 @@ app.append(card('Measured on the hardware, not estimated',
 /* ------------------------------------------------------------- readiness */
 
 app.append(card('Where it stands, honestly',
-  el('div', { class: 'cols two' },
-    el('div', {},
-      el('h4', { style: 'margin:0 0 8px;font-size:13px;color:var(--ink-dim)' }, 'Run on real hardware'),
-      el('ul', { class: 'ticks' },
-        el('li', {}, el('strong', {}, 'Multi-tenant scheduling'), ' ',
-          el('span', {}, '— whole cards and vNPU slices, gang-scheduled')),
-        el('li', {}, el('strong', {}, 'Four-level tenancy'), ' ',
-          el('span', {}, '— quota, network and Pod Security all contained')),
-        el('li', {}, el('strong', {}, 'Autoscaling inference'), ' ',
-          el('span', {}, '— 1→4→1, capped at the quota ceiling')),
-        el('li', {}, el('strong', {}, 'Metering and recursive billing'), ' ',
-          el('span', {}, '— a real period closed at 665.12 USD')),
-        el('li', {}, el('strong', {}, 'Tamper-evident audit'), ' ',
-          el('span', {}, '— verified, and a forged trail refused')),
-        el('li', {}, el('strong', {}, 'OIDC through Keycloak'), ' ',
-          el('span', {}, '— eight real logins, scoped end to end')))),
-    el('div', {},
-      el('h4', { style: 'margin:0 0 8px;font-size:13px;color:var(--ink-dim)' }, 'Not there yet'),
-      el('ul', { class: 'ticks' },
-        el('li', { class: 'no' }, el('strong', {}, 'No public endpoint address'), ' ',
-          el('span', {}, '— ClusterIP only; no ingress or TLS')),
-        el('li', { class: 'no' }, el('strong', {}, 'Billing is device-seconds, not tokens'), ' ',
-          el('span', {}, '— a mismatch for a token factory')),
-        el('li', { class: 'no' }, el('strong', {}, 'No per-caller API keys'), ' ',
-          el('span', {}, '— anything in-cluster can call an endpoint')),
-        el('li', { class: 'part' }, el('strong', {}, 'Self-healing is armed, not proven'), ' ',
-          el('span', {}, '— one node, nowhere to drain to')),
-        el('li', { class: 'part' }, el('strong', {}, 'Single cluster'), ' ',
-          el('span', {}, '— cross-cluster is refused until validated')),
-        el('li', { class: 'no' }, el('strong', {}, 'Nothing scrapes the metrics'), ' ',
-          el('span', {}, '— no Prometheus, no history'))))),
+  el('p', { class: 'note', style: 'margin-bottom:16px' },
+    'Three states, and the middle one is the honest one. ',
+    el('strong', {}, 'Run'),
+    ' means it has executed on real Ascend hardware. ',
+    el('strong', {}, 'Partial'),
+    ' means it works and has not been proven at the scale that matters. ',
+    el('strong', {}, 'Designed'),
+    ' means the shape, the validation and the tests exist and the thing that '
+    + 'executes it does not — and where that is true, the API itself refuses '
+    + 'rather than letting a console offer a button that does nothing.'),
+
+  readiness([
+    { state: 'run', kind: 'ok', title: 'Multi-tenant scheduling',
+      detail: 'Whole cards and vNPU slices, gang-scheduled through Volcano, with per-tenant '
+        + 'queues. Four replicas each received a distinct card with correct topology '
+        + 'annotations.' },
+    { state: 'run', kind: 'ok', title: 'Four-level tenancy',
+      detail: 'Quota, network policy, Pod Security and vNPU templates all contained: a '
+        + 'sub-tenant cannot exceed, or open a path its parent closed.' },
+    { state: 'run', kind: 'ok', title: 'Autoscaling inference',
+      detail: '1 → 4 → 1 on a recorded run, capped by the quota ceiling rather than by '
+        + 'demand. 4535 requests at 1501 tok/s.' },
+    { state: 'run', kind: 'ok', title: 'Metering and recursive billing',
+      detail: 'Device-seconds from observations, never a PromQL integral. A real period '
+        + 'closed at 665.12 USD and a reseller statement at 720.89 across three '
+        + 'sub-tenants.' },
+    { state: 'run', kind: 'ok', title: 'Tamper-evident audit',
+      detail: 'Hash chain, RFC 6962 Merkle tree, Ed25519-signed checkpoints anchored onto '
+        + 'closed periods. Verified, and a forged trail refused.' },
+    { state: 'run', kind: 'ok', title: 'OIDC through Keycloak',
+      detail: 'Eight real logins, scoped end to end. Five defects were found by one real '
+        + 'token that no test tier could catch.' },
+    { state: 'run', kind: 'ok', title: 'Fine-tuning storage and credentials',
+      detail: 'PVCs, ConfigMaps, a sized memory-backed /dev/shm, and credentials mounted '
+        + 'rather than placed in the job environment.' },
+    { state: 'run', kind: 'ok', title: 'Workload catalog',
+      detail: 'Seven named shapes with typed parameters, so nobody types an extended '
+        + 'resource name. A console renders the form from the server.' },
+    { state: 'run', kind: 'ok', title: 'Per-caller API keys',
+      detail: 'Hash-only storage, constant-time comparison, roles a closed list. An invoke '
+        + 'key can be scoped to one endpoint, which is what makes reselling safe.' },
+    { state: 'run', kind: 'ok', title: 'Token metering',
+      detail: 'The reseller’s meter, above device-seconds. Survives the autoscaler '
+        + 'destroying replicas, which is where a naive implementation loses the revenue.' },
+
+    { state: 'partial', kind: 'warn', title: 'Self-healing',
+      detail: 'The drift loop runs and is visible on the console. It has never been proven '
+        + 'against a second node, because there has only ever been one — there is '
+        + 'nowhere to drain to.' },
+    { state: 'partial', kind: 'warn', title: 'Scale',
+      detail: 'Measured to 8 cards on one node. Cross-cluster placement is refused in code '
+        + 'until a second cluster validates it, rather than claimed.' },
+    { state: 'partial', kind: 'warn', title: 'Reservations',
+      detail: 'The admission ledger is built and tested — peak commitment across overlapping '
+        + 'windows, half-open intervals, "no but Tuesday" on a refusal. The controller '
+        + 'that holds the capacity is not written.' },
+    { state: 'partial', kind: 'warn', title: 'Engine health',
+      detail: 'Found on the pilot while writing this: vLLM’s engine core can die while its '
+        + 'HTTP server keeps answering /health 200 and exits 0. The endpoint reported '
+        + 'Ready through seven restarts. Readiness needs to reflect the engine, not '
+        + 'the web server.' },
+
+    { state: 'designed', kind: '', title: 'Public endpoint address',
+      detail: 'INGRESS AND TLS. spec.route validates — TLS and an API key are both '
+        + 'mandatory on a published route, and there is deliberately no flag to serve '
+        + 'one in plaintext — and nothing yet creates the Ingress object. Until it '
+        + 'does, an endpoint is reachable only from inside its own namespace, and '
+        + 'nothing about model-as-a-service is real. First item on the roadmap.' },
+    { state: 'designed', kind: '', title: 'Scale to zero',
+      detail: 'THE ACTIVATOR. spec.scaleToZero configures it and the autoscaler honours its '
+        + 'wake signal, but the request-holding proxy that sends it is not deployed. '
+        + 'Until it is, minReplicas: 0 is refused by the webhook — which is the '
+        + 'correct failure, because it used to be accepted with a warning about a '
+        + '“cold start” and the endpoint never came back at all.' },
+    { state: 'designed', kind: '', title: 'Notebooks and dev boxes',
+      detail: 'The Workspace type, its validation and its catalog templates are built and '
+        + 'tested; the controller that turns one into a pod, a service and an idle '
+        + 'reaper is not. The catalog serves both templates with no submit route, so '
+        + 'nothing can offer them by accident.' },
+    { state: 'designed', kind: '', title: 'Real virtual machines',
+      detail: 'NOT BUILT, AND NOT WHAT THE DEV BOX IS. A dev box is a container with a '
+        + 'shell, your keys and a card — which is what VS Code Remote, rsync and a '
+        + 'Makefile actually need. A real VM with device passthrough means KubeVirt, '
+        + 'a kernel per tenant and snapshots, and none of that is here. Saying '
+        + '“VMs” today would be a different product.' },
+    { state: 'designed', kind: '', title: 'Warm pools and KV-cache reuse',
+      detail: 'The 258-second cold start is the single biggest gap between this and a '
+        + 'commercial inference product. A warm floor and prefix-cache reuse across '
+        + 'replicas are the answer and neither exists.' },
+    { state: 'designed', kind: '', title: 'Observability',
+      detail: 'Nothing scrapes the metrics the manager exposes. No Prometheus, no Grafana, '
+        + 'no history — so every number on these pages is a point reading rather than '
+        + 'a trend.' },
+    { state: 'designed', kind: '', title: 'Self-service onboarding',
+      detail: 'A reseller creating its own customers through the API, with its own margin, '
+        + 'is what makes the channel a business rather than a support queue. Tenants '
+        + 'are created by the operator applying YAML.' },
+  ]),
+
+  callout('warn', 'Read this section first if you are evaluating us',
+    el('p', {},
+      'Four of the seven “designed” rows above are what stand between this and a product '
+      + 'somebody can buy: an ingress, an activator, a Workspace controller and a warm '
+      + 'pool. Each is small next to what already works, and none of them is hand-waved — '
+      + 'the types, the validation and the tests are in the repository, which is why they '
+      + 'are listed as designed rather than as roadmap.')),
+
   el('p', { class: 'note' },
     'The full list, checked against the code rather than remembered, is in ',
     el('a', { href: 'https://github.com/Arqamz/npu-orchestration-demo/blob/main/docs/WHAT-IS-MISSING.md' },
-      'WHAT-IS-MISSING.md'), '.')));
+      'WHAT-IS-MISSING.md'), ' and in ',
+    el('a', { href: 'https://github.com/Arqamz/npu-orchestration/blob/main/docs/HANDBOOK.md' },
+      'the handbook'), '.')));
 
 /* ------------------------------------------------------------ what next */
 
-app.append(card('What this opens up',
+const horizon = (kind, when, title, body) => el('div', { class: `box ${kind}` },
+  el('div', { class: 'who' }, when),
+  el('h4', {}, title),
+  el('p', {}, body));
+
+app.append(card('What comes next, in order',
+  el('p', { class: 'note', style: 'margin-bottom:16px' },
+    'Ordered by what unlocks the most, not by what is easiest. The first three are '
+    + 'the difference between a control plane and a product somebody can buy.'),
   el('div', { class: 'layer' },
-    el('div', { class: 'box' },
-      el('div', { class: 'who' }, 'Near'),
-      el('h4', {}, 'Token-based billing'),
-      el('p', {}, 'vLLM already reports prompt and completion tokens. Metering them alongside '
-        + 'device-seconds turns this into a platform an AI company bills its own users from.')),
-    el('div', { class: 'box' },
-      el('div', { class: 'who' }, 'Near'),
-      el('h4', {}, 'Public endpoints with issued keys'),
-      el('p', {}, 'Ingress, TLS and per-caller API keys make a tenant’s endpoint a product '
-        + 'their customers can call — and make token metering attributable.')),
-    el('div', { class: 'box' },
-      el('div', { class: 'who' }, 'Next'),
-      el('h4', {}, 'Reservations and commitments'),
-      el('p', {}, '“64 NPUs for three months” is how capacity is actually sold and is '
-        + 'unrepresentable today. Quota is a ceiling, not a guarantee.')),
-    el('div', { class: 'box' },
-      el('div', { class: 'who' }, 'Next'),
-      el('h4', {}, 'Multi-cluster, multi-site'),
-      el('p', {}, 'The CRDs exist and cross-cluster scheduling is deliberately refused until a '
-        + 'second cluster validates it. That is what turns one data centre into a fleet.')),
-    el('div', { class: 'box' },
-      el('div', { class: 'who' }, 'Later'),
-      el('h4', {}, 'Self-service onboarding'),
-      el('p', {}, 'A reseller creating its own customers through the API, with its own margin, '
-        + 'is what makes the channel a business rather than a support queue.')),
-    el('div', { class: 'box' },
-      el('div', { class: 'who' }, 'Later'),
-      el('h4', {}, 'A marketplace of certified stacks'),
-      el('p', {}, 'Nodes are already validated against a CertifiedStack. The same mechanism '
-        + 'could publish vetted model and framework images per hardware generation.')))));
+    horizon('near', 'Next — unblocks three things',
+      'Ingress, TLS and a hostname per endpoint',
+      'Nothing about model-as-a-service is real until a customer outside the cluster can '
+      + 'call the endpoint. The route policy is already validated and already refuses '
+      + 'plaintext and anonymous access; what is missing is the object that publishes it. '
+      + 'It also unlocks notebooks and dev boxes, which need exactly the same path in.'),
+    horizon('near', 'Next',
+      'The activator, and a warm floor',
+      'A proxy that holds the first request while a replica starts. It makes scale-to-zero '
+      + 'real rather than refused, and it is where prefix-cache reuse and a warm pool '
+      + 'belong — which is the answer to the 258-second cold start that is currently the '
+      + 'most honest number on this site.'),
+    horizon('near', 'Next',
+      'The Workspace controller',
+      'Notebooks and SSH dev boxes, with the idle reaper that makes them affordable. A card '
+      + 'costs the same behind an idle browser tab as it does training; every platform that '
+      + 'offered notebooks without a reaper either ate that or billed for it and lost the '
+      + 'customer.'),
+    horizon('next', 'Then',
+      'The reservation controller',
+      '“64 cards for three months” is how capacity is actually sold, and a quota is a limit '
+      + 'rather than a promise. The admission ledger that decides whether a commitment can '
+      + 'be met is built and tested; what is missing is the thing that holds the capacity '
+      + 'it promised.'),
+    horizon('next', 'Then',
+      'Prometheus, Grafana and a history',
+      'Nothing scrapes what the manager already exposes, so every figure is a point reading. '
+      + 'Utilisation over time is both the operator’s commercial signal and the first thing '
+      + 'a customer asks for.'),
+    horizon('next', 'Then',
+      'Multi-cluster, multi-site',
+      'The CRDs exist and cross-cluster scheduling is deliberately refused until a second '
+      + 'cluster validates it. That refusal is what turns one data centre into a fleet, '
+      + 'honestly, rather than a claim.'),
+    horizon('later', 'Later',
+      'Real virtual machines',
+      'KubeVirt, a kernel per tenant, device passthrough and snapshots — for customers whose '
+      + 'compliance regime will not accept a shared kernel. Deliberately not conflated with '
+      + 'the dev box, which is a container and is honest about it.'),
+    horizon('later', 'Later',
+      'Self-service onboarding',
+      'A reseller creating its own customers through the API, with its own margin and its own '
+      + 'rate card, is what makes the channel a business rather than a support queue.'),
+    horizon('later', 'Later',
+      'A marketplace of certified stacks',
+      'Nodes are already validated against a CertifiedStack. The same mechanism could publish '
+      + 'vetted model and framework images per hardware generation — the thing that makes a '
+      + 'preferred-partner reference architecture worth the name.'))));
 
 /* ------------------------------------------------------------- the demo */
 

@@ -509,6 +509,43 @@ const PAGES = [
   }
 }
 
+report('no component is named after a state modifier');
+
+/* THE BUG THIS CATCHES, which cost an hour of staring at a screenshot.
+ *
+ * The site logo was styled as a bare `.brand`. "brand" is also one of the
+ * STATE MODIFIERS a KPI tile takes -- kind: 'brand' renders
+ * class="kpi brand" to ask for the accent colour. So the tile matched the
+ * logo rule and inherited font-weight:700 and white-space:nowrap. One tile
+ * out of four rendered bold on a single line, overflowing into its
+ * neighbour, and nothing in any rule named .kpi explained why.
+ *
+ * The lesson is the selector, not the colour. These words are modifiers
+ * everywhere in this stylesheet, so none of them may also be a bare
+ * top-level component selector -- a component must be `.top .brand` or
+ * `.card.brand`, qualified by where it lives or what it modifies.
+ */
+{
+  const MODIFIERS = ['ok', 'warn', 'bad', 'policy', 'brand', 'now', 'done', 'run',
+    'partial', 'designed', 'plain', 'on', 'no', 'part'];
+  const sheet = await readFileP(path.join(HERE, 'web/shared/fleet.css'), 'utf8');
+  const body = sheet.replace(/\/\*[\s\S]*?\*\//g, '');
+  const offenders = [];
+  for (const m of body.matchAll(/(^|\}|\{)\s*([^{}]+?)\s*\{/g)) {
+    const prelude = m[2];
+    if (prelude.trimStart().startsWith('@')) continue;
+    for (const sel of prelude.split(',')) {
+      const t = sel.trim();
+      // A bare `.word` with nothing qualifying it.
+      const bare = /^\.([a-zA-Z0-9_-]+)$/.exec(t);
+      if (bare && MODIFIERS.includes(bare[1])) offenders.push(t);
+    }
+  }
+  check('no modifier word is also a bare component selector',
+    offenders.length === 0,
+    offenders.length ? `bare rules for: ${[...new Set(offenders)].join(', ')}` : '');
+}
+
 report('the guided tour is wired on every surface');
 
 /* A tour nobody can replay is a tour that runs once and is gone. Every

@@ -197,8 +197,14 @@ a:hover { text-decoration: underline; }
 h1, h2, h3 { margin: 0; font-weight: 650; letter-spacing: -0.015em; line-height: 1.25; }
 h1 { font-size: var(--t-h1); }
 h2 { font-size: var(--t-h2); }
-h3 { font-size: var(--t-h3); font-weight: 600; }
+h3 { font-size: 1.0625rem; font-weight: 650; }
 p { margin: 0; }
+
+/* Consecutive paragraphs need a gap. `p { margin: 0 }` is the right
+ * default -- it stops every helper having to strip browser margins -- but
+ * without this rule two paragraphs in a card run together into a wall,
+ * which is what the problem statement on the pitch page did. */
+p + p { margin-top: var(--s3); }
 
 .mono { font-family: var(--mono); font-size: 0.8125rem; font-variant-ligatures: none; }
 .num { font-family: var(--mono); font-variant-numeric: tabular-nums; text-align: right; }
@@ -225,13 +231,25 @@ p { margin: 0; }
   border-bottom: 1px solid var(--line);
 }
 
-.brand {
+/* SCOPED TO THE BAR, and it has to be.
+ *
+ * As a bare `.brand` this rule also matched every element carrying "brand"
+ * as a STATE modifier -- `.kpi.brand`, which is how a KPI tile asks for the
+ * accent colour. The tile inherited font-weight:700 and, far worse,
+ * white-space:nowrap, so its note rendered bold on a single line and
+ * overflowed into the next tile. One tile out of four behaved differently
+ * and nothing in the KPI rules explained why.
+ *
+ * The lesson is the selector, not the colour: a bare class name that is
+ * also a modifier word will collide eventually. The logo only ever lives
+ * in the top bar, so it says so. */
+.top .brand {
   display: inline-flex; align-items: center; gap: var(--s2);
   font-weight: 700; font-size: 0.9375rem; letter-spacing: -0.02em;
   color: var(--ink); white-space: nowrap;
 }
-.brand:hover { text-decoration: none; }
-.brand .dot {
+.top .brand:hover { text-decoration: none; }
+.top .brand .dot {
   width: 10px; height: 10px; border-radius: 3px;
   background: linear-gradient(135deg, var(--brand), var(--policy));
 }
@@ -324,7 +342,11 @@ select.persona:hover, button.ghost:hover { border-color: var(--brand); }
   background: var(--surface); border: 1px solid var(--line);
   border-radius: var(--radius); padding: var(--s5); margin-bottom: var(--s4);
 }
-.card > h3 { margin-bottom: var(--s3); }
+.card > h3 { margin-bottom: var(--s3); letter-spacing: -0.015em; }
+/* A card's own body text is a step down from its heading. Without this
+ * the heading and the prose are the same size and the card has no
+ * internal hierarchy at all. */
+.card > p, .card > div > p { font-size: var(--t-small); line-height: 1.65; }
 .card.raised { background: var(--raised); box-shadow: var(--shadow-2); }
 .card.flush { padding: 0; overflow: hidden; }
 .card.flush > h3 { padding: var(--s4) var(--s5) var(--s2); }
