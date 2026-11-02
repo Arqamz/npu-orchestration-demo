@@ -47,6 +47,12 @@ in a glossary nobody opens.
 Add `?notour` to any URL to suppress the walkthrough, which is what the
 screenshots use.
 
+## Reviewing it
+
+**[WALKTHROUGH.md](WALKTHROUGH.md)** — what to open, in what order, what
+you are looking at on each page, and the five questions to be ready for.
+Start there rather than with the link list.
+
 ## Deployed
 
 | URL | Surface | Show it to |
