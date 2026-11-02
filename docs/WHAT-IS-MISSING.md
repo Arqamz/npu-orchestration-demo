@@ -87,7 +87,8 @@ Missing, in the order that matters for a MaaS customer:
    structural mismatch, not a missing column — it needs a second meter with a
    different source and a different rate-card key.
 4. **Cold start is 4–5 minutes** and nothing hides it. The recorded run shows
-   the second replica becoming ready at t+258 s, 211 seconds after the
+   only a second replica ever becoming ready, at t+258 s and for ten
+   seconds, while replicas 3 and 4 never did -- 211 seconds after the
    autoscaler asked for it: the image is 9 GB and vLLM compiles graphs on first
    start. `minReplicas: 0` is permitted with nothing holding the first request.
    A model cache and a warm pool are the fix; neither exists.

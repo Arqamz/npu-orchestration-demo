@@ -57,30 +57,26 @@ Start there rather than with the link list.
 
 ## Deployed
 
-| URL | Surface | Show it to |
+**[npu-orchestration.pages.dev](https://npu-orchestration.pages.dev)** — one
+project, every surface, reached from the nav:
+
+| Path | Surface | Show it to |
 |---|---|---|
-| [npu-orchestration.pages.dev](https://npu-orchestration.pages.dev) | **Start here** — what this is, who it serves, where it stands | anyone, first |
-| [npu-console.pages.dev](https://npu-console.pages.dev) | Fleet console — nodes, drift, who holds what | Huawei; data-centre ops |
-| [npu-serving.pages.dev](https://npu-serving.pages.dev) | **Serving — the autoscaling endpoint** | AI factories, MaaS platforms |
-| [npu-workspace.pages.dev](https://npu-workspace.pages.dev) | Workspace — submit work, read logs | enterprise / research teams |
-| [npu-tenant.pages.dev](https://npu-tenant.pages.dev) | Tenancy — the four-level tenant tree | resellers, channel partners |
-| [npu-finance.pages.dev](https://npu-finance.pages.dev) | Finance — invoices, periods, resale statements | whoever signs the contract |
-| [npu-support.pages.dev](https://npu-support.pages.dev) | Audit — the trail, proofs, signed checkpoints | security and compliance |
+| [`/`](https://npu-orchestration.pages.dev/) | **Start here** — what this is, who it serves, where it stands | anyone, first |
+| [`/console/`](https://npu-orchestration.pages.dev/console/) | Fleet console — nodes, drift, who holds what | Huawei; data-centre ops |
+| [`/serving/`](https://npu-orchestration.pages.dev/serving/) | **Serving — the autoscaling endpoint** | AI factories, MaaS platforms |
+| [`/workspace/`](https://npu-orchestration.pages.dev/workspace/) | Workspace — submit work, read logs | enterprise / research teams |
+| [`/tenant/`](https://npu-orchestration.pages.dev/tenant/) | Tenancy — the four-level tenant tree | resellers, channel partners |
+| [`/finance/`](https://npu-orchestration.pages.dev/finance/) | Finance — invoices, periods, resale statements | whoever signs the contract |
+| [`/support/`](https://npu-orchestration.pages.dev/support/) | Audit — the trail, proofs, signed checkpoints | security and compliance |
 
-Each subdomain is its own Pages project carrying the whole app and its own
-backend, so every link in the nav works from any of them, and each one's root
-redirects (302) to its own surface — `npu-console.pages.dev` lands on the
-console, not on the overview.
-
-That redirect is per project and is written by `deploy.mjs` immediately before
-each deploy, because the seven projects are otherwise handed an identical
-`dist/`. Deploying by hand with `wrangler pages deploy dist` skips it and every
-root then serves the pitch page, which is exactly what had happened.
-
-A `*.pages.dev` subdomain *is* a project — there is no way to put
-`serving.npu-orchestration.pages.dev` under one. Real per-surface subdomains of
-a domain you own need a custom domain on each project, which is a dashboard
-step.
+There used to be a Pages project per surface -- `npu-console.pages.dev` and
+so on -- each a complete copy of the same app with a redirect on its root.
+Seven deployments of seven identical pages is not a feature; the nav already
+goes everywhere. **Those six projects were deleted on 2026-11-02** and any
+link to them is dead. Per-surface hostnames of a domain you own remain
+possible as custom domains, and would be worth it for a customer-branded
+instance rather than for a demo.
 
 ## The one to show first
 
@@ -90,7 +86,10 @@ A real run, frame by frame: 64 concurrent clients against Qwen2-0.5B on one
 910B3. The endpoint goes 1 → 4 replicas in 47 seconds, holds exactly the 4
 cards the tenant bought, and settles back to 1. 4535 requests at 1501 tok/s.
 
-Watch the second replica: it becomes ready at **t+258 s**, 211 seconds after
+Watch what the four replicas actually do. Only a **second** one ever answers,
+at **t+258 s**, and only for ten seconds; the third and fourth never become
+ready. Four cards are held and billed for ~330 s and at most two ever serve.
+That is the cold start — 211 seconds after
 the autoscaler asked for it. The image is 9 GB and vLLM compiles graphs on
 first start. Scaling is immediate; capacity is not. That gap is the most
 honest thing in the demo and it is left visible on purpose.

@@ -18,7 +18,7 @@
 import {
   call, demo, el, card, table, pill, phasePill, refusal,
   chrome, pageTitle, val, ago,
-  lede, kpis, section, callout, hint, readiness,
+  lede, kpis, section, callout, hint, readiness, whoami,
 } from '/shared/fleet.js';
 import { Tour, launcher } from '/shared/tour.js';
 import { AutoscaleChart } from '/shared/chart.js';
@@ -56,6 +56,8 @@ app.append(lede({
   aside: launcher(tour),
 }));
 
+app.append(whoami(me));
+
 /* ---------------------------------------------------------- the endpoint */
 
 const listCard = card('Endpoints');
@@ -71,8 +73,26 @@ const playBtn = el('button', { class: 'primary' }, '▶  Replay the load test');
 const stopBtn = el('button', {}, 'Reset');
 const clock = el('span', { class: 'mono muted' }, 'idle');
 
+/* THE REPLAY IS SPED UP; THE REPORTED TIME IS NOT.
+ *
+ * The recorded run is 416 seconds. At 1:1 that is seven minutes of
+ * watching a number not change, which nobody sits through — so the
+ * playhead moves at a multiple of recorded time and the clock below
+ * always reads the REAL offset. The point of this run is that a replica
+ * takes four to five minutes to serve; a replay that made it look like
+ * twelve seconds would be hiding the most important number on the page.
+ *
+ * 1x is kept because somebody who does not believe the run should be
+ * able to watch it happen.
+ */
+const speedPicker = el('select', { title: 'How fast to replay recorded time' });
+for (const [v, label] of [[20, '20× faster'], [40, '40× faster'], [10, '10× faster'],
+  [1, 'real time (7 min)']]) {
+  speedPicker.append(el('option', { value: String(v) }, label));
+}
+
 runCard.append(el('div', { class: 'row', style: 'margin-bottom:14px' },
-  playBtn, stopBtn, clock));
+  playBtn, stopBtn, speedPicker, clock));
 
 const chartHost = el('div', {});
 runCard.append(chartHost);
@@ -224,12 +244,30 @@ function renderReplicas(e, podFrame) {
   }
   replicaCard.append(grid);
 
-  replicaCard.append(el('div', { class: 'gap' },
-    el('strong', {}, 'Measured on this hardware: '),
-    'a replica takes about four to five minutes from scheduled to serving — the image is 9GB and '
-    + 'vLLM compiles graphs on first start. In the run below the autoscaler reaches four replicas '
-    + 'in 47 seconds and the second one only begins answering at 258s. Scaling is immediate; '
-    + 'capacity is not. A model cache and a warm floor are what close that gap.'));
+  replicaCard.append(callout('bad', 'Held is not serving — and in this run most of it never served',
+    el('p', {},
+      el('strong', {}, 'Held'), ' is how many cards are allocated to this endpoint and '
+      + 'billed for, every second, from the moment the scheduler commits them. ',
+      el('strong', {}, 'Serving'), ' is how many have finished starting and are '
+      + 'answering requests. The gap between the two is a card you are paying for and '
+      + 'cannot use yet.'),
+    el('p', {},
+      'On this hardware that gap is four to five minutes: the image is 9GB and vLLM '
+      + 'compiles graphs and allocates its KV cache on first start.'),
+    el('p', {},
+      el('strong', {}, 'What the recorded run below actually shows: '),
+      'at t+47s the autoscaler went from 1 replica to 4, so four cards were held and '
+      + 'billed. A second replica answered at t+258s — for ten seconds. The third and '
+      + 'fourth never became ready at all, and at t+269s the whole thing scaled back '
+      + 'to one. Four cards were held for about 330 seconds and at most two ever '
+      + 'served.'),
+    el('p', {},
+      'That is not a display problem, it is the product problem: a 4–5 minute cold '
+      + 'start against a 120-second scale-down window means replicas are torn down '
+      + 'before they can finish starting. Autoscaling on this hardware is close to '
+      + 'useless without a warm pool, which is why one is top of the roadmap. We '
+      + 'show this run because it is the clearest evidence of that, not because it '
+      + 'went well.')));
 }
 
 /* -------------------------------------------------------------- driving */
@@ -282,11 +320,13 @@ async function tick() {
 }
 
 playBtn.addEventListener('click', async () => {
-  await demo.start();
+  await demo.start(Number(speedPicker.value));
   playBtn.disabled = true;
   playBtn.textContent = 'running…';
   if (timer) clearInterval(timer);
-  timer = setInterval(tick, 700);
+  // Poll faster than the slowest speed advances a frame, or the chart
+  // skips frames at 40x and the step changes look like jumps.
+  timer = setInterval(tick, Number(speedPicker.value) >= 20 ? 250 : 700);
   tick();
 });
 

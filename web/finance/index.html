@@ -16,7 +16,7 @@
 <script type="module">
 import {
   call, demo, el, card, table, pill, refusal, chrome, pageTitle, val, money, ago,
-  lede, kpis, section, callout, hint, readiness,
+  lede, kpis, section, callout, hint, readiness, whoami,
 } from '/shared/fleet.js';
 import { Tour, launcher } from '/shared/tour.js';
 
@@ -56,14 +56,64 @@ app.append(lede({
   aside: launcher(tour),
 }));
 
-const picker = el('select', {});
-for (const t of choices) picker.append(el('option', { value: t }, t));
-app.append(el('div', { class: 'row', style: 'margin-bottom:16px' },
-  el('label', {}, 'tenant ', picker),
-  el('button', { onclick: () => load(picker.value) }, 'Load')));
+/* WHO AM I, AND WHAT IS A TENANT.
+ *
+ * This page used to open with a bare `tenant [select] [Load]` and nothing
+ * else, which asks the reader three questions before answering any:
+ * what is a tenant, which one am I, and why must I press a button to see
+ * my own invoice.
+ *
+ * So: the banner says who is signed in and what that organisation is.
+ * The page then loads THEIR OWN account immediately -- nobody should
+ * have to click to see their own bill. The picker only appears for a
+ * reseller, who genuinely has more than one account to look at, and it
+ * is labelled as what it is: their customers.
+ */
+app.append(whoami(me));
 
 const body = el('div');
+
+// A tenancy is the thing being billed; say so once, here, in the place a
+// reader is first confronted with the word.
+const TENANT_HINT = 'A tenant is one billable organisation: its own namespace, its own '
+  + 'quota, its own queue and its own invoice. A tenant can itself have tenants — that '
+  + 'is how a data centre resells to an AI company, which resells to its customers.';
+
+const mine = (me?.tenants || [])[0] || choices[0];
+const customers = (me?.reach || []).filter((t) => t !== mine);
+
+if (customers.length) {
+  // A reseller. Their own account first, their customers' beside it.
+  const picker = el('select', {
+    onchange: (e) => load(e.target.value),
+  });
+  picker.append(el('option', { value: mine }, `${mine} — your own account`));
+  for (const t of customers) picker.append(el('option', { value: t }, `${t} — your customer`));
+  app.append(el('div', { class: 'row', style: 'margin-bottom:20px' },
+    el('span', { class: 'muted' }, 'Showing the account for'),
+    picker,
+    el('span', { class: 'faint', style: 'font-size:12px' },
+      `You can read these ${customers.length} because they are your `,
+      hint('sub-tenants', TENANT_HINT),
+      '. Nobody else can.')));
+} else if (choices.length > 1) {
+  // The operator, who can read everybody.
+  const picker = el('select', { onchange: (e) => load(e.target.value) });
+  for (const t of choices) picker.append(el('option', { value: t }, t));
+  app.append(el('div', { class: 'row', style: 'margin-bottom:20px' },
+    el('span', { class: 'muted' }, 'Showing the account for'), picker,
+    el('span', { class: 'faint', style: 'font-size:12px' },
+      'You see every ', hint('tenant', TENANT_HINT), ' because you hold the operator grant.')));
+} else {
+  app.append(el('p', { class: 'note', style: 'margin-bottom:20px' },
+    'This is your own account. ', hint('What is a tenant?', TENANT_HINT)));
+}
+
 app.append(body);
+
+// Load immediately. Nobody should have to press a button to see their
+// own invoice, and an empty page behind a button reads as a broken page.
+await load(mine);
 
 app.append(card('How a figure on this page is produced',
   el('p', { class: 'note' },

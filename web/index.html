@@ -354,13 +354,22 @@ app.append(card('Measured on the hardware, not estimated',
       el('div', { class: 'v' }, '1501'), el('div', { class: 'n' }, 'tok/s at 64-way')),
     el('div', { class: 'stat' }, el('div', { class: 'k' }, 'Requests served'),
       el('div', { class: 'v' }, '4535'), el('div', { class: 'n' }, 'in the recorded run'))),
-  el('p', { class: 'note' },
-    'And the number that is not flattering: a new replica takes ',
-    el('strong', {}, 'four to five minutes'),
-    ' to start serving — the image is 9GB and vLLM compiles graphs on first start. In the '
-    + 'recorded run the autoscaler reaches four replicas in 47 seconds and the second one only '
-    + 'begins answering at t+258s. Scaling is immediate; capacity is not. It is on the serving '
-    + 'page, visible, because a demo that hid it would be selling rather than describing.')));
+  callout('bad', 'And the number that is not flattering',
+    el('p', {},
+      'A new replica takes ', el('strong', {}, 'four to five minutes'),
+      ' to start serving — the image is 9GB and vLLM compiles graphs and allocates '
+      + 'its KV cache on first start.'),
+    el('p', {},
+      'In the recorded run the autoscaler went from 1 replica to 4 in 47 seconds, so '
+      + 'four cards were held and billed. A ', el('strong', {}, 'second'),
+      ' replica answered at t+258s — for ten seconds. The third and fourth '
+      + 'never became ready at all, and at t+269s it scaled back to one. Four cards '
+      + 'were held for about 330 seconds and at most two ever served.'),
+    el('p', {},
+      'A 4–5 minute cold start against a 120-second scale-down window tears replicas '
+      + 'down before they finish starting. Autoscaling on this hardware is close to '
+      + 'useless without a warm pool. That run is on the serving page because it is '
+      + 'the clearest evidence for the top roadmap item, not because it went well.'))));
 
 /* ------------------------------------------------------------- readiness */
 

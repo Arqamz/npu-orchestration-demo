@@ -16,7 +16,7 @@
 <script type="module">
 import {
   call, demo, el, card, table, pill, phasePill, refusal, chrome, pageTitle, val, ago, statusPill,
-  lede, kpis, section, callout, hint, readiness,
+  lede, kpis, section, callout, hint, readiness, whoami,
 } from '/shared/fleet.js';
 import { Tour, launcher } from '/shared/tour.js';
 
@@ -48,6 +48,8 @@ app.append(lede({
   sub: "Where an engineer submits work, watches it schedule, and reads why it did not. This login is a member of the tenancy and deliberately not an administrator, so the billing pages are refused to it \u2014 you can see the refusals below.",
   aside: launcher(tour),
 }));
+
+app.append(whoami(me));
 
 /* ---------------------------------------------------------------- jobs */
 

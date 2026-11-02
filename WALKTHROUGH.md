@@ -82,8 +82,9 @@ Press **"Replay the load test"**. It replays 80 frames of a real run:
 | | |
 |---|---|
 | 1 → 4 replicas | at t+47s, once the in-flight batch crossed target |
-| held at 4 | the quota ceiling, not the demand ceiling |
-| second replica ready | only at t+258s — engine init dominates |
+| cards held and billed | **4**, for about 330 s |
+| replicas that ever served | **at most 2** — and the second for only 10 s |
+| replicas 3 and 4 | **never became ready at all** |
 | settled back to 1 | at t+416s |
 | served | 4535 requests OK, 12 failed, 11.92 req/s, 1501 tok/s |
 
@@ -92,10 +93,17 @@ Two things to say while it runs:
 - **The chart is two panels on one time axis, never one chart with two
   scales.** Load rises below, replicas follow above. A dual-axis chart
   would invite a causal reading that is an artifact of the scaling.
-- **Scaling is immediate; capacity is not.** The gap between "replicas
-  held" and "serving" is the honest part of the demo — four to five
-  minutes from scheduled to answering, because the image is 9GB and vLLM
-  compiles graphs on first start. The callout says so.
+- **Held is not serving, and this run is the proof.** "Held" is cards
+  allocated and billed from the moment the scheduler commits them;
+  "serving" is replicas that have finished starting. Four to five minutes
+  separate the two on this hardware.
+- **This run did not go well, and that is why we show it.** A 4–5 minute
+  cold start against a 120-second scale-down window means replicas are
+  torn down before they finish starting. The customer paid for four cards
+  and got roughly one card's worth of serving. Autoscaling on this
+  hardware is close to useless without a warm pool — which is exactly the
+  argument for the top roadmap item, made with a measurement instead of an
+  assertion.
 
 *Ten minutes. The most important ten minutes in the deck.*
 
@@ -177,6 +185,7 @@ Verification lives outside the server, in `cmd/audit-verify`.
 |---|---|
 | Can I call an endpoint from outside the cluster? | Not yet. `spec.route` is validated — TLS and an API key are both mandatory — and nothing creates the Ingress. First item on the roadmap. |
 | Can I get a notebook? | The shape is built and tested; the controller that turns it into a pod is not. The catalog says so itself: those templates come back with no submit route. |
+| Why were 4 cards held but only 1 serving? | Held = allocated and billed; serving = finished starting. The gap is the 4–5 min engine init. In the recorded run replicas 3 and 4 never closed that gap before being scaled down. |
 | Does it scale past one node? | Measured to 8 cards on one node. Cross-cluster is refused in code until a second cluster validates it, rather than claimed. |
 | Does self-healing work? | The loop runs and is visible on the console. It has not been proven against a second node, because there has only ever been one. |
 | What about scale-to-zero? | Refused today, deliberately. It used to be accepted with a warning and it never came back — see the handbook. The activator that fixes it is designed and not deployed. |

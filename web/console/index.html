@@ -17,7 +17,7 @@
 <script type="module">
 import {
   call, demo, el, card, tableCard, table, pill, phasePill, refusal, chrome,
-  lede, kpis, section, callout, hint, readiness, val,
+  lede, kpis, section, callout, hint, readiness, whoami, val,
 } from '/shared/fleet.js';
 import { Tour, launcher } from '/shared/tour.js';
 
@@ -91,6 +91,8 @@ app.append(lede({
      + 'customer’s business.',
   aside: launcher(tour),
 }));
+
+app.append(whoami(me));
 
 /* --------------------------------------------------------------- nodes */
 

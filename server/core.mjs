@@ -211,10 +211,28 @@ export class Timeline {
     return this.frames.length > 0;
   }
 
-  /** start the clock. A demo "runs the load test" by calling this. */
-  start() {
+  /** start the clock. A demo "runs the load test" by calling this.
+   *
+   * SPEED IS A MULTIPLIER ON RECORDED TIME, NOT A DIFFERENT RUN.
+   *
+   * The recorded run is 416 seconds. Replaying it at 1:1 means nearly
+   * seven minutes of somebody watching a number not change, which is not
+   * a demo. At 20x it is 21 seconds.
+   *
+   * What must NOT compress is the reported time. Every frame keeps its
+   * real offset, and the surfaces show "t+258s" rather than wall-clock,
+   * because the whole point of this run is that a replica takes four to
+   * five minutes to serve. A replay that made it look like twelve
+   * seconds would be selling rather than describing -- and the number it
+   * would be hiding is the most important one on the page.
+   */
+  start(speed = 1) {
     this.startedAt = Date.now();
-    return { started: true, frames: this.frames.length, meta: this.meta };
+    this.speed = Number(speed) > 0 ? Number(speed) : 1;
+    return {
+      started: true, frames: this.frames.length, meta: this.meta,
+      speed: this.speed, recordedSeconds: this.frames.at(-1)?.offset ?? 0,
+    };
   }
 
   stop() {
@@ -222,11 +240,17 @@ export class Timeline {
     return { started: false };
   }
 
+  /** The replay speeds a surface may offer. 1x is kept deliberately:
+   *  somebody who does not believe the run can watch it in real time. */
+  static SPEEDS = [1, 10, 20, 40];
+
   /** the frame for the current moment, or the first frame when idle. */
   current() {
     if (!this.frames.length) return null;
     if (this.startedAt === null) return { ...this.frames[0], offset: 0, running: false };
-    const elapsed = (Date.now() - this.startedAt) / 1000;
+    // Recorded seconds, not wall-clock seconds: the multiplier moves the
+    // playhead through the run, and every offset reported stays real.
+    const elapsed = ((Date.now() - this.startedAt) / 1000) * (this.speed || 1);
     let chosen = this.frames[0];
     for (const f of this.frames) {
       if (f.offset <= elapsed) chosen = f;
@@ -234,7 +258,10 @@ export class Timeline {
     }
     const last = this.frames[this.frames.length - 1];
     const done = elapsed > last.offset;
-    return { ...chosen, elapsed, running: !done, done };
+    return {
+      ...chosen, elapsed, running: !done, done,
+      speed: this.speed || 1, recordedSeconds: last.offset,
+    };
   }
 
   /** the whole run, for a chart that shows it at once rather than live. */
@@ -604,7 +631,15 @@ export class DemoAPI {
       };
     }
     if (leaf === 'timeline/start' && method === 'POST') {
-      return { status: 200, body: this.timeline ? this.timeline.start() : { started: false } };
+      // Clamped to the offered set rather than taken as given: an
+      // arbitrary multiplier from a query string is a way to make the
+      // run look however somebody wants it to look.
+      const asked = Number(query?.get?.('speed') ?? 20);
+      const speed = Timeline.SPEEDS.includes(asked) ? asked : 20;
+      return {
+        status: 200,
+        body: this.timeline ? this.timeline.start(speed) : { started: false },
+      };
     }
     if (leaf === 'timeline/stop' && method === 'POST') {
       return { status: 200, body: this.timeline ? this.timeline.stop() : { started: false } };

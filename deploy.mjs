@@ -1,23 +1,18 @@
 #!/usr/bin/env node
-/* Deploy dist/ to every Pages project.
+/* Deploy dist/ to the Pages project.
  *
- * WHY THIS IS A SCRIPT AND NOT A SHELL LOOP.
+ * ONE PROJECT, NOT SEVEN.
  *
- * Every project is handed the SAME dist/ -- the whole app, so the nav
- * works from any subdomain -- with one file that differs: `_redirects`.
- * Without it, every subdomain serves the pitch page at `/`, so
- * npu-console.pages.dev shows the overview and the console is only at
- * /console/. The subdomain names then promise something the links do not
- * deliver, and a link shared into a chat lands on the wrong page.
+ * There used to be a project per surface -- npu-console, npu-serving and
+ * so on -- each carrying an identical copy of the whole app with a
+ * different redirect on its root. That was silly: the same seven pages
+ * deployed seven times, seven build artefacts to keep in step, and seven
+ * links to correct whenever one moved. The nav already carries every
+ * surface, so npu-orchestration.pages.dev/finance/ is the whole answer.
  *
- * That is exactly what had happened: there was no _redirects anywhere and
- * all seven roots served the pitch page.
- *
- * A *.pages.dev subdomain IS a project -- there is no way to put
- * serving.npu-orchestration.pages.dev under one project -- so one deploy
- * per surface is the shape, and the per-project file has to be written
- * between deploys. Doing that in a shell loop means the redirect and the
- * project name can drift apart; here they are one table.
+ * The six duplicates were deleted on 2026-11-02. Keeping the script as a
+ * table of one makes adding a genuinely separate deployment -- a
+ * customer-branded instance, say -- an edit rather than a rewrite.
  */
 
 import { writeFile, rm } from 'node:fs/promises';
@@ -29,15 +24,9 @@ const HERE = path.dirname(fileURLToPath(import.meta.url));
 const DIST = path.join(HERE, 'dist');
 
 /** project -> the path its root should land on. null means serve the
- *  pitch page, which is what the root project is for. */
+ *  overview, which is what the root is for. */
 const PROJECTS = [
   ['npu-orchestration', null],
-  ['npu-console', '/console/'],
-  ['npu-serving', '/serving/'],
-  ['npu-workspace', '/workspace/'],
-  ['npu-tenant', '/tenant/'],
-  ['npu-finance', '/finance/'],
-  ['npu-support', '/support/'],
 ];
 
 const ACCOUNT = process.env.CLOUDFLARE_ACCOUNT_ID;

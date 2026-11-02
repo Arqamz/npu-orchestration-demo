@@ -68,7 +68,7 @@ export const demo = {
   personas: () => call('/__demo/personas'),
   series: () => call('/__demo/timeline/series'),
   now: () => call('/__demo/timeline/now'),
-  start: () => call('/__demo/timeline/start', { method: 'POST' }),
+  start: (speed = 20) => call(`/__demo/timeline/start?speed=${speed}`, { method: 'POST' }),
   stop: () => call('/__demo/timeline/stop', { method: 'POST' }),
   reset: () => call('/__demo/reset', { method: 'POST' }),
   tree: () => call('/__demo/tree'),
@@ -232,6 +232,84 @@ function toggleTheme() {
   try { localStorage.setItem(THEME_KEY, next); } catch { /* not worth failing over */ }
 }
 
+/* WHO IS SIGNED IN, AS AN ORGANISATION RATHER THAN A USERNAME.
+ *
+ * "acme-engineer" tells a reader nothing. The questions these pages kept
+ * failing -- who am I, what is a tenant, whose data is this -- are all
+ * answered by naming the ORGANISATION, saying what it is, and giving it
+ * its own colour so the answer is visible before anything is read.
+ *
+ * Each entry maps a persona to the org it belongs to. The slug drives
+ * --brand through data-org on <html>, so the whole console reskins. That
+ * is not decoration: a white-label platform has to look like the
+ * customer's product, and an operator console and a reseller console
+ * must not look like the same company's. */
+export const ORGS = {
+  'demo-fleet-operator': {
+    org: 'huawei', mark: 'HW', name: 'Huawei · fleet operator',
+    kind: 'Operator',
+    what: 'You run the hardware. You see every node and every tenant, and you '
+      + 'are the only one who can.',
+  },
+  'demo-dc-shanghai-admin': {
+    org: 'sky47', mark: 'S47', name: 'Sky47', kind: 'Data centre · reseller',
+    what: 'You bought capacity from the operator and resell it. Your customers '
+      + 'are tenants of you, and you are invoiced for everything they spend.',
+  },
+  'demo-maas-co-admin': {
+    org: 'maas', mark: 'MA', name: 'MaaS Co', kind: 'AI factory · model-as-a-service',
+    what: 'You serve models to your own users and bill them per token, while '
+      + 'paying for the cards by the second.',
+  },
+  'demo-acme-admin': {
+    org: 'acme', mark: 'AC', name: 'Acme', kind: 'Tenant administrator',
+    what: 'You hold a quota from Sky47 and administer your own team — including '
+      + 'the invoices, which your engineers cannot see.',
+  },
+  'demo-acme-engineer': {
+    org: 'acme', mark: 'AC', name: 'Acme', kind: 'Engineer',
+    what: 'You can spend Acme’s cards and read your own logs. You cannot read '
+      + 'Acme’s invoices: running work and seeing what it costs are '
+      + 'different grants.',
+  },
+  'demo-acme-research-admin': {
+    org: 'research', mark: 'AR', name: 'Acme Research', kind: 'Sub-tenant of Acme',
+    what: 'A tenant of a tenant of a tenant. Your spend rolls up to Acme, whose '
+      + 'spend rolls up to Sky47.',
+  },
+  'demo-globex-admin': {
+    org: 'globex', mark: 'GX', name: 'Globex', kind: 'Tenant administrator',
+    what: 'Another of Sky47’s customers. You cannot see Acme and Acme cannot '
+      + 'see you — that separation is the product.',
+  },
+  'demo-lab-co-admin': {
+    org: 'lab', mark: 'LB', name: 'Lab Co', kind: 'Training customer',
+    what: 'You run multi-card fine-tuning jobs rather than serving endpoints.',
+  },
+};
+
+export function orgOf(persona) {
+  return ORGS[persona?.token] || {
+    org: 'acme', mark: '??', name: persona?.username || 'unknown',
+    kind: persona?.role || '', what: '',
+  };
+}
+
+/** whoami is the banner that answers the question on every page. */
+export function whoami(persona) {
+  const o = orgOf(persona);
+  return el('div', { class: 'whoami' },
+    el('div', { class: 'mark' }, o.mark),
+    el('div', {},
+      el('div', { class: 'who-name' }, o.name,
+        el('span', { class: 'who-sub' }, `  ·  ${o.kind}`)),
+      o.what ? el('div', { class: 'who-sub' }, o.what) : null),
+    el('div', { class: 'who-right' },
+      persona?.operator ? pill('operator grant', 'brand') : null,
+      persona?.tenantAdmin ? pill('tenant admin', 'policy') : null,
+      el('span', { class: 'mono faint' }, persona?.username || '')));
+}
+
 export async function chrome(active) {
   const header = el('header', { class: 'top' });
   const nav = el('nav', {});
@@ -253,9 +331,15 @@ export async function chrome(active) {
     }, `${p.username} — ${p.role}`));
   }
 
+  // The mark and the name come from whoever is signed in, and the accent
+  // follows via data-org. Switching persona reskins the whole console.
+  const mine = (res.body || []).find((p) => p.token === me) || null;
+  const org = orgOf(mine);
+  document.documentElement.setAttribute('data-org', org.org);
+
   header.append(
     el('a', { class: 'brand', href: '/' },
-      el('span', { class: 'dot' }), 'Ascend Fleet'),
+      el('span', { class: 'dot' }, org.mark), org.name),
     nav,
     el('div', { class: 'spacer' }),
     el('span', {
@@ -270,7 +354,7 @@ export async function chrome(active) {
     picker,
   );
   document.body.prepend(header);
-  return (res.body || []).find((p) => p.token === me) || null;
+  return mine;
 }
 
 /* --------------------------------------------------------- page scaffold */
