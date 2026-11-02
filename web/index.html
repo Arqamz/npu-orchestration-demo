@@ -120,6 +120,202 @@ app.append(el('section', { class: 'hero' },
     el('strong', {}, 'recorded from a real control plane'),
     ' running on an Atlas 800I A2 with eight Ascend 910B3 cards. Nothing is a mock-up.')));
 
+/* ------------------------------------------------------- what this IS */
+
+/* THE SECTION A DEMO AUDIENCE READS FIRST.
+ *
+ * Everything below this used to describe the product. Nothing said which
+ * parts of it exist, so a reader could leave believing notebooks, dev
+ * boxes and self-service onboarding were things they could use. They are
+ * not. Four states, stated before anything else on the page:
+ *
+ *   RUNNING   executed on the pilot hardware; there is a recording
+ *   TESTED    code and tests exist; never run against cards
+ *   DESIGNED  a shape and its validation; NOTHING TO SHOW
+ *   ABSENT    not started
+ *
+ * The distinction that matters most is TESTED vs DESIGNED vs ABSENT,
+ * because all three are easy to present as "built".
+ */
+
+const STATES = {
+  running: ['running', 'ok'],
+  tested: ['tested, not run', 'warn'],
+  designed: ['designed only', ''],
+  absent: ['not started', 'bad'],
+};
+
+const deliverable = (state, title, detail, evidence) => el('tr', {},
+  el('td', {}, pill(...STATES[state])),
+  el('td', { class: 'wrap' }, el('strong', {}, title)),
+  el('td', { class: 'wrap' }, detail),
+  el('td', { class: 'wrap faint', style: 'font-size:12px' }, evidence));
+
+app.append(section('What is actually built, in plain terms',
+  'Read this before anything else on the page. Everything below describes the product; '
+  + 'this says which parts of it exist today, and how we know.',
+
+  callout('warn', 'What this demo is, and what it is not',
+    el('p', {},
+      'It is a ', el('strong', {}, 'control plane'),
+      ' — the layer that turns a rack of Ascend cards into tenancies, quotas, scheduled '
+      + 'work, metered usage and invoices. It ran on one Atlas 800I A2 with eight 910B3 '
+      + 'cards, and every screen here replays a response that machine actually gave.'),
+    el('p', {},
+      'It is ', el('strong', {}, 'not a product you could sell access to on Monday'),
+      '. It ran on a single node with node-local disk and no object storage, no metrics '
+      + 'history, and no way for a customer outside the cluster to reach an endpoint. '
+      + 'Those are listed below rather than left to be discovered.')),
+
+  el('h3', { style: 'margin:24px 0 8px' }, 'Running — executed on the pilot hardware'),
+  el('p', { class: 'note', style: 'margin-bottom:12px' },
+    'Each of these has a recording behind it, which is what the screens replay.'),
+  el('div', { class: 'card flush' }, table(
+    [{ label: 'State' }, { label: 'Capability' }, { label: 'What it does' },
+      { label: 'How we know' }],
+    [
+      ['running', 'Multi-tenant scheduling',
+        'Whole cards and quarter-card vNPU slices, gang-scheduled per tenant.',
+        'Four replicas each took a distinct card with correct topology annotations.'],
+      ['running', 'Four-level tenancy',
+        'Operator → data centre → AI company → its customers, each contained.',
+        'Six tenancies across three levels; quota, network and Pod Security all held.'],
+      ['running', 'Job submission',
+        'Submit work with volumes, config and injected credentials; read your own logs.',
+        'Jobs ran on cards. Mounts and secrets covered by tests.'],
+      ['running', 'Autoscaling inference',
+        'An endpoint that adds and removes replicas with load, capped by quota.',
+        'A recorded run — and it went BADLY. See the warning below.'],
+      ['running', 'Metering and recursive billing',
+        'Device-seconds from observations; usage rolled up to whoever pays.',
+        'A period closed at 665.12 USD; a reseller statement at 720.89 over 3 sub-tenants.'],
+      ['running', 'Tamper-evident audit',
+        'Hash chain, RFC 6962 Merkle tree, signed checkpoints anchored onto invoices.',
+        'Verified end to end, and a deliberately forged trail was refused.'],
+      ['running', 'OIDC login and scoping',
+        'Real Keycloak tokens; every route narrowed to what the caller may see.',
+        'Eight logins. Five real defects were found by one real token.'],
+      ['running', 'Certified-stack drift detection',
+        'Notices a node whose driver/firmware/CANN left its approved set.',
+        'Detected a real CANN drift (8.5.2 → 8.5.1) on the pilot node.'],
+    ],
+    (r) => deliverable(r[0], r[1], r[2], r[3]))),
+
+  callout('bad', 'The autoscaling run did not go well, and we show it anyway',
+    el('p', {},
+      'At t+47s it went from 1 replica to 4, so four cards were held and billed. A second '
+      + 'replica answered at t+258s — for ten seconds. The third and fourth never became '
+      + 'ready at all. Four cards were held for about 330 seconds and at most two ever '
+      + 'served.'),
+    el('p', {},
+      'A 4–5 minute cold start against a 120-second scale-down window tears replicas down '
+      + 'before they finish starting. ', el('strong', {},
+        'Autoscaling on this hardware is close to useless without a warm pool, which does '
+        + 'not exist yet.'),
+      ' That is the single most important finding in this demo.')),
+
+  el('h3', { style: 'margin:28px 0 8px' }, 'Tested, but never run against cards'),
+  el('p', { class: 'note', style: 'margin-bottom:12px' },
+    'Written and covered by tests in the control plane, including negative controls. The '
+    + 'pilot node’s cards were released before these could be exercised on hardware, so '
+    + 'there is no recording — the screens describe them rather than replaying them.'),
+  el('div', { class: 'card flush' }, table(
+    [{ label: 'State' }, { label: 'Capability' }, { label: 'What it does' },
+      { label: 'How we know' }],
+    [
+      ['tested', 'Workload catalog',
+        'Named templates so nobody types an extended resource name.',
+        'Served live at /fleet/catalog; every template decodes into the real request type.'],
+      ['tested', 'Per-caller API keys',
+        'Long-lived credentials for applications, scoped to one endpoint.',
+        'Hash-only storage, constant-time compare, 12 negative controls.'],
+      ['tested', 'Token metering',
+        'The reseller’s meter — prompt and completion tokens, priced per million.',
+        'Survives replica destruction; 11 negative controls.'],
+      ['tested', 'Reservation admission',
+        'Decides whether committed capacity can be promised without double-selling.',
+        'Peak-over-window arithmetic; 9 negative controls. No controller holds it.'],
+      ['tested', 'Scale-to-zero logic',
+        'Releasing the last replica and waking on a request.',
+        'Autoscaler honours a wake signal; nothing sends one yet (no activator).'],
+    ],
+    (r) => deliverable(r[0], r[1], r[2], r[3]))),
+
+  el('h3', { style: 'margin:28px 0 8px' }, 'Designed only — there is nothing to show'),
+  el('p', { class: 'note', style: 'margin-bottom:12px' },
+    'A type, its validation and its tests exist. Nothing creates the thing. If somebody '
+    + 'asks to see one of these in the demo, the honest answer is that you cannot — and '
+    + 'the API itself refuses, which is why there is no button for them anywhere.'),
+  el('div', { class: 'card flush' }, table(
+    [{ label: 'State' }, { label: 'Capability' }, { label: 'What exists' },
+      { label: 'What is missing' }],
+    [
+      ['designed', 'Notebook as a service',
+        'The Workspace type, its validation, and a catalog template.',
+        'The controller that creates the pod, the service and the idle reaper.'],
+      ['designed', 'Dev box (SSH)',
+        'Same type; a container with a shell and a card. NOT a virtual machine.',
+        'The same controller, plus a TCP route the HTTP ingress does not provide.'],
+      ['designed', 'Reservations',
+        'The admission ledger that decides whether a promise can be met.',
+        'The controller that actually holds the capacity it promised.'],
+      ['designed', 'Scale to zero',
+        'The policy and the autoscaler’s wake path.',
+        'The activator — a proxy that holds the first request while a replica starts.'],
+      ['absent', 'Self-service onboarding',
+        'Nothing. A reseller cannot create its own customers.',
+        'Tenancies are created by the operator applying YAML on their behalf.'],
+      ['absent', 'Real virtual machines',
+        'Nothing. The dev box is a container and we do not call it a VM.',
+        'KubeVirt, a kernel per tenant, device passthrough, snapshots.'],
+    ],
+    (r) => deliverable(r[0], r[1], r[2], r[3]))),
+
+  el('h3', { style: 'margin:28px 0 8px' }, 'Missing before any of this is production'),
+  el('p', { class: 'note', style: 'margin-bottom:12px' },
+    'Infrastructure the pilot never had. None of it is hard; all of it is required, and '
+    + 'none of it is visible in a demo that runs on one machine.'),
+  el('div', { class: 'card flush' }, table(
+    [{ label: 'Gap' }, { label: 'What the pilot had' }, { label: 'Why it blocks production' }],
+    [
+      ['More than one node',
+        'One Atlas 800I A2. Eight cards, one control plane, no second machine.',
+        'Self-healing has nowhere to drain to, so it is armed and unproven. Nothing larger '
+        + 'than 8 cards has ever been scheduled. Cross-cluster placement is refused in '
+        + 'code rather than claimed.'],
+      ['Shared storage',
+        'One storage class: k3s local-path. Node-local disk, ReadWriteOnce, no expansion.',
+        'A volume is pinned to the disk of one machine. Two pods cannot share a dataset, '
+        + 'and on a second node a job simply could not reach its data. Distributed '
+        + 'training needs ReadWriteMany; there is no CSI driver, no NFS, no Ceph.'],
+      ['Object storage',
+        'None. No S3, no MinIO, no bucket of any kind.',
+        'Model weights and checkpoints have nowhere durable or shared to live. Today a '
+        + 'model is downloaded onto one node’s disk, which is why every replica restart '
+        + 'pays for it again.'],
+      ['Metrics and history',
+        'The manager exposes metrics. Nothing scrapes them.',
+        'No Prometheus, no Grafana, no retention. Every number on these pages is a point '
+        + 'reading — there is no utilisation over time, which is both the operator’s '
+        + 'commercial signal and the first thing a customer asks for.'],
+      ['A way in from outside',
+        'ClusterIP services only. No ingress controller, no TLS termination, no DNS.',
+        'A customer outside the cluster cannot call an endpoint at all, so nothing about '
+        + 'model-as-a-service is real yet.'],
+      ['A highly available control plane',
+        'One k3s server, one manager replica, SQLite-backed.',
+        'The control plane is a single point of failure. Leader election exists in the '
+        + 'manager; the cluster underneath it does not survive the node.'],
+      ['Backup and disaster recovery',
+        'None. The audit trail and closed periods sit on one PVC on one disk.',
+        'Losing the node loses the billing record. The audit design survives tampering; '
+        + 'it does not survive a disk.'],
+    ],
+    (r) => el('tr', {},
+      el('td', { class: 'wrap' }, el('strong', {}, r[0])),
+      el('td', { class: 'wrap' }, r[1]),
+      el('td', { class: 'wrap faint' }, r[2]))))));
+
 /* --------------------------------------------------------------- problem */
 
 app.append(card('The problem',
