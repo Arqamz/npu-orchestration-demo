@@ -30,44 +30,55 @@
 
 /* ============================================================== tokens */
 
+/* LIGHT IS THE DEFAULT, not a preference-driven alternative.
+ *
+ * These screens are read for a long time in lit rooms and shown on
+ * projectors, and the dark build was genuinely harder to read -- 13px
+ * #999 on #0a0a0a is below comfortable contrast for body text however
+ * good it looks in a screenshot. So light ships, and dark is opt-in
+ * through the toggle rather than through the operating system: a reader
+ * whose laptop is in dark mode still gets the legible build unless they
+ * ask otherwise.
+ *
+ * The neutral ramp is warm rather than pure grey (#fcfcfd rather than
+ * #ffffff for the page) so that a white panel reads as raised against it
+ * without needing a shadow -- the same "regions drawn on one surface"
+ * idea as the dark build, inverted.
+ */
 :root {
-  /* --- the reference neutral ramp ----------------------------------- */
-  --bg: #0a0a0a;
-  --surface: #101010;
-  --raised: #171717;
-  --sunken: #0d0d0d;
-  --line: #252525;
-  --line-soft: #181818;
-  --active: #262626;
+  --bg: #fbfbfc;
+  --surface: #ffffff;
+  --raised: #ffffff;
+  --sunken: #f4f5f7;
+  --line: #e3e5e9;
+  --line-soft: #eef0f3;
+  --active: #eceef1;
 
-  --ink: #ededed;
-  --ink-dim: #999999;
-  --ink-faint: #666666;
+  /* Ink: near-black rather than black, and the dim step is dark enough
+   * to carry 12-13px body text (4.8:1 on the page) rather than being a
+   * decorative grey. */
+  --ink: #15181d;
+  --ink-dim: #525862;
+  --ink-faint: #7c838f;
 
-  /* --- accent. Overridden per organisation at the bottom. ------------ */
-  --brand: #3a9ed7;
-  --brand-ink: #6cb9e4;
-  --brand-wash: #3a9ed71f;
+  --brand: #2563eb;
+  --brand-ink: #1d4ed8;
+  --brand-wash: #eff4ff;
 
-  /* --- state, from the reference ------------------------------------ */
-  --ok: #4db28c;
-  --ok-wash: #0c241c;
-  --warn: #ecaa22;
-  --warn-wash: #2b210b;
-  --bad: #f14a54;
-  --bad-wash: #2a1215;
-  --policy: #a78bfa;
-  --policy-wash: #1d1730;
+  --ok: #0f7a43;
+  --ok-wash: #e8f6ee;
+  --warn: #8a5a00;
+  --warn-wash: #fdf3e2;
+  --bad: #b3243b;
+  --bad-wash: #fdecef;
+  --policy: #6d31d0;
+  --policy-wash: #f2ecfd;
 
-  /* --- chart series. Kept: these were validated for colour-vision
-   *     deficiency and the reference does not specify a categorical
-   *     palette, so there is nothing to port over them. ---------------- */
-  --series-held: #3987e5;
-  --series-serving: #199e70;
-  --series-load: #d95926;
-  --series-ceiling: #e66767;
+  --series-held: #2a78d6;
+  --series-serving: #1b9e6f;
+  --series-load: #d9601f;
+  --series-ceiling: #d4374b;
 
-  /* --- aliases kept so surfaces need not all change at once ---------- */
   --panel: var(--surface);
   --panel-2: var(--raised);
   --accent: var(--brand);
@@ -75,89 +86,72 @@
   --sans: Geist, Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
 
-  /* --- the reference type scale -------------------------------------- */
-  --t-display: 25px;
-  --t-h1: 21px;
-  --t-h2: 15px;
+  /* TYPE SCALE, with real steps and a job for each.
+   *
+   * The complaint these answer: everything was one size, so nothing said
+   * what mattered. Each step is at least 3px from its neighbour, and the
+   * jobs are fixed -- display is the one number a panel is about, h1
+   * names the page, h2 names a section, h3 names a panel, body is prose,
+   * small is table text, micro is a label. */
+  --t-display: 30px;
+  --t-h1: 24px;
+  --t-h2: 18px;
   --t-h3: 15px;
-  --t-body: 13px;
-  --t-small: 12px;
+  --t-body: 13.5px;
+  --t-small: 12.5px;
   --t-micro: 11px;
 
   --s1: 4px;  --s2: 8px;  --s3: 12px; --s4: 16px;
   --s5: 20px; --s6: 24px; --s7: 40px; --s8: 56px;
 
-  --radius: 16px;
+  --radius: 14px;
   --radius-sm: 9px;
   --radius-pill: 20px;
 
-  --shadow-1: none;
-  --shadow-2: none;
-  --shadow-pop: 0 16px 48px -12px #000c, 0 2px 8px #0008;
-  /* The reference's panel definition: a border plus a barely-there inner
-   * highlight. Doing the lift with 1% white instead of a drop shadow is
-   * what keeps a dense page from looking like a pile of cards. */
-  --inset: inset 0 0 0 2px #ffffff02;
+  --shadow-1: 0 1px 2px #1118271a;
+  --shadow-2: 0 1px 3px #11182714, 0 1px 2px #1118270f;
+  --shadow-pop: 0 12px 32px -8px #11182733, 0 2px 6px #1118271a;
+  --inset: none;
 
   --max: 1280px;
 }
 
-/* Light mode is SELECTED, not inverted: the reference ships a .light
- * variant and these are its values, picked against white. */
-:root:not([data-theme="dark"]) {
-  @media (prefers-color-scheme: light) {
-    --bg: #ffffff;
-    --surface: #ffffff;
-    --raised: #f7f7f7;
-    --sunken: #f4f4f4;
-    --line: #e4e4e4;
-    --line-soft: #efefef;
-    --active: #e9e9e9;
-    --ink: #171717;
-    --ink-dim: #666666;
-    --ink-faint: #8a8a8a;
-    --ok: #15803d;
-    --ok-wash: #e8f5ee;
-    --warn: #a16207;
-    --warn-wash: #fdf3e0;
-    --bad: #be123c;
-    --bad-wash: #fdeaee;
-    --policy: #7c3aed;
-    --policy-wash: #f1ecfe;
-    --series-held: #2a78d6;
-    --series-serving: #1baf7a;
-    --series-load: #eb6834;
-    --series-ceiling: #e34948;
-    --inset: none;
-    --shadow-pop: 0 16px 48px -12px #0f172a2e, 0 2px 8px #0f172a14;
-  }
-}
+/* Dark is opt-in only. */
+:root[data-theme="dark"] {
+  --bg: #0a0c10;
+  --surface: #111419;
+  --raised: #171b21;
+  --sunken: #0d1014;
+  --line: #242831;
+  --line-soft: #1b1f26;
+  --active: #232831;
 
-:root[data-theme="light"] {
-  --bg: #ffffff;
-  --surface: #ffffff;
-  --raised: #f7f7f7;
-  --sunken: #f4f4f4;
-  --line: #e4e4e4;
-  --line-soft: #efefef;
-  --active: #e9e9e9;
-  --ink: #171717;
-  --ink-dim: #666666;
-  --ink-faint: #8a8a8a;
-  --ok: #15803d;
-  --ok-wash: #e8f5ee;
-  --warn: #a16207;
-  --warn-wash: #fdf3e0;
-  --bad: #be123c;
-  --bad-wash: #fdeaee;
-  --policy: #7c3aed;
-  --policy-wash: #f1ecfe;
-  --series-held: #2a78d6;
-  --series-serving: #1baf7a;
-  --series-load: #eb6834;
-  --series-ceiling: #e34948;
-  --inset: none;
-  --shadow-pop: 0 16px 48px -12px #0f172a2e, 0 2px 8px #0f172a14;
+  --ink: #edeff3;
+  --ink-dim: #a2a9b5;
+  --ink-faint: #6e7684;
+
+  --brand: #4c8ef5;
+  --brand-ink: #8db4ff;
+  --brand-wash: #4c8ef520;
+
+  --ok: #4db28c;
+  --ok-wash: #0c241c;
+  --warn: #ecaa22;
+  --warn-wash: #2b210b;
+  --bad: #f1707b;
+  --bad-wash: #2a1215;
+  --policy: #a78bfa;
+  --policy-wash: #1d1730;
+
+  --series-held: #3987e5;
+  --series-serving: #199e70;
+  --series-load: #d95926;
+  --series-ceiling: #e66767;
+
+  --shadow-1: none;
+  --shadow-2: none;
+  --shadow-pop: 0 16px 48px -12px #000c, 0 2px 8px #0008;
+  --inset: inset 0 0 0 2px #ffffff02;
 }
 
 /* ================================================================ base */
@@ -189,12 +183,26 @@ a:hover { text-decoration: underline; }
  * stays visible on every surface here without matching any status hue. */
 :focus-visible { outline: 2px solid #a3a3a3; outline-offset: 3px; border-radius: 4px; }
 
-h1, h2, h3, h4 { margin: 0; }
-h1 { font-size: var(--t-h1); line-height: 1.35; font-weight: 600; letter-spacing: -0.025em; }
-h2 { font-size: var(--t-display); line-height: 1.25; font-weight: 600; letter-spacing: -0.04em; font-variant-numeric: tabular-nums; }
-h3 { font-size: var(--t-h3); font-weight: 500; line-height: 1.5; letter-spacing: -0.02em; }
-h4 { font-size: var(--t-body); font-weight: 400; }
-p { margin: 0; color: var(--ink-dim); line-height: 1.5; font-size: var(--t-body); }
+/* EACH LEVEL HAS ONE JOB, and the three signals move together.
+ *
+ * The complaint this answers: everything was the same size, so nothing on
+ * the page said what mattered. Size, weight and colour now rise together
+ * -- a section heading is bigger AND heavier AND darker than the prose
+ * under it, so the structure is readable at a glance and out of focus.
+ *
+ *   h1  names the page           24px / 600 / ink
+ *   h2  names a section          18px / 600 / ink
+ *   h3  names a panel            15px / 600 / ink
+ *   h4  names a field group      13.5px / 600 / ink-dim
+ *   p   is prose                 13.5px / 400 / ink-dim
+ *   .label is a label            11px / 500 / ink-faint / uppercase
+ */
+h1, h2, h3, h4 { margin: 0; color: var(--ink); }
+h1 { font-size: var(--t-h1); line-height: 1.25; font-weight: 600; letter-spacing: -0.03em; }
+h2 { font-size: var(--t-h2); line-height: 1.3; font-weight: 600; letter-spacing: -0.02em; }
+h3 { font-size: var(--t-h3); font-weight: 600; line-height: 1.45; letter-spacing: -0.015em; }
+h4 { font-size: var(--t-body); font-weight: 600; color: var(--ink-dim); }
+p { margin: 0; color: var(--ink-dim); line-height: 1.6; font-size: var(--t-body); }
 p + p { margin-top: var(--s3); }
 strong { font-weight: 500; color: var(--ink); }
 small { font-size: var(--t-small); color: var(--ink-dim); line-height: 1.5; }
@@ -213,19 +221,20 @@ small { font-size: var(--t-small); color: var(--ink-dim); line-height: 1.5; }
 button, .btn, select.persona, button.ghost {
   cursor: pointer; display: inline-flex; align-items: center; justify-content: center;
   gap: 7px;
-  background: linear-gradient(#1b1b1b, #141414);
-  color: var(--ink); border: 1px solid #2d2d2d; border-radius: var(--radius-sm);
-  padding: 6px 10px; min-height: 31px; white-space: nowrap;
-  font: inherit; font-size: var(--t-body);
-  box-shadow: inset 0 1px 0 #ffffff04;
+  background: var(--surface); color: var(--ink);
+  border: 1px solid var(--line); border-radius: var(--radius-sm);
+  padding: 6px 11px; min-height: 32px; white-space: nowrap;
+  font: inherit; font-size: var(--t-body); font-weight: 500;
+  box-shadow: var(--shadow-1);
 }
-button:hover, .btn:hover, button.ghost:hover { background: #282828; border-color: #444; }
-button:disabled { opacity: .4; cursor: default; }
-:root[data-theme="light"] button, :root[data-theme="light"] .btn,
-:root[data-theme="light"] select.persona {
-  background: #fff; border-color: var(--line); box-shadow: 0 1px 2px #0000000a;
+button:hover, .btn:hover, button.ghost:hover { background: var(--sunken); border-color: var(--ink-faint); }
+button:disabled { opacity: .45; cursor: default; }
+:root[data-theme="dark"] button, :root[data-theme="dark"] .btn,
+:root[data-theme="dark"] select.persona {
+  background: linear-gradient(#1b1f26, #141820); border-color: #2d323c;
+  box-shadow: inset 0 1px 0 #ffffff06;
 }
-:root[data-theme="light"] button:hover { background: #f4f4f4; border-color: #d4d4d4; }
+:root[data-theme="dark"] button:hover { background: #262c36; border-color: #444b57; }
 
 button.primary, .btn.primary {
   background: var(--brand); border-color: transparent; color: #fff; font-weight: 500;
@@ -233,12 +242,12 @@ button.primary, .btn.primary {
 button.primary:hover { filter: brightness(1.1); background: var(--brand); border-color: transparent; }
 
 select, input {
-  color: var(--ink); background: #151515; border: 1px solid #303030;
+  color: var(--ink); background: var(--surface); border: 1px solid var(--line);
   border-radius: 8px; padding: 7px 10px; min-width: 0;
   font: inherit; font-size: var(--t-body);
 }
-:root[data-theme="light"] select, :root[data-theme="light"] input {
-  background: #fff; border-color: var(--line);
+:root[data-theme="dark"] select, :root[data-theme="dark"] input {
+  background: #141820; border-color: #2d323c;
 }
 
 /* ============================================================== top bar */
@@ -288,8 +297,10 @@ select, input {
 
 .page-head { margin-bottom: var(--s6); }
 .page-head .eyebrow { display: flex; align-items: center; gap: var(--s2); margin-bottom: var(--s3); flex-wrap: wrap; }
-.page-head h1 { margin-bottom: var(--s2); }
-.page-head .sub { max-width: 72ch; font-size: var(--t-body); line-height: 1.6; color: var(--ink-dim); }
+.page-head h1 { margin-bottom: var(--s3); }
+/* The lede is a step ABOVE body text: it is the one paragraph everybody
+ * reads, so it is bigger than the prose it introduces. */
+.page-head .sub { max-width: 72ch; font-size: 15px; line-height: 1.65; color: var(--ink-dim); }
 
 /* ================================================================ KPIs */
 
@@ -308,8 +319,9 @@ select, input {
 }
 .kpi:last-child { border-right: 0; }
 .kpi .v {
-  font-size: var(--t-display); font-weight: 600; letter-spacing: -0.04em;
-  line-height: 1.25; font-variant-numeric: tabular-nums; margin: 6px 0 4px;
+  font-size: var(--t-display); font-weight: 600; letter-spacing: -0.035em;
+  line-height: 1.15; font-variant-numeric: tabular-nums; margin: 8px 0 5px;
+  color: var(--ink);
 }
 .kpi .v .unit { font-size: var(--t-body); font-weight: 400; color: var(--ink-faint); letter-spacing: 0; margin-left: 4px; }
 .kpi .n { font-size: var(--t-small); color: var(--ink-dim); line-height: 1.5; overflow-wrap: anywhere; }
@@ -328,7 +340,10 @@ select, input {
 
 .section { margin-bottom: var(--s7); }
 .section > header { margin-bottom: var(--s4); }
-.section > header h2 { font-size: var(--t-h1); letter-spacing: -0.025em; margin-bottom: var(--s2); }
+/* A section heading sits above a rule, which is what separates one
+ * section from the next without a box around either. */
+.section > header { border-bottom: 1px solid var(--line); padding-bottom: var(--s3); }
+.section > header h2 { margin-bottom: var(--s2); }
 /* A block, not a flex row. As `justify-content: space-between` the
  * explanation was pushed to the right-hand end of the heading's own line
  * instead of starting under it, so the two read as unrelated. */
@@ -446,10 +461,8 @@ details > summary { cursor: pointer; font-size: var(--t-body); color: var(--ink-
 /* ================================================================= tour */
 
 .tour-backdrop { position: fixed; background: #000; opacity: .66; z-index: 900; transition: all .2s ease; }
-:root[data-theme="light"] .tour-backdrop { opacity: .32; }
-@media (prefers-color-scheme: light) {
-  :root:not([data-theme="dark"]) .tour-backdrop { opacity: .32; }
-}
+.tour-backdrop { opacity: .3; }
+:root[data-theme="dark"] .tour-backdrop { opacity: .66; }
 .tour-ring {
   position: fixed; z-index: 901; border-radius: var(--radius);
   box-shadow: 0 0 0 1px var(--brand), 0 0 0 5px var(--brand-wash);
@@ -545,7 +558,7 @@ details > summary { cursor: pointer; font-size: var(--t-body); color: var(--ink-
 .stat { padding: var(--s4); min-width: 0; border-right: 1px solid var(--line); display: flex; flex-direction: column; }
 .stat:last-child { border-right: 0; }
 .stat .k { font-size: var(--t-micro); letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink-faint); }
-.stat .v { font-size: var(--t-display); font-weight: 600; letter-spacing: -0.04em; line-height: 1.25; font-variant-numeric: tabular-nums; margin: 6px 0 4px; }
+.stat .v { font-size: var(--t-display); font-weight: 600; letter-spacing: -0.035em; line-height: 1.15; font-variant-numeric: tabular-nums; margin: 8px 0 5px; color: var(--ink); }
 .stat .n { font-size: var(--t-small); color: var(--ink-dim); line-height: 1.5; overflow-wrap: anywhere; }
 .stat.ok .v { color: var(--ok); }
 .stat.warn .v { color: var(--warn); }
@@ -636,6 +649,13 @@ details.table-view table { margin-top: var(--s2); }
 .whoami .who-name { font-weight: 500; color: var(--ink); font-size: var(--t-body); }
 .whoami .who-sub { font-size: var(--t-small); color: var(--ink-dim); }
 .whoami .who-right { margin-left: auto; display: flex; align-items: center; gap: var(--s3); flex-wrap: wrap; }
+/* What THIS account sees on THIS page. Accented, because it is the line
+ * that changes when the persona changes and is the answer to "why does
+ * this page look different from the one in the screenshot". */
+.whoami .who-page {
+  margin-top: 6px; padding-top: 6px; border-top: 1px dashed var(--line);
+  font-size: var(--t-small); color: var(--brand-ink); font-weight: 500;
+}
 
 /* =========================================================== responsive */
 

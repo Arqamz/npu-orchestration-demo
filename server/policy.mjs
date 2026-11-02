@@ -38,6 +38,11 @@ export const POLICY = {
   '/fleet/logs': Scope.TENANT,
   '/fleet/endpoints': Scope.TENANT,
 
+  // What can be run, and the questions each shape asks. Readable by any
+  // authenticated caller: the catalog describes the platform's own
+  // capabilities and carries nothing about any tenancy.
+  '/fleet/catalog': Scope.SELF,
+
   // Carries the billing account identifier.
   '/fleet/invoices': Scope.TENANT_ADMIN,
   '/fleet/entitlements': Scope.TENANT_ADMIN,

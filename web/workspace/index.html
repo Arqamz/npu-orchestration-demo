@@ -16,7 +16,7 @@
 <script type="module">
 import {
   call, demo, el, card, table, pill, phasePill, refusal, chrome, pageTitle, val, ago, statusPill,
-  lede, kpis, section, callout, hint, readiness, whoami,
+  lede, kpis, section, callout, hint, readiness, whoami, flow,
 } from '/shared/fleet.js';
 import { Tour, launcher } from '/shared/tour.js';
 
@@ -49,7 +49,110 @@ app.append(lede({
   aside: launcher(tour),
 }));
 
-app.append(whoami(me));
+app.append(whoami(me, {"member": "You can submit and cancel work here and read your own containers’ logs. The billing panels at the bottom are refused to you.", "admin": "You can submit work AND read what it costs, because you hold tenant admin.", "reseller": "You administer your own tenancy and your customers’. Work you submit here spends your own quota.", "operator": "You are reading a tenant’s workspace as the operator. A tenant sees only their own."}));
+
+/* ----------------------------------------------- what work even is */
+
+/* THE QUESTION THIS PAGE WAS NOT ANSWERING.
+ *
+ * It opened straight into a table called "Jobs" and a form with three
+ * boxes. Nothing said what a job is, what you are submitting, what
+ * happens to it, or what the alternatives are -- so a reader who did not
+ * already know the product learned nothing from the most important
+ * screen for an engineer.
+ */
+app.append(section('What you can run',
+  'Three shapes of work, and which one you want depends on whether it finishes.',
+  el('div', { class: 'cols three' },
+    card('A job — work that finishes',
+      el('p', {}, 'A container, a number of cards, and a command. The platform puts it in '
+        + 'your queue, waits until the cards you asked for are all free, starts every '
+        + 'replica at once, and stops billing the moment it exits.'),
+      el('p', {}, el('strong', {}, 'Gang-scheduled: '),
+        'all of its cards or none. A half-started distributed run burns the cards it '
+        + 'did get while waiting for the rest, so the scheduler refuses to start one.'),
+      el('p', { class: 'faint' }, 'Fine-tuning, evaluation, offline scoring, benchmarks.')),
+    card('An endpoint — work that does not finish',
+      el('p', {}, 'A model server with a stable address that scales with demand. It never '
+        + 'completes, so it is billed continuously for the cards it holds.'),
+      el('p', {}, 'Lives on the ', el('a', { href: '/serving/' }, 'Serving'),
+        ' page rather than here.'),
+      el('p', { class: 'faint' }, 'Chat APIs, model-as-a-service, anything with callers.')),
+    card('A workspace — work you sit in front of',
+      el('p', {}, 'A notebook or an SSH box with a card attached, which you open, use for '
+        + 'an afternoon, and forget about. That last part is the design problem: it idles '
+        + 'out on its own, because a card costs the same behind an idle browser tab as it '
+        + 'does training.'),
+      el('p', {}, el('strong', {}, 'Not built yet. '),
+        'The shape and its validation are; the controller that creates the pod is not.'),
+      el('p', { class: 'faint' }, 'Exploration, debugging, teams whose tools expect a machine.')))));
+
+/* --------------------------------------------------- the catalog */
+
+/* WHY THERE IS A CATALOG AT ALL.
+ *
+ * The request body underneath needs an extended resource name
+ * (huawei.com/Ascend910-5c.1cpu.16g -- not the spelling Huawei's own
+ * documentation uses), a sized memory-backed /dev/shm, and a non-root
+ * uid, or the job is admitted and then fails. None of that is the
+ * customer's problem, so they pick a template and the platform fills it
+ * in. This table is served by the control plane at /fleet/catalog, which
+ * is why a console can render a form without knowing what a template is.
+ */
+const cat = await call('/fleet/catalog');
+if (cat.ok) {
+  const avail = { available: ['runs today', 'ok'], preview: ['preview', 'warn'],
+    designed: ['designed', ''] };
+  app.append(section('The workload catalog',
+    'You pick one of these and answer a handful of questions. You never type an extended '
+    + 'resource name, size a tmpfs, or choose a uid — those are the three things that '
+    + 'silently fail after a job is accepted, so the platform owns them.',
+    el('div', { class: 'card flush' },
+      table(
+        [{ label: 'Template' }, { label: 'Runs as' }, { label: 'It asks you for' },
+          { label: 'State' }],
+        cat.body.templates,
+        (t) => el('tr', {},
+          el('td', { class: 'wrap' },
+            el('strong', {}, t.title),
+            el('div', { class: 'faint', style: 'font-size:12px;margin-top:2px' }, t.summary)),
+          el('td', {}, el('span', { class: 'mono' }, t.kind)),
+          el('td', { class: 'wrap faint', style: 'font-size:12px' },
+            (t.asks || []).join(' · ')),
+          el('td', {},
+            pill(avail[t.availability][0], avail[t.availability][1]),
+            t.blocker
+              ? el('div', { class: 'faint', style: 'font-size:11px;margin-top:4px;max-width:34ch' },
+                t.blocker)
+              : null)))),
+    callout('', 'Where the dev box and the notebook are',
+      el('p', {},
+        'Both are in the catalog above, marked ', el('strong', {}, 'designed'),
+        '. The control plane serves them with no submit route at all, so this page '
+        + 'cannot offer a button for them — that is deliberate, and it is how the API '
+        + 'stops a console promising something that does not work.'),
+      el('p', {},
+        'A dev box is a container with a shell, your keys and a card: what VS Code '
+        + 'Remote, rsync and a Makefile expect. It is not a virtual machine, and we '
+        + 'do not call it one.'))));
+}
+
+/* ---------------------------------------------------------- lifecycle */
+
+app.append(section('What happens after you submit',
+  'Every refusal this platform makes happens as early in this sequence as it can. Once '
+  + 'the scheduler has committed, your quota is spent and the error arrives as something '
+  + 'about virtual devices.',
+  flow([
+    { title: 'Validated', detail: 'Shape, quota, Pod Security and mounts — before anything '
+      + 'is created.', state: 'done' },
+    { title: 'Queued', detail: 'Into your tenancy’s own Volcano queue.', state: 'done' },
+    { title: 'Gang-scheduled', detail: 'Waits until every card is free, then starts all '
+      + 'replicas together.' },
+    { title: 'Running', detail: 'Billed per device-second from here. Logs are below.' },
+    { title: 'Finished', detail: 'Billing stops. Output is on your volume; the pod is '
+      + 'cleaned up after its TTL.' },
+  ])));
 
 /* ---------------------------------------------------------------- jobs */
 
@@ -150,10 +253,16 @@ async function renderLogs() {
   const jobsRes = await call(`/fleet/jobs?tenant=${myTenant}`);
   for (const j of (jobsRes.body?.jobs || [])) candidates.push(`${j.name}-pod`);
 
-  const picker = el('select', {});
+  const picker = el('select', { onchange: (e) => load(e.target.value) });
   for (const c of candidates) picker.append(el('option', { value: c }, c));
-  const manual = el('input', { type: 'text', placeholder: 'or type a pod name', style: 'min-width:280px' });
-  const pane = el('pre', { class: 'logs' }, 'pick a pod');
+  // The free-text box exists to DEMONSTRATE the boundary, not as a
+  // convenience: typing another tenancy's pod name is how a reader
+  // proves to themselves that the scoping is real.
+  const manual = el('input', {
+    type: 'text', placeholder: 'try another tenant\u2019s pod name', style: 'min-width:260px',
+    onkeydown: (e) => { if (e.key === 'Enter') load(manual.value); },
+  });
+  const pane = el('pre', { class: 'logs' }, 'loading…');
 
   const load = async (pod) => {
     if (!pod) return;
@@ -168,18 +277,25 @@ async function renderLogs() {
 
   logCard.append(
     el('p', { class: 'note' },
-      'Scoped the same way everything else is: the pod is resolved inside this tenant’s '
-      + 'namespace only. A pod name belonging to another tenancy returns 404 — the caller '
-      + 'learns it is not theirs and nothing about whose it is. Try one from the recording '
-      + 'below as a different persona to see that.'),
-    el('div', { class: 'row', style: 'margin-bottom:10px' },
-      picker,
-      el('button', { onclick: () => load(picker.value) }, 'Read'),
-      manual,
-      el('button', { onclick: () => load(manual.value) }, 'Read that one')),
+      'The stdout and stderr of a container you are running — the same stream '
+      + '`kubectl logs` would give you, which is how you find out why a job failed '
+      + 'without anyone giving you access to the cluster.'),
+    el('p', { class: 'note', style: 'margin-top:8px' },
+      'Scoped like everything else: the pod is resolved inside ',
+      el('strong', {}, myTenant), '’s namespace only. A pod belonging to another '
+      + 'tenancy returns 404, so the caller learns it is not theirs and nothing about '
+      + 'whose it is. Type one in and see.'),
+    el('div', { class: 'row', style: 'margin:14px 0 10px' },
+      el('span', { class: 'muted' }, 'Container'), picker,
+      el('span', { class: 'faint' }, 'or'), manual),
     pane);
 
+  // No "Read" button: the picker loads on change and the first container
+  // loads on open. A control whose only job is "now actually do it" puts
+  // an empty pane in front of the reader and reads as a broken page.
   if (candidates.length) load(candidates[0]);
+  else pane.textContent = 'This tenancy is running nothing right now, so there are no '
+    + 'containers to read.';
 }
 await renderLogs();
 

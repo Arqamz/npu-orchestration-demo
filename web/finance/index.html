@@ -69,7 +69,7 @@ app.append(lede({
  * reseller, who genuinely has more than one account to look at, and it
  * is labelled as what it is: their customers.
  */
-app.append(whoami(me));
+app.append(whoami(me, {"operator": "You can read any account. Closing a period is yours alone.", "reseller": "Your own usage, plus what each of your customers spent, rolled up to you as one statement.", "admin": "Your tenancy’s invoices and closed periods.", "member": "Billing is refused to you — see below."}));
 
 const body = el('div');
 

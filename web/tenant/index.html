@@ -49,7 +49,7 @@ app.append(lede({
   aside: launcher(tour),
 }));
 
-app.append(whoami(me));
+app.append(whoami(me, {"operator": "You can read any tenancy by name. The tree below is the whole fleet.", "reseller": "The tree below is you and the customers you resell to. Their spend rolls up to you.", "admin": "You and your sub-tenants. You are liable for what they spend.", "member": "Your tenancy’s position in the tree. Administration is not yours."}));
 
 /* ---------------------------------------------------------------- tree */
 
@@ -96,15 +96,35 @@ if (!reach.length) {
       + 'It can read any of them by name — pick one below.')));
 }
 
+/* NO LOAD BUTTON.
+ *
+ * This panel opened empty behind a button, which made a working page look
+ * like a broken one -- and the button was the only thing between the
+ * reader and data they already had permission to see. A control whose
+ * only job is "now actually do the thing" is not a control.
+ *
+ * The picker loads on change. It is labelled with what the choices ARE
+ * rather than with the word "tenant", because that word is the thing the
+ * reader does not yet understand.
+ */
 const choices = reach.length ? reach : Object.keys(tree);
-const picker = el('select', {});
-for (const t of choices) picker.append(el('option', { value: t }, t));
+const mine = (me?.tenants || [])[0] || choices[0];
+const others = choices.filter((t) => t !== mine);
+
+const picker = el('select', { onchange: (e) => load(e.target.value) });
+if (choices.includes(mine)) picker.append(el('option', { value: mine }, `${mine} — you`));
+for (const t of others) {
+  picker.append(el('option', { value: t },
+    `${t}${tree[t]?.parent === mine ? ' — your customer' : ''}`));
+}
 
 const detail = el('div');
 app.append(card('Tenancy detail',
-  el('div', { class: 'row', style: 'margin-bottom:12px' },
-    el('label', {}, 'tenant ', picker),
-    el('button', { onclick: () => load(picker.value) }, 'Load')),
+  el('p', { class: 'note', style: 'margin-bottom:12px' },
+    'Everything one tenancy holds: its billing identity, who it buys from, who pays '
+    + 'for it, its quota, and what it is running right now.'),
+  el('div', { class: 'row', style: 'margin-bottom:16px' },
+    el('span', { class: 'muted' }, 'Showing'), picker),
   detail));
 
 async function load(tenant) {
@@ -191,6 +211,8 @@ app.append(card('What tenancy cannot do yet',
     el('li', {}, el('strong', {}, 'No reservations. '),
       '"Rent 64 NPUs for three months" is unrepresentable: quota is a ceiling, not a '
       + 'commitment, and nothing holds capacity for a future date.'))));
+await load(mine);
+
 tour.offer();
 </script>
 </body>

@@ -19,6 +19,7 @@ import { existsSync } from 'node:fs';
 import path from 'node:path';
 
 import { decide, reach, TENANT_TREE } from './policy.mjs';
+import { catalogBody } from './catalog.mjs';
 
 /* ---------------------------------------------------------------- tokens */
 
@@ -385,6 +386,20 @@ export class DemoAPI {
           ? { error: 'unauthenticated', errorDescription: verdict.reason }
           : { error: 'Forbidden', reason: verdict.reason },
       };
+    }
+
+    // The catalog is served from code rather than from a recording: it
+    // describes what the platform can run, which does not depend on a
+    // cluster being attached. It still goes through the policy above, so
+    // an unauthenticated caller is refused it like anything else.
+    if (pathname === '/fleet/catalog') {
+      this.audit.write({
+        method, path: pathname,
+        caller: principal ? principal.username : 'anonymous',
+        via: principal ? 'oidc' : 'anonymous',
+        decision: 'allowed', status: 200, reason: '', tenant: null,
+      });
+      return { status: 200, body: catalogBody() };
     }
 
     // A mutating call writes its intent BEFORE the handler runs, and is

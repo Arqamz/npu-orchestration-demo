@@ -98,7 +98,7 @@
 <main id="app"></main>
 <script type="module">
 import {
-  demo, el, card, table, pill, chrome, setPersona, readiness, callout,
+  demo, el, card, table, pill, chrome, setPersona, readiness, callout, section, flow,
 } from '/shared/fleet.js';
 
 const app = document.getElementById('app');
@@ -339,6 +339,208 @@ app.append(card('Who it is for — and what to show them',
   audGrid));
 
 /* ----------------------------------------------------------------- proof */
+
+/* ------------------------------------------------- the tooling stack */
+
+/* WHERE HUAWEI'S OWN SOFTWARE SITS.
+ *
+ * The question that comes up in every conversation with Huawei: is this a
+ * fork, a replacement, or a competitor to MindCluster? None of those. It
+ * runs ON their stack and is useless without it. Saying which piece does
+ * what, in one table, is the fastest way to stop that question.
+ */
+app.append(section('What this is built on',
+  'Huawei already ships the pieces that talk to the silicon. This is the commercial layer '
+  + 'above them — it does not replace any of them and does not work without them.',
+  el('div', { class: 'card flush' },
+    table(
+      [{ label: 'Component' }, { label: 'Whose' }, { label: 'What it does' },
+        { label: 'How we use it' }],
+      [
+        ['CANN', 'Huawei', 'The compute toolkit and runtime — the CUDA-equivalent layer.',
+          'Pinned per node and enforced: a node whose CANN drifts from its CertifiedStack '
+          + 'is cordoned and repaired.'],
+        ['Ascend driver + firmware', 'Huawei', 'Kernel driver and card firmware.',
+          'Version-checked by the node agent every reconcile. An unreadable version is an '
+          + 'error, never an absent one.'],
+        ['MindCluster — device plugin', 'Huawei (Apache-2.0)',
+          'Advertises NPUs to Kubernetes and allocates them to containers.',
+          'The source of the extended resource names, including vNPU slices. We read the '
+          + 'names off the node rather than predicting them.'],
+        ['MindCluster — Volcano NPU plugin', 'Huawei (Apache-2.0)',
+          'Topology-aware scheduling of Ascend cards.',
+          'Every job goes through it. Two of our hardest-won invariants exist because of '
+          + 'exactly how it decides a pod is an NPU pod.'],
+        ['Volcano', 'CNCF', 'Gang scheduling and queues.',
+          'One queue per tenant. Gang scheduling is what makes "all my cards or none" real.'],
+        ['Ascend Deployer', 'Huawei (Apache-2.0)',
+          'Installs and upgrades driver, firmware and CANN across a fleet, unattended.',
+          'The remediation step at the end of the drift loop. It is the thing that actually '
+          + 'repairs a node once we have drained it.'],
+        ['npu-smi', 'Huawei', 'Card-level health, power, memory and vNPU control.',
+          'Read by the node agent for faults and card inventory; also what creates and '
+          + 'destroys vNPU slices.'],
+        ['Ascend Docker Runtime', 'Huawei', 'Injects devices into containers.',
+          'Set as runtimeClassName on everything this platform submits.'],
+      ],
+      (r) => el('tr', {},
+        el('td', { class: 'wrap' }, el('strong', {}, r[0])),
+        el('td', { class: 'wrap faint', style: 'font-size:12px' }, r[1]),
+        el('td', { class: 'wrap' }, r[2]),
+        el('td', { class: 'wrap faint' }, r[3])))),
+  callout('', 'And what this is not',
+    el('p', {},
+      'Not a fork of MindCluster, not a replacement for CCE or UCS, and not a scheduler. '
+      + 'Huawei’s stack ends at "a container got a card". Everything after that — whose '
+      + 'card it was, what they agreed to pay, how it is invoiced, who may resell it, and '
+      + 'whether the node is still running the versions it was certified for — is what '
+      + 'this adds. On CCE or UCS it would run as the layer above them, the same way it '
+      + 'runs above k3s on the pilot.'))));
+
+/* --------------------------------------------------------- the meter */
+
+app.append(section('How a customer is billed',
+  'The part most platforms get wrong, and the reason the audit trail exists. Every figure '
+  + 'is derived from observations the control plane actually made.',
+  el('div', { class: 'cols two' },
+    card('The meter: device-seconds',
+      el('p', {},
+        'The unit is one device held for one second. A whole 910B3 and a quarter-card '
+        + 'slice both report as ', el('strong', {}, 'one device'),
+        ', which is why price is attached to the extended resource name rather than to '
+        + '"an NPU" — a rate card keyed on anything else bills a slice at the price of a '
+        + 'whole card, or the reverse.'),
+      el('p', {},
+        el('strong', {}, 'Never a PromQL rate(). '),
+        'rate() extrapolates past the data, interpolates across scrape gaps, and expires '
+        + 'at retention — three different ways to bill somebody for time nobody measured. '
+        + 'Usage is accumulated from the observations themselves.'),
+      el('p', {},
+        el('strong', {}, 'Billing identity is sticky. '),
+        'Usage outlives the tenancy that created it, so a customer who closes their '
+        + 'account can still be invoiced for the month they were open.'),
+      el('p', {},
+        el('strong', {}, 'Unattributed usage is reported, never dropped. '),
+        'Per-tenant figures have to reconcile against the fleet total; a gap that is '
+        + 'hidden is a gap nobody finds until an invoice is disputed.')),
+    card('The rate card',
+      el('p', {},
+        'A table of prices keyed by extended resource name, with a currency and an '
+        + 'effective date. Amounts are exact decimals, not floating point: 0.30 has no '
+        + 'binary representation, and an invoice assembled from float64 does not foot '
+        + 'against itself.'),
+      el('div', { class: 'card flush', style: 'margin:12px 0 0' },
+        table([{ label: 'Resource' }, { label: 'Unit' }, { label: 'Priced as', align: 'right' }],
+          [['huawei.com/Ascend910', 'device-second', 'full card rate'],
+            ['huawei.com/Ascend910-5c.1cpu.16g', 'device-second', 'slice rate'],
+            ['tokens (prompt)', 'per million', 'reseller’s own card'],
+            ['tokens (completion)', 'per million', 'reseller’s own card']],
+          (r) => el('tr', {},
+            el('td', { class: 'mono wrap' }, r[0]),
+            el('td', { class: 'wrap faint' }, r[1]),
+            el('td', { class: 'num wrap' }, r[2])))),
+      el('p', { style: 'margin-top:12px' },
+        el('strong', {}, 'A model priced at nothing is flagged, not billed as free. '),
+        'A resource the rate card does not name would otherwise bill zero and look like a '
+        + 'deliberately free tier.')),
+    card('Periods, invoices and statements',
+      el('p', {},
+        'A billing period is closed by ', el('strong', {}, 'reading the meter, not resetting it'),
+        '. A period’s usage is the difference between two cumulative readings, so periods '
+        + 'always sum to the lifetime total, closing is repeatable, and a lost checkpoint '
+        + 'cannot make the past unreconstructible.'),
+      el('p', {},
+        'A closed period is append-only — the store refuses to overwrite one, because that '
+        + 'is the one way to change an invoice that has already been sent.'),
+      el('p', {},
+        el('strong', {}, 'A statement is the period rolled up to whoever pays. '),
+        'Rolling a sub-tenant’s usage up to its payer may move it; it must never duplicate '
+        + 'it. A rollup counting a grandchild under both its parent and its grandparent '
+        + 'looks like a healthy business and is fraud.'),
+      el('p', {},
+        'Closing a period requires the operator grant, checked in the handler rather than '
+        + 'in the scope policy — otherwise a customer could decide when their own usage '
+        + 'stops accruing.')),
+    card('Two meters, deliberately not reconciled',
+      el('p', {},
+        'The operator rents hardware, and a card costs the same however efficiently it is '
+        + 'used — so the operator’s meter is device-seconds and stays that way.'),
+      el('p', {},
+        'A customer running model-as-a-service does not sell hardware; they sell tokens. '
+        + 'Their revenue is per million tokens and their cost is per device-second, and '
+        + 'the gap between those two numbers is their entire business.'),
+      el('p', {},
+        'So token metering sits ', el('strong', {}, 'above'),
+        ' device-seconds and the two are never reconciled against each other. Two '
+        + 'customers serving 1500 and 300 tok/s on the same card owe the operator the '
+        + 'same amount, and that is correct.'),
+      el('p', { class: 'faint' },
+        'The hard part is arithmetic: vLLM counters are per replica and the autoscaler '
+        + 'destroys replicas constantly, so a naive sum goes backwards on every '
+        + 'scale-down.')))));
+
+/* ------------------------------------------------- buying and getting in */
+
+app.append(section('Buying capacity, and getting started on it',
+  'Two different questions — what you are entitled to, and how you actually start using it.',
+  el('div', { class: 'cols two' },
+    card('Quota is a limit. A reservation is a promise.',
+      el('p', {},
+        'A quota says "you may hold up to 16 cards". It says nothing about whether 16 will '
+        + 'be there. Sixteen tenants each limited to 16 cards on a fleet of 64 is a '
+        + 'perfectly consistent configuration in which nobody is doing anything wrong and '
+        + 'most of them cannot run.'),
+      el('p', {},
+        'A ', el('strong', {}, 'reservation'), ' is committed capacity for a window — '
+        + '"64 cards from March to June" — and the fleet will refuse anything that would '
+        + 'sell the same card twice over that window.'),
+      el('p', {},
+        'Confirming one is about the ', el('strong', {}, 'peak'),
+        ' commitment across the requested window, not the sum: a booking for March does '
+        + 'not compete with one for May. A refusal names the reservations in the way and '
+        + 'the earliest start that would fit — the difference between "no" and "no, but '
+        + 'Tuesday".'),
+      el('p', {},
+        el('strong', {}, 'Guaranteed'), ' holds the capacity whether or not it is used, '
+        + 'and is billed for the window regardless. ', el('strong', {}, 'Best-effort'),
+        ' takes what nothing guaranteed is using, yields when that changes, and is billed '
+        + 'only for what it actually held.'),
+      el('div', { style: 'margin-top:12px' },
+        pill('ledger built and tested', 'warn'),
+        el('span', { class: 'faint', style: 'font-size:12px;margin-left:8px' },
+          'the controller that holds the capacity is not written')),
+      el('div', { style: 'margin-top:14px' },
+        flow([
+          { title: 'Requested', detail: 'A ticket. Not capacity yet.', state: 'done' },
+          { title: 'Checked', detail: 'Against the peak commitment over the window.', state: 'done' },
+          { title: 'Confirmed', detail: 'Recorded with who promised it, and when.' },
+          { title: 'Active', detail: 'Your work draws against it.' },
+          { title: 'Expired', detail: 'Or renewed, if nothing else was promised it.' },
+        ]))),
+    card('Self-provisioning — what a customer can do alone',
+      el('p', {},
+        'Once a tenancy exists, everything inside it is self-service through one API and '
+        + 'one credential. Nobody files a ticket to run a job.'),
+      el('div', { class: 'card flush', style: 'margin:12px 0' },
+        table([{ label: 'Action' }, { label: 'Who' }, { label: 'State' }],
+          [['Submit, watch and cancel jobs', 'any member', 'runs today'],
+            ['Create and scale inference endpoints', 'any member', 'runs today'],
+            ['Read your own logs', 'any member', 'runs today'],
+            ['Issue and revoke API keys', 'tenant admin', 'runs today'],
+            ['Read invoices, close a period', 'tenant admin / operator', 'runs today'],
+            ['Open a notebook or dev box', 'any member', 'designed'],
+            ['Book a reservation', 'tenant admin', 'designed'],
+            ['Create your own sub-tenants', 'tenant admin', 'not built — operator applies YAML']],
+          (r) => el('tr', {},
+            el('td', { class: 'wrap' }, r[0]),
+            el('td', { class: 'wrap faint' }, r[1]),
+            el('td', {}, pill(r[2],
+              r[2] === 'runs today' ? 'ok' : (r[2] === 'designed' ? '' : 'warn')))))),
+      el('p', {},
+        el('strong', {}, 'The gap worth naming: '),
+        'a reseller cannot yet create its own customers. That is what makes a channel a '
+        + 'business rather than a support queue, and today it is the operator applying '
+        + 'YAML on their behalf.')))));
 
 app.append(card('Measured on the hardware, not estimated',
   el('div', { class: 'stats' },

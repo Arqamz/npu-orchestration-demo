@@ -295,15 +295,41 @@ export function orgOf(persona) {
   };
 }
 
-/** whoami is the banner that answers the question on every page. */
-export function whoami(persona) {
+/** Which role bucket a persona falls in, for page copy that has to
+ *  differ by what the reader can actually see. */
+export function roleOf(persona) {
+  if (persona?.operator) return 'operator';
+  // ADMINISTRATION IS CHECKED BEFORE REACH.
+  //
+  // `reach` is a tenancy and its descendants, so any tenant that happens
+  // to have a sub-tenant has a reach wider than its own tenancies --
+  // including an ENGINEER, who administers nothing. Testing reach first
+  // handed Acme's engineer the reseller copy ("the customers you resell
+  // to"), which is exactly the wrong answer for the one persona whose
+  // whole point is that they cannot administer or bill.
+  if (!persona?.tenantAdmin) return 'member';
+  if ((persona?.reach || []).length > (persona?.tenants || []).length) return 'reseller';
+  return 'admin';
+}
+
+/** whoami is the banner that answers the question on every page.
+ *
+ *  `says` optionally carries per-role copy for THIS page, so the
+ *  description a reader gets is about the account that is loaded rather
+ *  than about the product in general. "You see every tenant because you
+ *  hold the operator grant" and "you see your own account and your three
+ *  customers" are different pages wearing the same layout, and a reader
+ *  who is handed the wrong one concludes the demo is broken. */
+export function whoami(persona, says = null) {
   const o = orgOf(persona);
+  const line = says ? (says[roleOf(persona)] ?? says.default ?? null) : null;
   return el('div', { class: 'whoami' },
     el('div', { class: 'mark' }, o.mark),
     el('div', {},
       el('div', { class: 'who-name' }, o.name,
         el('span', { class: 'who-sub' }, `  ·  ${o.kind}`)),
-      o.what ? el('div', { class: 'who-sub' }, o.what) : null),
+      o.what ? el('div', { class: 'who-sub' }, o.what) : null,
+      line ? el('div', { class: 'who-page' }, line) : null),
     el('div', { class: 'who-right' },
       persona?.operator ? pill('operator grant', 'brand') : null,
       persona?.tenantAdmin ? pill('tenant admin', 'policy') : null,
